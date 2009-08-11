@@ -1,0 +1,1485 @@
+<html><head>
+<!--
+ vi:  ts=4:
+ vim: ts=4:
+-->
+<!--
+	git clone git@github.com:EnDe/EMiR.git
+-->
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>JavaScript Events with HTML Tag Attributes (1.1)</title>
+	<meta name="Author"         content="Achim Hoffmann">
+	<meta name="Generator"      content="me using vi ;-)">
+	<meta name="DC.Creator"     content="ende @at@ my -dash- stp .dot. net">
+	<meta name="DC.Date"        content="2009-08-02">
+	<meta name="DC.Source"      content="@(#) emir.html 1.1 09/08/11 15:37:16">
+	<meta name="DC.Identifier"  content="git://github .dot. com/EnDe/EMiR/">
+	<meta name="DC.Title"       content="EMiR">
+	<meta name="DC.Description" content="EMiR - Event Mapping in Reality, strange Browser behaviours">
+	<meta name="DC.Language"    content="en">
+	<meta name="DC.Rights"      content="Creative Commons 3.0, http://creativecommons.org/licenses/by-sa/3.0/">
+	<style  type="text/css">
+body, h1        { font-weight:normal; font-family:monospace; font-size:8pt; }
+.chck { }
+.otab ul {
+	padding-top:    1.0ex;
+	padding-right:  1.0em;
+	padding-bottom: 1px;
+	margin-bottom:  0px;
+	border-bottom:  1px solid #a0a0a0;;
+}
+.otab ul li {
+	display:        inline;
+	list-style:     none;
+	list-style-type:none;
+}
+.otab ul li a {
+	margin:         0px;
+	padding-top:    0.3ex;
+	padding-bottom: 0.3ex;
+	padding-right:  0.5em;
+	padding-left:   0.5em;
+	border-right:   1px solid #a0a0a0;;
+	border-top:     1px solid #a0a0a0;;
+	border-left:    1px solid #a0a0a0;;
+/*	border-bottom:  1px solid #a0a0a0; / * don't define here!  */
+	-moz-border-radius-topleft:      5px;
+	-moz-border-radius-topright:     5px;
+	-khtml-border-radius-topleft:    5px;
+	-khtml-border-radius-topright:   5px;
+	-webkit-border-top-left-radius:  5px;
+	-webkit-border-top-right-radius: 5px;
+	text-decoration: none;
+	color:          #000000;
+}
+.otab ul li a:hover { text-decoration:none; color:#000000; background:#a0a0a0; }
+.otab ul li a:focus { outline-style:none; }
+.otab_bg{ background:#d8d8d8; border-bottom:1px solid #a0a0a0; }
+.otab_fg{ background:#ffffff; border-bottom:1px solid #ffffff; }
+.utab ul {
+	padding-right:  1.0em;
+	padding-top:    1px;
+	border-top:     1px solid #a0a0a0;;
+}
+.utab ul li {
+	display:        inline;
+	list-style:     none;
+	list-style-type:none;
+}
+.utab ul li a {
+	padding-top:    0.3ex;
+	padding-bottom: 0.3ex;
+	padding-right:  0.5em;
+	padding-left:   0.5em;
+	border-left:    1px solid #a0a0a0;
+/*	border-top:     1px solid #a0a0a0; / * don't define here!  */
+	border-right:   1px solid #a0a0a0;
+	border-bottom:  1px solid #a0a0a0;
+	-moz-border-radius-bottomleft:   5px;
+	-moz-border-radius-bottomright:  5px;
+	-khtml-border-radius-bottomleft: 5px;
+	-khtml-border-radius-bottomright:5px;
+	-webkit-border-bottom-left-radius: 5px;
+	-webkit-border-bottom-right-radius:5px;
+	text-decoration: none;
+	color:          #000000;
+	min-width:      8.0em;
+}
+.utab ul li a:hover { text-decoration:none; color:#000000; background:#a0a0a0; }
+.utab ul li a:focus { outline-style:none; }
+.utab_bg{ background:#d8d8d8; border-top:1px solid #a0a0a0; }
+.utab_fg{ background:#ffffff; border-top:1px solid #ffffff; }
+fieldset span.l { font-weight:bold; background:#c0c0f0; min-width:8em; float:left; }
+fieldset                    { background:#f0f0f0; padding:0px; }
+fieldset:first-child        { background:#ffffff; }
+fieldset:first-child:hover  { background:#00ffff; }
+fieldset:first-child:focus  { background:#ff00ff; }
+fieldset.e:first-child:hover{ background:#ffffff; }
+.err                        { background:#ffff00; }
+.err:first-child            { background:#ffff00; }
+.err:hover                  { background:#ff0000; }
+.err:first-child:hover      { background:#ff0000; }
+.table{ border:1px solid #000000; border-collapse:separate; border-spacing:1px 1px; }
+	</style>
+	<script type="text/javascript">
+function $c$ (obj,typ) {//#? called when checkbox in "Show Events" clicked
+	var val = (obj.checked===true) ? 'inline' : 'none';
+	jse.find.checked({type:typ});
+	jse.find.show(val);
+	return true; // must return true, otherwise checkbox will not be activated
+}; // $c$
+function dumm(tag) {alert('Tag <'+tag+'> clicked');return false;}
+function $e$(tag,evt) { //#? called for events of tag; sets corresponding checkbox
+	if (tag.id=='') { return false; } // take care for event bubbling
+	var o = document.getElementById(tag.id + '-' + evt);
+	if (o==null)    { return false; }
+	o.disabled = false;
+	o.checked  = true;
+	o.disabled = true;
+	return false;
+}; // $e$
+function $r$ (obj,typ) {//#? called when Result button clicked
+	if (jse.selected.event===undefined) { return false; }
+	var c = null;
+	var e = null;
+	var f = null;
+	var arr = document.getElementsByTagName('INPUT');
+	var tags= {};
+	var r = document.getElementById('tag-result');
+	r.innerHTML = '';
+	for (c in arr) {
+		if (c==='indexOf')                   { continue; } // contribution to old Mozilla 1.x
+		if (arr[c].id          ===undefined) { continue; } // some browers like this ..
+		if (arr[c].id               ===null) { continue; } // .. others like this
+		if (arr[c].checked===true) {
+			e = arr[c].id.split('-'); // [0] is tag name, [1] is event name
+			if(e.length==2) {   // all others are unexpected
+				if (tags[e[0]]===undefined) { tags[e[0]] = []; }
+				//e[1] = e[1].replace(/\./g, '><');
+				tags[e[0]].push(e[1]);
+			}
+		}
+	}
+	/* if the tag name contains a . (dot), then it's one of the special tags
+	 * which has child tags (see JSEvent.init() for details)
+	 * we simply replace the . in the name with >< which shows the tag tree
+	 * then
+	 */
+	for (c in tags) {
+		f = document.createElement('B');
+		f.appendChild(document.createTextNode('<' + c.replace(/\./g, '><').toUpperCase() + '>: '));
+		r.appendChild(f);
+		f = document.createElement('SPAN');
+		f.appendChild(document.createTextNode(tags[c].join(', ')));
+		r.appendChild(f);
+		r.appendChild(document.createElement('BR'));
+		delete this.f; f = null;
+	}
+	c = null;
+	return false;
+}; // $r$
+function $s$ (obj,typ) {//#? called when highlight (un)check in "Show Events" clicked
+	if (jse.selected.event===undefined) { return false; }
+	var c = document.getElementById('use-' + 'onAbort' + '-onAbort');
+	var e = jse.get_events(jse.selected.event);
+	for (var i=0; i<e.length; i++) {
+		c = document.getElementById('use-' + e[i] + '-' + e[i]);
+		if (typ==='check')   { c.checked = true; }
+		if (typ==='uncheck') { c.checked = false; }
+		$c$(c, e[i]);
+	}
+	return false;
+}; // $s$
+function $t$(obj,cls){  //#? called when tab in "Show Events", "Show Tags" clicked
+	var c   = '';
+	var arr = obj.id.split('-'); // we get: use-event-* or use-tag-*
+	var typ = arr[1];
+	var tab = arr[2];
+	arr = document.getElementsByTagName('A');
+	for (var a=0; a<arr.length; a++){
+		if (arr[a].id===undefined) { continue };  // unknown onject
+		if (arr[a].id.split('-')[1]!==typ) { continue };  // skip tabs in other list
+		c = arr[a].getAttribute('class');
+		if (c.match(new RegExp('^'+cls+'tab_fg$'))!==null) {
+			arr[a].setAttribute('class',c.replace('fg','bg'));
+			break;
+		}
+		
+	}
+	switch (typ) {
+	  case 'event': jse.selected.event = tab; break;
+	  case 'tag':   jse.selected.tag   = tab; break;
+	}
+	jse.find.mark(obj);  //
+	obj.setAttribute('class',c);
+	c = null; delete this.arr;
+   	return false;
+}; // $t$
+
+window.JSevents = function() {
+	function $(id) { return document.getElementById(id); }
+	var events  = {
+		'w3c': {
+			// hash labels here must be the same as hash labels following categories{}
+			'HTML 4':       {desc:'w3c events: HTML 4',
+							 url:'http://www.w3.org/TR/html4/interact/scripts.html#adef-'},
+			'HTML 5':       {desc:'w3c events: HTML 5',
+							 url:'http://www.w3.org/TR/html5/browsers.html#events-handler-attributes-on-elements-document-objects-and-window-objects'},
+							//see also:  url:'http://dev.w3.org/html5/spec/Overview.html',
+			'&nbsp;':       {desc:'reset all highlights', url:''},
+			'DOM Level 2':  {desc:'w3c events: DOM Level 2',
+							 url:'http://www.w3.org/TR/DOM-Level-2-Events/events.html#Events-eventgroupings'},
+							//see also:  url:'http://www.w3.org/TR/2000/REC-DOM-Level-2-Events-20001113/events.html',
+			'DOM Level 3':  {desc:'w3c events: DOM Level 3',
+							 url:'http://www.w3.org/TR/DOM-Level-3-Events/events.html#Events-EventTypes-complete'}
+		}, // w3c
+		'categories': {
+			'all':      {desc:'all category, standard w3c and proprietary',  url:''},
+			'Form':     {desc:'common w3c events: category HTML form',       url:''},
+			'Keys':     {desc:'common w3c events: category keyboard',        url:''},
+			'Mouse':    {desc:'common w3c events: category Mouse',           url:''},
+			'Mutation': {desc:'common w3c events: category mutation',        url:''},
+			'Object':   {desc:'common w3c events: category HTML frame/object',url:''},
+			'User':     {desc:'common w3c events: category user interface',  url:''},
+			'&nbsp;':   {desc:'reset all highlights',    url:''},
+				/* reset is a empty tab used as separartor
+				 * it serves as "reset" automatically ;-)  */
+		//'browsers':
+			'Opera':    {desc:'spezial Opera events',    url:''},
+			'Safari':   {desc:'spezial Safari events',   url:''},
+			'IE':       {desc:'spezial IE events',       url:''},
+			'XUL':      {desc:'spezial Mozilla XUL elements events', url:''}
+		}, // categories
+		// note that sequence of following hashes is important for display
+		'all': {
+			'DOMContentLoaded': null,
+			'DOMFrameContentLoaded': null,
+			'DOMMouseScroll':   null,
+			'DOMMenuItemActive':null,
+			'DOMMenuItemInactive':null,
+			'FSCommand':        null,	// SWF only
+			'formchange':       null,	// typo? Opera
+			'forminput':        null,	// typo? Opera
+			'invalid':          null,	// typo? Opera
+			'onAbort':          null,
+			'onActivate':       null,
+			'onAfterPrint':     null,
+			'onAfterUpdate':    null,
+			'onAttrModified':   null,	// typo?
+			'onBeforeActivate': null,
+			'onBeforeCopy':     null,
+			'onBeforeCut':      null,
+			'onBeforeDeactivate':null,
+			'onBeforeEditFocus':null,
+			'onBeforePaste':    null,
+			'onBeforePrint':    null,
+			'onBeforeUnload':   null,
+			'onBeforeUpdate':   null,
+			'onBegin':          null,
+			'onBlur':           null,
+			'onBounce':         null,
+			'onBroadcast':      null,
+			'onCanPlay':        null,
+			'onCanPlayThrough': null,
+			'onCellChange':     null,
+			'onChange':         null,
+			'onCharacterDataModified':null,	// typo?
+			'onClick':          null,
+			'onClose':          null,
+			'onCommand':        null,
+			'onCommandUpdate':  null,
+			'onContextMenu':    null,
+			'onControlSelect':  null,
+			'onCopy':           null,
+			'onCut':            null,
+			'onDataAvailable':  null,
+			'onDataSetChanged': null,
+			'onDataSetComplete':null,
+			'onDblClick':       null,
+			'onDeactivate':     null,
+			'onDOMActivate':    null,
+			'onDOMAttrModified':null,
+			'onDOMAttributeNameChanged':null,
+			'onDOMCharacterDataModified':null,
+			'onDOMElementNameChanged':null,
+			'onDOMFocusIn':     null,
+			'onDOMFocusOut':    null,
+			'onDOMNodeInserted':   null,
+			'onDOMNodeInsertedIntoDocument':null,
+			'onDOMNodeRemoved':    null,
+			'onDOMNodeRemovedFromDocument': null,
+			'onDOMSubTreeModified':null,
+			'onDrag':           null,
+			'onDragDrop':       null,
+			'onDragEnd':        null,
+			'onDragEnter':      null,
+			'onDragExit':       null,
+			'onDragGesture':    null,
+			'onDragLeave':      null,
+			'onDragOver':       null,
+			'onDragStart':      null,
+			'onDrop':           null,
+			'onDurationChange': null,
+			'onEmtied':         null,
+			'onEnded':          null,
+			'onEnd':            null,
+			'onError':          null,
+			'onErrorUpdate':    null,
+			'onExit':           null,
+			'onFilterChange':   null,
+			'onFinish':         null,
+			'onFocus':          null,
+			'onFocusIn':        null,
+			'onFocusOut':       null,
+			'onFormChange':     null,
+			'onFormInput':      null,
+			'onHashChange':     null,
+			'onHelp':           null,
+			'onInput':          null,
+			'onInvalid':        null,
+			'onKeyDown':        null,
+			'onKeyPress':       null,
+			'onKeyUp':          null,
+			'onLayoutComplete': null,
+			'onLoad':           null,
+			'onLoadedData':     null,
+			'onLoadedMetaData': null,
+			'onLoadStart':      null,
+			'onLoseCapture':    null,
+			'onMediaComplete':  null,
+			'onMediaError':     null,
+			'onMessage':        null,
+			'onMouseDown':      null,
+			'onMouseEnter':     null,
+			'onMouseLeave':     null,
+			'onMouseMove':      null,
+			'onMouseMultiWheel':null,
+			'onMouseOut':       null,
+			'onMouseOver':      null,
+			'onMouseUp':        null,
+			'onMouseWheel':     null,
+			'onMove':           null,
+			'onMoveEnd':        null,
+			'onMoveStart':      null,
+			'onNodeInserted':   null,	// typo?
+			'onNodeRemoved':    null,	// typo?
+			'onOffline':        null,
+			'onOnline':         null,
+			'onOutOfSync':      null,
+			'onOverFlow':       null,
+			'onOverFlowChanged':null,
+			'onPaste':          null,
+			'onPause':          null,
+			'onPlay':           null,
+			'onPlaying':        null,
+			'onPopState':       null,
+			'onPopupHidden':    null,
+			'onPopupHiding':    null,
+			'onPopupShowing':   null,
+			'onPopupShown':     null,
+			'onProgress':       null,
+			'onPropertyChange': null,
+			'onRateChange':     null,
+			'onReadyStateChange': null,
+			'onRedo':           null,
+			'onRepeat':         null,
+			'onReset':          null,
+			'onResize':         null,
+			'onResizeEnd':      null,
+			'onResizeStart':    null,
+			'onResume':         null,
+			'onReverse':        null,
+			'onRowDelete':      null,	// typo?
+			'onRowEnter':       null,
+			'onRowExit':        null,
+			'onRowInserted':    null,	// typo?
+			'onRowsDelete':     null,
+			'onRowsInserted':   null,
+			'onScroll':         null,
+			'onSeek':           null,
+			'onSeeked':         null,
+			'onSeeking':        null,
+			'onSelect':         null,
+			'onSelectionChange':null,
+			'onSelectStart':    null,
+			'onShow':           null,
+			'onStalled':        null,
+			'onStart':          null,
+			'onStop':           null,
+			'onStorage':        null,
+			'onStorageCommit':  null,
+			'onSubmit':         null,
+			'onSubTreeModified':null,	// typo?
+			'onSuspend':        null,
+			'onSyncRestored':   null,
+			'onSynchRestored':  null,	// typo?
+			'onTextInput':      null,
+			'onTimeError':      null,
+			'onTimeupdate':     null,
+			'onTrackChange':    null,
+			'onUnderflow':      null,
+			'onUndo':           null,
+			'onUnload':         null,
+			'onURLFlip':        null,
+			'onVolumeChange':   null,
+			'onWaiting':        null,
+			'seekSegmentTime':  null
+		}, // all
+		'HTML 4': {
+			'onBlur':           null,
+			'onChange':         null,
+			'onClick':          null,
+			'onDblClick':       null,
+			'onFocus':          null,
+			'onKeyDown':        null,
+			'onKeyPress':       null,
+			'onKeyUp':          null,
+			'onLoad':           null,
+			'onMouseDown':      null,
+			'onMouseMove':      null,
+			'onMouseOut':       null,
+			'onMouseOver':      null,
+			'onMouseUp':        null,
+			'onReset':          null,
+			'onSelect':         null,
+			'onSubmit':         null,
+			'onUnload':         null
+		}, // HTML 4
+		'HTML 5': {
+			//objects: {'document':null, 'window':null },
+			'onAbort':          null,
+			'onAfterPrint':     null,
+			'onBeforePrint':    null,
+			'onBeforeUnload':   null,
+			'onBlur':           null,
+			'onCanPlay':        null,
+			'onCanPlayThrough': null,
+			'onChange':         null,
+			'onClick':          null,
+			'onContextMenu':    null,
+			'onDblClick':       null,
+			'onDrag':           null,
+			'onDragEnd':        null,
+			'onDragEnter':      null,
+			'onDragLeave':      null,
+			'onDragOver':       null,
+			'onDragStart':      null,
+			'onDrop':           null,
+			'onDurationChange': null,
+			'onEmtied':         null,
+			'onEnded':          null,
+			'onError':          null,
+			'onFocus':          null,
+			'onFormChange':     null,
+			'onFormInput':      null,
+			'onHashChange':     null,
+			'onInvalid':        null,
+			'onLoad':           null,
+			'onLoadedData':     null,
+			'onLoadedMetaData': null,
+			'onLoadStart':      null,
+			'onKeyDown':        null,
+			'onKeyPress':       null,
+			'onKeyUp':          null,
+			'onMessage':        null,
+			'onMouseDown':      null,
+			'onMouseMove':      null,
+			'onMouseOut':       null,
+			'onMouseOver':      null,
+			'onMouseUp':        null,
+			'onMouseWheel':     null,
+			'onOffline':        null,
+			'onOnline':         null,
+			'onPause':          null,
+			'onPlay':           null,
+			'onPlaying':        null,
+			'onPopState':       null,
+			'onProgress':       null,
+			'onRateChange':     null,
+			'onReadyStateChange': null,
+			'onRedo':           null,
+			'onReset':          null, // missing?
+			'onResize':         null,
+			'onScroll':         null,
+			'onSeeked':         null,
+			'onSeeking':        null,
+			'onSelect':         null,
+			'onShow':           null,
+			'onStalled':        null,
+			'onStorage':        null,
+			'onSubmit':         null,
+			'onSuspend':        null,
+			'onTimeupdate':     null,
+			'onVolumeChange':   null,
+			'onWaiting':        null,
+			'onUndo':           null,
+			'onUnload':         null // missing?
+		}, // HTML 5
+		'DOM Level 2': {
+			'onAbort':          null,
+			'onBlur':           null,
+			'onChange':         null,
+			'onClick':          null,
+			'onDOMActivate':    null,
+			'onDOMAttrModified':null,
+			'onDOMCharacterDataModified':null,
+			'onDOMFocusIn':     null,
+			'onDOMFocusOut':    null,
+			'onDOMNodeInserted':null,
+			'onDOMNodeInsertedIntoDocument':null,
+			'onDOMNodeRemoved':null,
+			'onDOMNodeRemovedFromDocument': null,
+			'onDOMSubTreeModified':null,
+			'onError':          null,
+			'onFocus':          null,
+			'onLoad':           null,
+			'onMouseDown':      null,
+			'onMouseMove':      null,
+			'onMouseOut':       null,
+			'onMouseOver':      null,
+			'onMouseUp':        null,
+			'onReset':          null,
+			'onResize':         null,
+			'onScroll':         null,
+			'onSelect':         null,
+			'onSubmit':         null,
+			'onUnload':         null
+		}, // DOM Level 2
+		'DOM Level 3': {
+			'onAbort':          null,
+			'onBlur':           null,
+			'onChange':         null,
+			'onClick':          null,
+			'onDblClick':       null,
+			'onDOMActivate':    null,
+			'onDOMAttrModified':null,
+			'onDOMAttributeNameChanged':null,
+			'onDOMCharacterDataModified':null,
+			'onDOMElementNameChanged':null,
+			'onDOMFocusIn':     null,
+			'onDOMFocusOut':    null,
+			'onDOMNodeInserted':   null,
+			'onDOMNodeInsertedIntoDocument':null,
+			'onDOMNodeRemoved':    null,
+			'onDOMNodeRemovedFromDocument': null,
+			'onDOMSubTreeModified':null,
+			'onError':          null,
+			'onFocus':          null,
+			'onKeyDown':        null,
+			'onKeyUp':          null,
+			'onLoad':           null,
+			'onMouseDown':      null,
+			'onMouseMove':      null,
+			'onMouseMultiWheel':null,
+			'onMouseOut':       null,
+			'onMouseOver':      null,
+			'onMouseUp':        null,
+			'onMouseWheel':     null,
+			'onReset':          null,
+			'onResize':         null,
+			'onScroll':         null,
+			'onSelect':         null,
+			'onSubmit':         null,
+			'onTextInput':      null,
+			'onUnload':         null
+		}, // DOM Level 3
+		'Object': {
+			'onAbort':          null,
+			'onError':          null,
+			'onChange':         null,
+			'onLoad':           null,
+			'onReset':          null,
+			'onResize':         null,	// or User Interface?
+			'onScroll':         null,	// or User Interface?
+			'onSelect':         null,
+			'onSubmit':         null,
+			'onUnload':         null
+		}, // Object
+		'Keys': {
+			'onKeyDown':        null,
+			'onKeyPress':       null,
+			'onKeyUp':          null
+		}, // Keys
+		'Form': {
+			'onBlur':           null,
+			'onChange':         null,
+			'onFocus':          null,
+			'onReset':          null,
+			'onSelect':         null,
+			'onSubmit':         null
+		}, // Form
+		'Mouse': {
+			'onClick':          null,
+			'onDblClick':       null,
+			'onMouseDown':      null,
+			'onMouseMove':      null,
+			'onMouseOut':       null,
+			'onMouseOver':      null,
+			'onMouseUp':        null,
+			'onMouseMultiWheel':null,
+			'onMouseWheel':     null
+		}, // Mouse
+		'Mutation': {
+			'onAttrModified':   null,	// typo?
+			'onCharacterDataModified':null,	// typo?
+			'onNodeInserted':   null,	// typo?
+			'onNodeRemoved':    null,	// typo?
+			'onDOMAttrModified':null,
+			'onDOMCharacterDataModified':null,
+			'onDOMNodeInsertedIntoDocument':null,
+			'onDOMNodeRemovedFromDocument': null,
+			'onDOMSubTreeModified':null,
+			'onSubTreeModified':null	// typo?
+			}, // Mutation
+		'User': {
+			'onDOMFocusIn':     null,
+			'onDOMFocusOut':    null,
+			'onDOMActivate':    null,
+			'onBlur':           null,
+			'onFocus':          null,
+			'onResize':         null,	// or Object?
+			'onScroll':         null,	// or Object?
+			'onTextInput':      null	// also Text Event
+			}, // User
+		'Safari': {
+			'onBeforeCopy':     null,
+			'onBeforeCut':      null,
+			'onBeforePaste':    null,
+			'onBlur':           null,
+			'onClick':          null,
+			'onContextMenu':    null,
+			'onCopy':           null,
+			'onCut':            null,
+			'onDblClick':       null,
+			'onDrag':           null,
+			'onDragDrop':       null,
+			'onDragEnd':        null,
+			'onDragEnter':      null,
+			'onDragLeave':      null,
+			'onDragOver':       null,
+			'onDragStart':      null,
+			'onDrop':           null,
+			'onError':          null,
+			'onFocus':          null,
+			'onKeyDown':        null,
+			'onKeyPress':       null,
+			'onKeyUp':          null,
+			'onLoad':           null,
+			'onMouseDown':      null,
+			'onMouseMove':      null,
+			'onMouseOut':       null,
+			'onMouseOver':      null,
+			'onMouseUp':        null,
+			'onMove':           null,
+			'onOffline':        null,
+			'onOnline':         null,
+			'onOutOfSync':      null,
+			'onSelectStart':    null,
+			'onSubmit':         null,
+			'onUnload':         null
+		}, // Safari
+		'&nbsp;': {},
+		'IE': {
+			'onActivate':       null,
+			'onAfterPrint':     null,	// Misc.
+			'onAfterUpdate':    null,	// Data Binding
+			'onBeforeActivate': null,
+			'onBeforeCopy':     null,	// Clipboard
+			'onBeforeCut':      null,	// Clipboard
+			'onBeforeDeactivate':null,
+			'onBeforeEditFocus':null,	// Form
+			'onBeforePaste':    null,	// Clipboard
+			'onBeforePrint':    null,	// Misc.
+			'onBeforeUnload':   null,	// Object
+			'onBeforeUpdate':   null,	// Data Binding
+			'onBlur':           null,
+			'onBounce':         null,	// Marquee
+			'onCellChange':     null,	// Data Binding
+			'onClick':          null,
+			'onContextMenu':    null,	// Mouse
+			'onCopy':           null,	// Clipboard
+			'onCut':            null,	// Clipboard
+			'onDataAvailable':  null,	// Data Binding
+			'onDataSetChanged': null,	// Data Binding
+			'onDataSetComplete':null,	// Data Binding
+			'onDblClick':       null,
+			'onDeactivate':     null,
+			'onDrag':           null,	// Mouse
+			'onDragDrop':       null,	// Mouse ??
+			'onDragEnd':        null,	// Mouse
+			'onDragEnter':      null,	// Mouse
+			'onDragLeave':      null,	// Mouse
+			'onDragOver':       null,	// Mouse
+			'onDragStart':      null,	// Mouse
+			'onDrop':           null,	// Mouse
+			'onError':          null,
+			'onErrorUpdate':    null,	// Data Binding
+			'onFilterChange':   null,	// Misc.
+			'onFinish':         null,	// Marquee
+			'onFocus':          null,
+			'onFocusIn':        null,
+			'onFocusOut':       null,
+			'onHelp':           null,	// Keyboard
+			'onKeyDown':        null,
+			'onKeyPress':       null,
+			'onKeyUp':          null,
+			'onLoad':           null,
+			'onLoseCapture':    null,	// Misc.
+			'onMouseDown':      null,
+			'onMouseEnter':     null,
+			'onMouseLeave':     null,
+			'onMouseMove':      null,
+			'onMouseOut':       null,
+			'onMouseOver':      null,
+			'onMouseUp':        null,
+			'onMouseWheel':     null,
+			'onMove':           null,
+			'onMoveEnd':        null,
+			'onMoveStart':      null,
+			'onPaste':          null,	// Clipboard
+			'onPropertyChange': null,	// Misc.
+			'onReadyStateChange': null,	// Misc.
+			'onReset':          null,
+			'onResize':         null,
+			'onRowEnter':       null,	// Data Binding
+			'onRowExit':        null,	// Data Binding
+			'onRowsDelete':     null,	// Data Binding
+			'onRowsInserted':   null,	// Data Binding
+			'onScroll':         null,
+			'onSelectStart':    null,	// Mouse
+			'onStart':          null,	// Marquee
+			'onStop':           null,	// Object
+			'onUnload':         null
+		}, // IE
+		'Opera': {
+			'DOMContentLoaded': null,	// ?
+			'DOMFrameContentLoaded': null,	// ?
+			'DOMMouseScroll':   null,	// ?
+			'formchange':       null,	// ?
+			'forminput':        null,	// ?
+			'invalid':          null,	// ?
+			'onBeforeUnload':   null,
+			'onDragStart':      null,
+			'onResize':         null,
+			'onScroll':         null,
+			'onSelectStart':    null
+		}, // Opera
+		'XUL': {
+			'DOMContentLoaded': null,	// ?
+			'DOMFrameContentLoaded': null,	// ?
+			'DOMMouseScroll':   null,	// Mouse
+			'DOMMenuItemActive':null,	// User
+			'DOMMenuItemInactive':null,	// User
+			'onBroadcast':      null,	// User
+			'onClose':          null,	// Input
+			'onCommand':        null,	// Input
+			'onCommandUpdate':  null,	// User
+			'onContextMenu':    null,	// User
+//			'onCheckboxStateChange': null,	// Input
+//			'onRadioStateChange': null,	// Input
+			'onDragDrop':       null,	// Mouse
+			'onDragEnter':      null,	// Mouse
+			'onDragExit':       null,	// Mouse
+			'onDragGesture':    null,	// Mouse
+			'onDragOver':       null,	// Mouse
+			'onInput':          null,	// Input
+			'onOverFlow':       null,	// User
+			'onOverFlowChanged':null,	// User
+			'onPopupHidden':    null,	// User
+			'onPopupHiding':    null,	// User
+			'onPopupShowing':   null,	// User
+			'onPopupShown':     null,	// User
+			'onUnderflow':      null	// User
+		} // XUL
+	}; // events
+	var tags    = {
+		'w3c': {
+			// hash labels here must be the same as hash labels following categories{}
+			'HTML 4':       {desc:'w3c tags: HTML 4',
+							 url:'http://www.w3.org/TR/html4/'},
+			'HTML 5':       {desc:'w3c tags: HTML 5',
+							url:'http://dev.w3.org/html5/spec/Overview.html'},
+			'&nbsp;':       {desc:'reset all highlights', url:''},
+		}, // w3c
+		/*
+		 * values in each hash are used as follows:
+		 *  file:   should be used in its own file also, provide a link for it
+		 *  meta:   tags for meta data, should appear in HEAD container only
+		 *  use:    don't generate, causes JavaScript DOM error
+		 *  attr:   all listes attributes are set in the generated tag
+		 *  empty:  element does not have content, hence closing tag forbidden
+		 *  notext: do not generate text node, causes JavaScript DOM error
+		 *          (except the script tag, this should occour for tags marked
+		 *           empty:true only)
+		 *  input:  special behaviour for INPUT tag
+		 *  table:  special behaviour for TABLE, TR, TD, etc. tags
+		 *  select: special behaviour for SELECT, OPTION, etc. tags
+		 */
+		'HTML 4': {
+			'a':            {href:'return dumm("A");'}, // does not work 'cause onClick returns false
+			'abbr':         null,
+			'acronym':      null,
+			'address':      null,
+			'applet':       {use:false,file:true,attr:{width:'15px',height:'15px',src:'#'}},
+			'area':         {empty:true},
+			'audioscope':   null,
+			'b':            null,
+			'base':         {file:true,empty:true,meta:true},
+			'basefont':     {empty:true},
+			'bdo':          null,
+			'bgsound':      null,
+			'big':          null,
+			'blackface':    null,
+			'blink':        null,
+			'blockquote':   null,
+			'body':         {file:true,use:false},
+	/*
+			'body':         {file:true},
+	*/
+			'bq':           null,
+			'br':           {empty:true},
+			'button':       null,
+			'caption':      {table:true},
+			'center':       null,
+			'cite':         null,
+			'code':         null,
+			'col':          {table:true,empty:true},
+			'colgroup':     {table:true},
+			'comment':      null,
+			'dd':           null,
+			'del':          null,
+			'dfn':          null,
+			'dir':          null,
+			'div':          null,
+			'dl':           null,
+			'dt':           null,
+			'em':           null,
+			'elements':     {use:false},    // must be last tag
+			'fieldset':     null,
+			'fn':           null,
+			'font':         null,
+			'form':         {file:true},
+			'frame':        {file:true},
+			//'frameset':     {attr:{width:'15px',height:'15px'}},
+			'frameset':     {attr:{width:'200px',height:'30px',border:'1px',src:'data:text/html,ein <b>fetter text</b> im frameset'}},
+			'h1':           null,
+			'head':         {file:true,meta:true},
+			'hr':           {empty:true,notext:true},
+			'html':         {file:true},    //# seems to work proper in Mozilla
+			'i':            null,
+			'iframe':       {attr:{width:'200px',height:'30px',border:'0px',src:'data:text/html,ein <b>fetter text</b> im iframe'}},
+			'ilayer':       null,
+			'img':          {attr:{width:'15px',height:'15px'},empty:true},
+			'input':        {input:{'button':true,'hidden':true,'text':true,'password':true,'reset':true,'submit':true,'file':true,'checkbox':true,'radio':true,'image':true},empty:true},
+	//HTML5	'input':        {input:{'search':true,'tel':true,'url':true,'email':true,'datetime':true,'date':true,'month':true,'week':true,'time':true,'datetime-local':true,'number':true,'range':true,'color':true},empty:true},
+			'ins':          null,
+			'isindex':      {empty:true,meta:true},
+			'kbd':          null,
+			'label':        null,
+			'layer':        null,
+			'legend':       null,
+			'li':           null,
+			'limittext':    null,
+			'link':         {file:true,empty:true,meta:true},
+			'listing':      null,
+			'map':          null,
+			'marquee':      null,
+			'meta':         {file:true,empty:true,meta:true},
+			'multicol':     {select:true},
+			'nextid':       null,
+			'nobr':         null,
+			'noframes':     {file:true},
+			'noscript':     {file:true},
+			'object':       null,
+			'ol':           null,
+			'optgroup':     {select:true},
+			'option':       {select:true},
+			'p':            null,
+			'param':        {empty:true},
+			'plaintext':    {attr:{width:'15px',height:'15px'}}, // for mozilla 1.7.x
+			'pre':          null,
+			'q':            null,
+			's':            null,
+			'samp':         null,
+			'script':       {notext:true},
+			'select':       {select:true},
+			'server':       null,
+			'shadow':       null,
+			'sidebar':      null,
+			'small':        null,
+			'spacer':       {empty:true},
+			'span':         null,
+			'strike':       null,
+			'strong':       null,
+			'style':        {file:true,meta:true},
+			'sub':          null,
+			'sup':          null,
+			'table':        {table:true},
+			'tbody':        {table:true},
+			'td':           {table:true},
+			'textarea':     {attr:{width:'15px',height:'15px'}},
+			'tfoot':        {table:true},
+			'th':           {table:true},
+			'thead':        {table:true},
+			'title':        {file:true,meta:true},    //# produces strange tags inside body in Mozilla
+			'tr':           {table:true},
+			'tt':           null,
+			'u':            null,
+			'ul':           null,
+			'var':          null,
+			'wbr':          {empty:true},
+			'xml':          null,
+			'xmp':          null
+		}, // HTML 4
+		'HTML 5': {
+			'article':      null,
+			'aside':        null,
+			'audio':        null,
+	//HTML5	'button':       {input:{'button':true,'submit':true,'reset':true}},
+			'canvas':       null,
+			'command':      null,
+			'datalist':     null,
+			'dialog':       null,
+			'details':      null,
+			'embed':        {attr:{width:'15px',height:'15px',src:'#'},empty:true},
+			'figure':       null,
+			'footer':       null,
+			'header':       null,
+			'hgroup':       null,
+	//HTML5	'input':        {input:{'search':true,'tel':true,'url':true,'email':true,'datetime':true,'date':true,'month':true,'week':true,'time':true,'datetime-local':true,'number':true,'range':true,'color':true},empty:true},
+			'keygen':       {empty:true},
+			'mark':         null,
+			'menu':         null,
+			'meter':        null,
+			'nav':          null,
+			'noembed':      {file:true},
+			'nosmartquotes':null, // ?
+			'progress':     null,
+			'output':       null,
+			'rp':           null,
+			'rt':           null,
+			'ruby':         null,
+			'source':       null,
+			'time':         null,
+			'video':        null
+		} // HTML 5
+	};
+	var objects = [];   // temp. array for sections
+
+	obj = function(){ this.init(); },
+	obj.prototype = {
+		//'objects':[],   // temp. array for sections
+		'selected': {  // contains current selected tab (Show Events, Tags)
+			'event':'all',
+			'tags': 'HTML 4'
+		}, // selected
+		'html':   '-test me-',
+		'get_objects':function() {
+			//#? get array of all objects[]
+			return objects;
+		}, // get_objects
+		'get_events':function(typ) {
+			//#? get array of all events[typ]
+			var t = [];
+			for (var e in events[typ]) { t.push(e); }
+			return t;
+		}, // get_events
+		'create':   { //#? ######################################## create tags
+			// ToDo 'self': this,
+			// ToDo 'html': this.html,
+			'innerHTML':function(parent,html) {
+				//#? set innerHTML attribute
+				if (html != '') {
+					try{ parent.innerHTML = html; }
+					catch(e){}; // contribution to w3c-conform browsers
+				}
+			}, // innerHTML
+			'onEvent':  function(parent,typ) {
+				//#? set all events[typ] attributes
+				var err = '';
+				for (var x in events[typ]) {
+					try { parent.setAttribute(x, "return $e$(this,'"+ x +"');"); }
+					catch(e) { err += '\n** ' + x + '\t"' + e + '"'; }
+				}
+				return err;
+			}, // onEvent
+			'on_body':  function(parent,typ) {
+				//#? set all events[typ] attributes for <body> (excluding 'onload')
+				var err = '';
+				for (var x in events[typ]) {
+					if (x.match(/^onLoad/i)!==null) { alert('onload');continue; }
+					if (x.match(/^onContextMenu/i)!==null) { alert('onContextMenu');continue; }
+					//if (x.match(/^onFocus/i)!==null) { alert('onFocus');continue; }
+					//if (x.match(/^onActivate/i)!==null) { alert('onActivate');continue; }
+					try { parent.setAttribute(x, "return $e$(this,'"+ x +"');"); }
+					catch(e) { err += '\n** ' + x + '\t"' + e + '"'; }
+				}
+				return err;
+			}, // on_body
+			'checkboxes':function(tag,id,parent,err) {
+				//#? create checkboxes for all events
+				var t = null;
+				var i = id;
+				//parent.appendChild(document.createElement('BR')); // nur bei inline Elementen
+				if (err!='') {
+					t = document.createElement('DIV');
+					t.innerHTML = err;
+					parent.setAttribute('class', 'err');
+					parent.appendChild(t);
+					delete this.t;
+					return;
+				}
+				for (var e in events.all) {
+					parent.appendChild(this.CHECKBOX( 'LABEL INPUT checkbox',
+					   {'id':       id,
+						'type':     'checkbox',
+						'event':    e,
+						'html':     '|\xa0' + e + ':',
+						'display':  false,
+						'disable':  true
+					   }
+					));
+				}
+				return;
+			}, // checkboxes
+			'tag':  function(tag,arg_hash,html) {
+				//#? return specified tag with given attributes
+				var args= arg_hash;
+				var t = document.createElement(tag);
+				this.innerHTML(t,html);
+				for (var arg in args)     { t.setAttribute(arg,     args[arg]); }
+				if (args.cls!==undefined) { t.setAttribute('class', args.cls);  }
+				if (args.id !==undefined) { t.setAttribute('name',  args.id);   }
+					// we need a name attrinute if we want to make a request
+				return t;
+			}, // tag
+			'tags': function(parent,typ) {
+				//#? create all tags of given typ (returns void)
+				var tag = null;
+				var html= '-test me-'; // ToDo: should be self.html;
+				if (typ==='SELECT') {
+					parent.appendChild(this.SELECT('SELECT',   {}, html));
+					parent.appendChild(this.SELECT('OPTGROUP', {}, html));
+					parent.appendChild(this.SELECT('OPTION',   {}, html));
+					return;
+				}
+				if (typ==='TABLE') {
+					parent.appendChild(this.TABLE('TABLE',     {}, html));
+					parent.appendChild(this.TABLE('THEAD',     {}, html));
+					parent.appendChild(this.TABLE('TBODY',     {}, html));
+					parent.appendChild(this.TABLE('TFOOT',     {}, html));
+					parent.appendChild(this.TABLE('CAPTION',   {}, html));
+					parent.appendChild(this.TABLE('TR',        {}, html));
+					parent.appendChild(this.TABLE('TD',        {}, html));
+					return;
+				}
+				// otherwise use tags from specified list
+				for (tag in tags[typ]) {
+					html= '-test me-'; // ToDo: should be this.html;
+					if (tags[typ][tag]!=null) {
+						if (tags[typ][tag].use!=null)   { /*alert('skip:'+tag);*/ continue; }
+						if (tags[typ][tag].notext!=null){ /*alert('html:'+tag);*/ html = ''; }
+						if (tags[typ][tag].input!=null) {
+							for (var a in tags[typ][tag].input) { // create INPUT tags with of all types
+								parent.appendChild(this.tag_form(tag, {type:a}, html));
+							}
+						}
+					}
+					parent.appendChild(this.tag_form(tag, {}, html)); // ToDo: inline should be configurable
+					if (tags[typ][tag]!==null) {
+						if (tags[typ][tag].file!==undefined) {
+						parent.appendChild(this.tag_form(tag, {'url':'tags-'+tag.toLowerCase()+'.html'}, html));
+						}
+					}
+//break; // speed up for testing
+				}
+			}, // tags
+			'CHECKBOX': function(dummytag,arg_hash) {
+				//#? return <label><input type=checkbox></label>
+				var args= arg_hash; // style: is for the surounding LABEL tag, all others for INPUT tag
+				var t   = document.createElement('LABEL');
+				var id  = args.id;
+				if (args.event!==undefined) { id += '-' + args.event; }
+				if (args.display===false)   { t.setAttribute('style', 'display:none'); }
+				t.id    = 'l-' + id;
+				t.setAttribute('for', id);
+				t.innerHTML = args.html;
+				if (args.disable===true) {
+					t.appendChild(this.tag('INPUT', {'id':id, 'type':args.type, disabled:'1'}, ''));
+				} else {
+					t.appendChild(this.tag('INPUT', {'id':id, 'type':args.type, onClick:args.onClick}, ''));
+				}
+				return t;
+			}, // CHECKBOX
+			'FIELDSET': function(tag,arg_hash,html) {
+				//#? return <fieldset><span> tag </span> </fieldset>
+				var t =   this.tag('FIELDSET', {}, '');
+				t.appendChild(this.tag('SPAN', {cls:'l'}, '&#x3c;' + tag.toUpperCase() + '&#x3e;'));
+				this.innerHTML(t,html);
+				return t;
+			}, // FIELDSET
+			'tag_form': function(tag,arg_hash,html) {
+				//#? return <div><fieldset><span> tag </span> <tag>..</tag> </fieldset></div>
+				var args= arg_hash; // attributes for generated tag
+				var err = '';
+				var id  = tag;
+				var t   = null;
+				if (tag.match(/^INPUT$/i)!=null) {  // need special id 'cause multiple tags
+					if(args.type!=null) { id += ' type=' + args.type; }
+				}
+				var f = this.FIELDSET(tag, {}, '');
+				if(args.url!==undefined) {
+					f.appendChild(document.createTextNode('\xa0see:\xa0'));
+					f.appendChild(this.tag( 'A', {'href':args.url}, args.url));
+					t = this.tag('DIV', {'id':'z-'+tag}, '');
+					t.appendChild(f);  delete this.f;
+					return t;
+				}
+				//if (tag==='body') { // BODY tag is tricky as other tags inherit from there
+				//	t = $('body');
+				//	err = this.on_body(t, 'all');
+				//} else {
+					t = this.tag( tag, {'id':id}, '');
+					if(tags[tag]!=null) {
+						if(tags[tag].attr!=null) {
+							for (var a in tags[tag].attr) { t.setAttribute(a, tags[tag].attr[a]); }
+						}
+					}
+					this.innerHTML(t,html);
+					err = this.onEvent(t, 'all');
+					f.appendChild(t);  delete this.t;
+				//}
+				for (var arg in args) { t.setAttribute(arg, args[arg]); }
+				this.checkboxes(tag, id, f, err);
+				t = this.tag('DIV', {'id':'z-'+tag}, '');
+				t.appendChild(f);  delete this.f;
+				return t;
+			}, // tag_form
+			'SELECT':   function(tag,arg_hash,html) {
+				//#? return <select><optgroup><option> text </option></optgroup></select>
+				/* event attributes are set to given "tag" only */
+				var id  = '';
+				var err = '';
+				var sid = {}, stx = '';
+				var gid = {}, gtx = '';
+				var oid = {}, otx = '';
+				switch (tag) {
+				  case 'select':
+				  case 'SELECT':   id='select.select';   sid={'id':id}; stx = html; break;
+				  case 'option':
+				  case 'OPTION':   id='select.option';   oid={'id':id}; otx = html; break;
+				  case 'optgroup':
+				  case 'OPTGROUP': id='select.optgroup'; gid={'id':id}; gtx = html; break;
+				}
+				var o = this.tag('option',   oid, otx);
+				var t = this.tag('select',   sid, stx);
+				var g = this.tag('optgroup', gid, gtx);
+				if (stx!=='') { err = this.onEvent(t, 'all'); }
+				if (gtx!=='') { err = this.onEvent(g, 'all'); }
+				if (otx!=='') { err = this.onEvent(o, 'all'); }
+				g.label = (gtx==='') ? '-no test-' : gtx;
+				g.appendChild(o);
+				g.appendChild(this.tag('OPTION', {}, '-no test-'));
+				t.appendChild(g);  delete this.g;
+				g = this.FIELDSET(tag, {}, '');
+				g.appendChild(t);  delete this.t;
+				this.checkboxes(tag, id, g, err);
+				t = this.tag('DIV', {'id':'z-'+tag}, '');
+				t.appendChild(g);  delete this.g;
+				return t;
+			}, // SELECT
+			'TABLE':    function(tag,arg_hash,html) {
+				var id  = '';
+				var err = '';
+				var tid = {'cls':'table'}, ttx = '';
+				var hid = {}, htx = '';
+				var bid = {}, btx = '';
+				var fid = {}, ftx = '';
+				var rid = {}, rtx = '';
+				var did = {}, dtx = '';
+				var cid = {}, ctx = '';
+				switch (tag) {
+				  case 'table':
+				  case 'TABLE': id='table.table';   tid={'id':id, 'cls':'table'}; ttx = html; break;
+				  case 'thead':
+				  case 'THEAD': id='table.thead';   hid={'id':id}; htx = html; break;
+				  case 'tbody':
+				  case 'TBODY': id='table.tbody';   bid={'id':id}; btx = html; break;
+				  case 'tfoot':
+				  case 'TFOOT': id='table.tfoot';   fid={'id':id}; ftx = html; break;
+				  case 'caption':
+				  case 'CAPTION':id='table.caption';cid={'id':id}; ctx = html; break;
+				  case 'tr':
+				  case 'TR':    id='table.tr';      rid={'id':id}; rtx = html; break;
+				  case 'td':
+				  case 'TD':    id='table.td';      did={'id':id}; dtx = html; break;
+				  case 'th':
+				  case 'TH':    id='table.th';      did={'id':id}; dtx = html; break;
+				}
+				var t = this.tag('table',   tid, ttx);
+				var h = this.tag('thead',   hid, htx);
+				var b = this.tag('tbody',   bid, btx);
+				var f = this.tag('tfoot',   fid, ftx);
+				var c = this.tag('caption', cid, ctx);
+				var r = this.tag('tr',      rid, rtx);
+				var d = this.tag('td',      did, dtx);
+				if (ttx!=='') { err = this.onEvent(t, 'all'); }
+				if (htx!=='') { err = this.onEvent(h, 'all'); }
+				if (btx!=='') { err = this.onEvent(b, 'all'); }
+				if (ftx!=='') { err = this.onEvent(f, 'all'); }
+				if (dtx!=='') { err = this.onEvent(d, 'all'); }
+				if (rtx!=='') { err = this.onEvent(r, 'all'); }
+				r.appendChild(d);
+				r.appendChild(this.tag('TD', {}, '-no test-'));
+				b.appendChild(r);  delete this.r;
+				t.appendChild(b);  delete this.b;
+				t.appendChild(h);  delete this.h;
+				t.appendChild(f);  delete this.f;
+				d = this.FIELDSET(tag, {}, '');
+				d.appendChild(t);  delete this.t;
+				this.checkboxes(tag, id, d, err);
+				t = this.tag('DIV', {'id':'z-'+tag}, '');
+				t.appendChild(d);  delete this.d;
+				return t;
+			}, // TABLE
+			'LI':       function(tag,arg_hash,html) {
+				//#? return <li><a ...>html</a></li>
+				var args= arg_hash;
+				var t = document.createElement('LI');
+				t.appendChild(this.tag('A', arg_hash, html));
+				return t;
+			} // LI
+		},
+
+		'find':     { //#? ###################################### find elements
+			'reset':    function() { var c = null; while((c=objects.shift())!=null){} },
+			'checked':  function(arg_hash) {
+				//#? find all checkboxes in tags of givven type
+				var args= arg_hash;
+				var arr = document.getElementsByTagName('LABEL');
+				var c   = null;
+				var t   = null;
+				this.reset();
+				for (c in arr) {
+					if (c==='indexOf')                    { continue; } // contribution to old Mozilla 1.x
+					if (arr[c].id            ==undefined) { continue; } // some browers like this ..
+					if (arr[c].id                ===null) { continue; } // .. others like this
+					if (arr[c].id.match(/^useal/)!==null) { continue; } // ignore ower own
+					if (arr[c].id.match(/^use-/) !==null) { continue; } // ignore ower own
+					if (arr[c].id.match(/^l-use/)!==null) { continue; } // ignore labels in "Show Events"
+					if (args.type===undefined) { objects.push(arr[c].id); }
+					if (args.type!==null) {
+						if (arr[c].id.match(new RegExp(args.type+'$'))===null) { continue; }
+					}
+					objects.push(arr[c].id);
+				}
+				return false;
+			},  // checked
+			'show':     function(val) {
+				var c = null;
+				while ((c=objects.shift())!=null) { $(c).style.display = val; }
+				c = null;
+				return false;
+			}, // show
+			'mark':     function(obj) {
+				//#? mark all checkboxes in "Show Events" which belong to events[tab]
+				var arr = obj.id.split('-'); // we get: use-event-* or use-tag-*
+				var typ = arr[1];
+				var tab = arr[2];
+				var c   = null;
+				while ((c=objects.shift())!=null) {}    // clear array
+				switch (typ) {
+				  case 'event': for (var e in events[tab]) { objects.push(e); }; break;
+				  case 'tag':   for (var e in tags[tab])   { objects.push(e); }; break;
+				}
+				var rex = new RegExp('-(' + objects.join('|') + ')$');
+				arr = document.getElementsByTagName('INPUT');
+				for (c in arr) {
+					if (c==='indexOf')          { continue; } // contribution to old Mozilla 1.x
+					if (arr[c].id===undefined)  { continue }; // unknown onject
+					if (arr[c].id.split('-')[1]!==typ) { continue };  // skip tabs in other list
+					if (arr[c].id===null)       { continue; }
+					if (arr[c].id===undefined)  { continue; }
+					if (arr[c].id.match(/^use-/)!=null) {
+						//#dbx# arr[c].checked= true;
+						$('l-' + arr[c].id).style.backgroundColor = '#ffffff';
+						if (arr[c].id.match(rex)===null) { continue; }
+						$('l-' + arr[c].id).style.backgroundColor = '#afffaf';
+					}
+				}
+				rex = null;
+			} // mark
+		}, // find
+		'init': function(){ //#? ######################################### init
+			var html = '';
+
+			// ------------- Show Events
+			var typ = 'use-event-'; // event is key used in .selected{}
+			var t = this.create.tag('FIELDSET',  {cls:'e'}, '');
+			    t.appendChild(this.create.tag('LEGEND', {}, 'Show Events for each tag'));
+			var u = this.create.tag('UL',  {}, '');
+			var f = null;
+			var c = 'otab_fg';  // ToDo: need to have at least on *_fg, otherwise $t$ will not work
+			for (var e in events.w3c) {
+				u.appendChild(this.create.LI('',
+					{'id':typ + e, 'cls':c, 'href':'', 'onClick':'return $t$(this,"o");', title:events.w3c[e].desc},
+					e)
+				);
+				c = 'otab_bg';
+			}
+			f = this.create.tag('DIV', {'id':'otab', cls:'otab'}, '');
+			f.appendChild(u);
+			t.appendChild(f);
+			f = this.create.tag('DIV', {cls:'text'}, '');
+			for (var e in events.all) {
+				f.appendChild(this.create.CHECKBOX( 'LABEL INPUT checkbox',
+				   {'id':       typ + e,
+					'type':     'checkbox',
+					'event':    e,
+					'cls':      'chck',
+					'html':     '|\xa0' + e + ':',
+					'display':  true,
+					'onClick':  'return $c$(this,"' + e + '");'
+				   }
+				));
+			}
+			t.appendChild(f);
+			u = this.create.tag('UL',  {}, '');
+			c = 'utab_fg';
+			for (var e in events) {
+				if (e==='w3c')        { continue; }
+				if (e==='categories') { continue; }
+				if (events.categories[e]===undefined) { continue; }
+				u.appendChild(this.create.LI('',
+					{'id':typ + e, 'cls':c, 'href':'', 'onClick':'return $t$(this,"u");', title:events.categories[e].desc},
+					e)
+//					events.categories[e].label)
+				);
+				c = 'utab_bg';
+			}
+			f = this.create.tag('DIV', {'id':'utab', cls:'utab'}, '');
+			f.appendChild(u);
+			t.appendChild(f);
+			delete this.u; u = null;
+			delete this.f; f = null;
+			t.appendChild(document.createElement('HR'));
+			t.appendChild(document.createTextNode(' highlighted:\xa0\xa0'));
+			t.appendChild(this.create.CHECKBOX( 'LABEL INPUT button',
+			   {'id':       typ + 'check',
+				'type':     'button',
+				'html':     ' check',
+				'title':    'display all checkboxes for highlighted events in tags below',
+				'onClick':  'return $s$(this,"check");'
+			   }
+			));
+			t.appendChild(this.create.CHECKBOX( 'LABEL INPUT button',
+			   {'id':       typ + 'uncheck',
+				'type':     'button',
+				'html':     ' uncheck',
+				'title':    'hide all checkboxes for highlighted events in tags below',
+				'onClick':  'return $s$(this,"uncheck");'
+			   }
+			));
+			f = document.createElement('SUB');
+			f.innerHTML = ' (NOTE: will take up to 10 seconds)';
+			t.appendChild(f);
+			$('events').appendChild(t);
+			$('events').appendChild(document.createElement('HR'));
+			delete this.f; f = null;
+			delete this.t; t = null;
+
+			// ------------- Show Tags
+			typ = 'use-tag-'; // tag is key used in .selected{}
+			t = this.create.tag('FIELDSET',  {cls:'e'}, '');
+			t.appendChild(this.create.tag('LEGEND', {}, 'Tag Categories'));
+			u = this.create.tag('UL',  {}, '');
+			c = 'otab_fg';  // ToDo:
+			for (var e in tags.w3c) {
+				u.appendChild(this.create.LI('',
+					{'id':typ + e, 'cls':c, 'href':'', 'onClick':'return $t$(this,"o");', title:tags.w3c[e].desc},
+					e)
+				);
+				c = 'otab_bg';
+			}
+			f = this.create.tag('DIV', {'id':'otab', cls:'otab'}, '');
+			f.appendChild(u);
+			t.appendChild(f);
+			f = this.create.tag('DIV', {cls:'text'}, '');
+			for (var e in tags['HTML 4']) {
+				f.appendChild(this.create.CHECKBOX( 'LABEL INPUT checkbox',
+				   {'id':       typ + e,
+					'type':     'checkbox',
+					'event':    e,
+					'cls':      'chck',
+					'html':     '|\xa0' + e + ':',
+					'display':  true,
+					'onClick':  'return $c$(this,"' + e + '");'
+				   }
+				));
+			}
+			for (var e in tags['HTML 5']) {
+				f.appendChild(this.create.CHECKBOX( 'LABEL INPUT checkbox',
+				   {'id':       typ + e,
+					'type':     'checkbox',
+					'event':    e,
+					'cls':      'chck',
+					'html':     '|\xa0' + e + ':',
+					'display':  true,
+					'onClick':  'return $c$(this,"' + e + '");'
+				   }
+				));
+			}
+			t.appendChild(f);
+			$('tags').appendChild(t);
+			$('tags').appendChild(document.createElement('HR'));
+			delete this.f; f = null;
+			delete this.u; u = null;
+			delete this.t; t = null;
+
+			// ------------- tags
+			var a = 0, b = 0;
+			var tag;
+			for (tag in tags['HTML 4']) { a++; }
+			for (tag in tags['HTML 5']) { a++; }
+			for (tag in events.all)     { b++; }
+			alert('creating approx. '+a+'*'+b+' (='+a*b+') elements, will take some seconds ...');
+/* some performance values for following loop:
+ * 15sec	IE7
+ * 10sec	Mozilla 1.7
+ *  8sec	FF2
+ * hence no need for using a template node and then cloning it.
+ */
+			this.create.tags($('testing'), 'HTML 4');   // create all tags to be tested
+			this.create.tags($('testing'), 'HTML 5');   // ..
+			this.create.tags($('testing'), 'SELECT');   // create special select tags
+			this.create.tags($('testing'), 'TABLE');    // create special table tags
+		// more specials for: (MAP, AREA); (UL, OL, LI); (DD, DL, DT); (OBJECT, PARAM)
+			//# DOM not yet finished, needs to be don in onload=# $t$($('HTML 4'),'o');
+
+			// ------------- link
+			$('testing').appendChild(this.create.tag('INPUT', {'id':'submit', type:'submit', value:'Submit', onClick:'return true;'}, ''));
+			$('testing').appendChild(document.createTextNode('  '));
+			$('testing').appendChild(this.create.tag('INPUT', {'id':'result', type:'button', value:'Result', onClick:'return $r$();', title:'show results'}, ''));
+			delete this.t; t = null;
+		}, // init
+		uselessdummytokeepjavascriptsyntaxhappy: null
+	}; // obj
+	return function() { return new obj(); };
+}();
+	</script></head>
+<body id="body" onload="jse=JSevents(); $t$(document.getElementById('use-event-HTML 4'),'o');" >
+<h2>Test Suite for Events in Tag Attributes</h2>
+	<h3>How it works</h3>
+	Each tag listed in its on fieldset below contains a text <b>-test me-</b>.
+	All known JavaScript events are bound to that tag as tag attribute. If the
+	event is triggered, the corresponding checkbox will be ticked.
+	<br>
+	As some events are interactive, they must be triggered manually by:
+	<ol>
+		<li>move the mouse over the <b>-test me-</b> text</li>
+		<li>click the mouse's select button on the <b>-test me-</b> text</li>
+		<li>click the mouse's context button on the <b>-test me-</b> text</li>
+		<li>double click the mouse's select button on the <b>-test me-</b> text</li>
+		<li>press a key after selcting <b>-test me-</b> text</li>
+	</ol>
+	<h3>GUI</h3>
+	All checkboxes for the events in the tags are invisible by default.<br>
+	Clicking the appropriate checkbox in the <b>Show Events for each tag</b>
+	area shows this event checkbox for each tag. Unchecking the checkbox hides
+	the tag's event checkbox.<br>
+	The tabs (like "HTML 4" or "Keys") are used to highligh all events of this
+	category.
+	<h3>Note</h3>
+	Note that some action may take 5-20 seconds, depending on the browser.
+	<h3>Closing Tags</h3>
+	See <a href="tags-close.html">tags-close.html</a> (<b>Warning:</b>~4.7MB)
+	<hr>
+	<h3>Selection</h3>
+	<form id="events"  action="don-know-where-to-send-to" method="POST"></form>
+	<form id="tags"    action="don-know-where-to-send-to" method="POST"></form>
+	<h3>Testing</h3>
+	<form id="testing" action="don-know-where-to-send-to" method="POST"></form>
+	</-- <br /><a href="grid.html">BACK</a> -->
+	<h3>Result</h3>
+	<div id="tag-result"></div>
+</body></html>
