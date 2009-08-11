@@ -1,5 +1,8 @@
 
 EMiR - (Browser JavaScript) Event Mapping in Reality
 
-This project tries to map all known/existing JavaScript events
-of HTML tags.
+	This project tries to map all known/existing JavaScript events
+	of HTML tags.
+
+	Get a Copy
+		git clone git@github.com:EnDe/EMiR.git
