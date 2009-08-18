@@ -1,0 +1,385 @@
+<html>
+<!--
+ vi:  ts=4:
+ vim: ts=4:
+-->
+<head>
+	<!-- useless test file, somehow, always ... -->
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>JavaScript Events with HTML Tag Attributes (tags-noscript.html 1.1)</title>
+	<meta name="Author"         content="Achim Hoffmann">
+	<meta name="Generator"      content="me using vi ;-)">
+	<meta name="DC.Creator"     content="emir @at@ my -dash- stp .dot. net">
+	<meta name="DC.Date"        content="2009-08-02">
+	<meta name="DC.Source"      content="@(#) tags-noscript.html 1.1 09/08/19 00:40:56">
+	<meta name="DC.Identifier"  content="git://github .dot. com/EnDe/EMiR/">
+	<meta name="DC.Title"       content="EMiR">
+	<meta name="DC.Description" content="EMiR - Event Mapping in Reality, strange Browser behaviours">
+	<meta name="DC.Language"    content="en">
+	<meta name="DC.Rights"      content="Creative Commons 3.0, http://creativecommons.org/licenses/by-sa/3.0/">
+	<style  type="text/css">
+body            { font-weight:normal; font-size:12pt; }
+	</style>
+	<script type="text/javascript">
+function $e$(tag,evt) { //#? called for events of tag; sets corresponding checkbox
+	if (tag.id===undefined) { return true; } // take care for event bubbling
+	if (tag.id==='')        { return true; } // ..
+	var o = document.getElementById(tag.id + '-' + evt);
+	if (o===null)           { return false; }
+	o.disabled = false;
+	o.checked  = true;
+	o.disabled = true;
+	return false;
+}; // $e$
+	</script></head>
+<html>
+<noscript name="noscript" id="noscript"
+	seeksegmenttime="return $e$(this,'seekSegmentTime');"
+	onwaiting="return $e$(this,'onWaiting');"
+	onvolumechange="return $e$(this,'onVolumeChange');"
+	onurlflip="return $e$(this,'onURLFlip');"
+	onunload="return $e$(this,'onUnload');"
+	onundo="return $e$(this,'onUndo');"
+	onunderflow="return $e$(this,'onUnderflow');"
+	ontrackchange="return $e$(this,'onTrackChange');"
+	ontimeupdate="return $e$(this,'onTimeupdate');"
+	ontimeerror="return $e$(this,'onTimeError');"
+	ontextinput="return $e$(this,'onTextInput');"
+	onsynchrestored="return $e$(this,'onSynchRestored');"
+	onsyncrestored="return $e$(this,'onSyncRestored');"
+	onsuspend="return $e$(this,'onSuspend');"
+	onsubtreemodified="return $e$(this,'onSubTreeModified');"
+	onsubmit="return $e$(this,'onSubmit');"
+	onstoragecommit="return $e$(this,'onStorageCommit');"
+	onstorage="return $e$(this,'onStorage');"
+	onstop="return $e$(this,'onStop');"
+	onstart="return $e$(this,'onStart');"
+	onstalled="return $e$(this,'onStalled');"
+	onshow="return $e$(this,'onShow');"
+	onselectstart="return $e$(this,'onSelectStart');"
+	onselectionchange="return $e$(this,'onSelectionChange');"
+	onselect="return $e$(this,'onSelect');"
+	onseeking="return $e$(this,'onSeeking');"
+	onseeked="return $e$(this,'onSeeked');"
+	onseek="return $e$(this,'onSeek');"
+	onscroll="return $e$(this,'onScroll');"
+	onrowsinserted="return $e$(this,'onRowsInserted');"
+	onrowsdelete="return $e$(this,'onRowsDelete');"
+	onrowinserted="return $e$(this,'onRowInserted');"
+	onrowexit="return $e$(this,'onRowExit');"
+	onrowenter="return $e$(this,'onRowEnter');"
+	onrowdelete="return $e$(this,'onRowDelete');"
+	onreverse="return $e$(this,'onReverse');"
+	onresume="return $e$(this,'onResume');"
+	onresizestart="return $e$(this,'onResizeStart');"
+	onresizeend="return $e$(this,'onResizeEnd');"
+	onresize="return $e$(this,'onResize');"
+	onreset="return $e$(this,'onReset');"
+	onrepeat="return $e$(this,'onRepeat');"
+	onredo="return $e$(this,'onRedo');"
+	onreadystatechange="return $e$(this,'onReadyStateChange');"
+	onratechange="return $e$(this,'onRateChange');"
+	onpropertychange="return $e$(this,'onPropertyChange');"
+	onprogress="return $e$(this,'onProgress');"
+	onpopupshown="return $e$(this,'onPopupShown');"
+	onpopupshowing="return $e$(this,'onPopupShowing');"
+	onpopuphiding="return $e$(this,'onPopupHiding');"
+	onpopuphidden="return $e$(this,'onPopupHidden');"
+	onpopstate="return $e$(this,'onPopState');"
+	onplaying="return $e$(this,'onPlaying');"
+	onplay="return $e$(this,'onPlay');"
+	onpause="return $e$(this,'onPause');"
+	onpaste="return $e$(this,'onPaste');"
+	onoverflowchanged="return $e$(this,'onOverFlowChanged');"
+	onoverflow="return $e$(this,'onOverFlow');"
+	onoutofsync="return $e$(this,'onOutOfSync');"
+	ononline="return $e$(this,'onOnline');"
+	onoffline="return $e$(this,'onOffline');"
+	onnoderemoved="return $e$(this,'onNodeRemoved');"
+	onnodeinserted="return $e$(this,'onNodeInserted');"
+	onmovestart="return $e$(this,'onMoveStart');"
+	onmoveend="return $e$(this,'onMoveEnd');"
+	onmove="return $e$(this,'onMove');"
+	onmousewheel="return $e$(this,'onMouseWheel');"
+	onmouseup="return $e$(this,'onMouseUp');"
+	onmouseover="return $e$(this,'onMouseOver');"
+	onmouseout="return $e$(this,'onMouseOut');"
+	onmousemultiwheel="return $e$(this,'onMouseMultiWheel');"
+	onmousemove="return $e$(this,'onMouseMove');"
+	onmouseleave="return $e$(this,'onMouseLeave');"
+	onmouseenter="return $e$(this,'onMouseEnter');"
+	onmousedown="return $e$(this,'onMouseDown');"
+	onmessage="return $e$(this,'onMessage');"
+	onmediaerror="return $e$(this,'onMediaError');"
+	onmediacomplete="return $e$(this,'onMediaComplete');"
+	onlosecapture="return $e$(this,'onLoseCapture');"
+	onloadstart="return $e$(this,'onLoadStart');"
+	onloadedmetadata="return $e$(this,'onLoadedMetaData');"
+	onloadeddata="return $e$(this,'onLoadedData');"
+	onload="return $e$(this,'onLoad');"
+	onlayoutcomplete="return $e$(this,'onLayoutComplete');"
+	onkeyup="return $e$(this,'onKeyUp');"
+	onkeypress="return $e$(this,'onKeyPress');"
+	onkeydown="return $e$(this,'onKeyDown');"
+	oninvalid="return $e$(this,'onInvalid');"
+	oninput="return $e$(this,'onInput');"
+	onhelp="return $e$(this,'onHelp');"
+	onhashchange="return $e$(this,'onHashChange');"
+	onforminput="return $e$(this,'onFormInput');"
+	onformchange="return $e$(this,'onFormChange');"
+	onfocusout="return $e$(this,'onFocusOut');"
+	onfocusin="return $e$(this,'onFocusIn');"
+	onfocus="return $e$(this,'onFocus');"
+	onfinish="return $e$(this,'onFinish');"
+	onfilterchange="return $e$(this,'onFilterChange');"
+	onexit="return $e$(this,'onExit');"
+	onerrorupdate="return $e$(this,'onErrorUpdate');"
+	onerror="return $e$(this,'onError');"
+	onend="return $e$(this,'onEnd');"
+	onended="return $e$(this,'onEnded');"
+	onemtied="return $e$(this,'onEmtied');"
+	ondurationchange="return $e$(this,'onDurationChange');"
+	ondrop="return $e$(this,'onDrop');"
+	ondragstart="return $e$(this,'onDragStart');"
+	ondragover="return $e$(this,'onDragOver');"
+	ondragleave="return $e$(this,'onDragLeave');"
+	ondraggesture="return $e$(this,'onDragGesture');"
+	ondragexit="return $e$(this,'onDragExit');"
+	ondragenter="return $e$(this,'onDragEnter');"
+	ondragend="return $e$(this,'onDragEnd');"
+	ondragdrop="return $e$(this,'onDragDrop');"
+	ondrag="return $e$(this,'onDrag');"
+	ondomsubtreemodified="return $e$(this,'onDOMSubTreeModified');"
+	ondomnoderemovedfromdocument="return $e$(this,'onDOMNodeRemovedFromDocument');"
+	ondomnoderemoved="return $e$(this,'onDOMNodeRemoved');"
+	ondomnodeinsertedintodocument="return $e$(this,'onDOMNodeInsertedIntoDocument');"
+	ondomnodeinserted="return $e$(this,'onDOMNodeInserted');"
+	ondomfocusout="return $e$(this,'onDOMFocusOut');"
+	ondomfocusin="return $e$(this,'onDOMFocusIn');"
+	ondomelementnamechanged="return $e$(this,'onDOMElementNameChanged');"
+	ondomcharacterdatamodified="return $e$(this,'onDOMCharacterDataModified');"
+	ondomattributenamechanged="return $e$(this,'onDOMAttributeNameChanged');"
+	ondomattrmodified="return $e$(this,'onDOMAttrModified');"
+	ondomactivate="return $e$(this,'onDOMActivate');"
+	ondeactivate="return $e$(this,'onDeactivate');"
+	ondblclick="return $e$(this,'onDblClick');"
+	ondatasetcomplete="return $e$(this,'onDataSetComplete');"
+	ondatasetchanged="return $e$(this,'onDataSetChanged');"
+	ondataavailable="return $e$(this,'onDataAvailable');"
+	oncut="return $e$(this,'onCut');"
+	oncopy="return $e$(this,'onCopy');"
+	oncontrolselect="return $e$(this,'onControlSelect');"
+	oncontextmenu="return $e$(this,'onContextMenu');"
+	oncommandupdate="return $e$(this,'onCommandUpdate');"
+	oncommand="return $e$(this,'onCommand');"
+	onclose="return $e$(this,'onClose');"
+	onclick="return $e$(this,'onClick');"
+	oncharacterdatamodified="return $e$(this,'onCharacterDataModified');"
+	onchange="return $e$(this,'onChange');"
+	oncellchange="return $e$(this,'onCellChange');"
+	oncanplaythrough="return $e$(this,'onCanPlayThrough');"
+	oncanplay="return $e$(this,'onCanPlay');"
+	onbroadcast="return $e$(this,'onBroadcast');"
+	onbounce="return $e$(this,'onBounce');"
+	onblur="return $e$(this,'onBlur');"
+	onbegin="return $e$(this,'onBegin');"
+	onbeforeupdate="return $e$(this,'onBeforeUpdate');"
+	onbeforeunload="return $e$(this,'onBeforeUnload');"
+	onbeforeprint="return $e$(this,'onBeforePrint');"
+	onbeforepaste="return $e$(this,'onBeforePaste');"
+	onbeforeeditfocus="return $e$(this,'onBeforeEditFocus');"
+	onbeforedeactivate="return $e$(this,'onBeforeDeactivate');"
+	onbeforecut="return $e$(this,'onBeforeCut');"
+	onbeforecopy="return $e$(this,'onBeforeCopy');"
+	onbeforeactivate="return $e$(this,'onBeforeActivate');"
+	onattrmodified="return $e$(this,'onAttrModified');"
+	onafterupdate="return $e$(this,'onAfterUpdate');"
+	onafterprint="return $e$(this,'onAfterPrint');"
+	onactivate="return $e$(this,'onActivate');"
+	onabort="return $e$(this,'onAbort');"
+	invalid="return $e$(this,'invalid');"
+	forminput="return $e$(this,'forminput');"
+	formchange="return $e$(this,'formchange');"
+	fscommand="return $e$(this,'FSCommand');"
+	dommenuiteminactive="return $e$(this,'DOMMenuItemInactive');"
+	dommenuitemactive="return $e$(this,'DOMMenuItemActive');"
+	dommousescroll="return $e$(this,'DOMMouseScroll');"
+	domframecontentloaded="return $e$(this,'DOMFrameContentLoaded');"
+	domcontentloaded="return $e$(this,'DOMContentLoaded');"
+>-test me-
+	</noscript>
+<body><br>-no test-<br><hr>
+<label for="noscript-DOMContentLoaded" id="l-noscript-DOMContentLoaded" >|&nbsp;DOMContentLoaded:<input name="noscript-DOMContentLoaded" disabled="1" id="noscript-DOMContentLoaded" type="checkbox"></label>
+<label for="noscript-DOMFrameContentLoaded" id="l-noscript-DOMFrameContentLoaded" >|&nbsp;DOMFrameContentLoaded:<input name="noscript-DOMFrameContentLoaded" disabled="1" id="noscript-DOMFrameContentLoaded" type="checkbox"></label>
+<label for="noscript-DOMMouseScroll" id="l-noscript-DOMMouseScroll" >|&nbsp;DOMMouseScroll:<input name="noscript-DOMMouseScroll" disabled="1" id="noscript-DOMMouseScroll" type="checkbox"></label>
+<label for="noscript-DOMMenuItemActive" id="l-noscript-DOMMenuItemActive" >|&nbsp;DOMMenuItemActive:<input name="noscript-DOMMenuItemActive" disabled="1" id="noscript-DOMMenuItemActive" type="checkbox"></label>
+<label for="noscript-DOMMenuItemInactive" id="l-noscript-DOMMenuItemInactive" >|&nbsp;DOMMenuItemInactive:<input name="noscript-DOMMenuItemInactive" disabled="1" id="noscript-DOMMenuItemInactive" type="checkbox"></label>
+<label for="noscript-FSCommand" id="l-noscript-FSCommand" >|&nbsp;FSCommand:<input name="noscript-FSCommand" disabled="1" id="noscript-FSCommand" type="checkbox"></label>
+<label for="noscript-formchange" id="l-noscript-formchange" >|&nbsp;formchange:<input name="noscript-formchange" disabled="1" id="noscript-formchange" type="checkbox"></label>
+<label for="noscript-forminput" id="l-noscript-forminput" >|&nbsp;forminput:<input name="noscript-forminput" disabled="1" id="noscript-forminput" type="checkbox"></label>
+<label for="noscript-invalid" id="l-noscript-invalid" >|&nbsp;invalid:<input name="noscript-invalid" disabled="1" id="noscript-invalid" type="checkbox"></label>
+<label for="noscript-onAbort" id="l-noscript-onAbort" >|&nbsp;onAbort:<input name="noscript-onAbort" disabled="1" id="noscript-onAbort" type="checkbox"></label>
+<label for="noscript-onActivate" id="l-noscript-onActivate" >|&nbsp;onActivate:<input name="noscript-onActivate" disabled="1" id="noscript-onActivate" type="checkbox"></label>
+<label for="noscript-onAfterPrint" id="l-noscript-onAfterPrint" >|&nbsp;onAfterPrint:<input name="noscript-onAfterPrint" disabled="1" id="noscript-onAfterPrint" type="checkbox"></label>
+<label for="noscript-onAfterUpdate" id="l-noscript-onAfterUpdate" >|&nbsp;onAfterUpdate:<input name="noscript-onAfterUpdate" disabled="1" id="noscript-onAfterUpdate" type="checkbox"></label>
+<label for="noscript-onAttrModified" id="l-noscript-onAttrModified" >|&nbsp;onAttrModified:<input name="noscript-onAttrModified" disabled="1" id="noscript-onAttrModified" type="checkbox"></label>
+<label for="noscript-onBeforeActivate" id="l-noscript-onBeforeActivate" >|&nbsp;onBeforeActivate:<input name="noscript-onBeforeActivate" disabled="1" id="noscript-onBeforeActivate" type="checkbox"></label>
+<label for="noscript-onBeforeCopy" id="l-noscript-onBeforeCopy" >|&nbsp;onBeforeCopy:<input name="noscript-onBeforeCopy" disabled="1" id="noscript-onBeforeCopy" type="checkbox"></label>
+<label for="noscript-onBeforeCut" id="l-noscript-onBeforeCut" >|&nbsp;onBeforeCut:<input name="noscript-onBeforeCut" disabled="1" id="noscript-onBeforeCut" type="checkbox"></label>
+<label for="noscript-onBeforeDeactivate" id="l-noscript-onBeforeDeactivate" >|&nbsp;onBeforeDeactivate:<input name="noscript-onBeforeDeactivate" disabled="1" id="noscript-onBeforeDeactivate" type="checkbox"></label>
+<label for="noscript-onBeforeEditFocus" id="l-noscript-onBeforeEditFocus" >|&nbsp;onBeforeEditFocus:<input name="noscript-onBeforeEditFocus" disabled="1" id="noscript-onBeforeEditFocus" type="checkbox"></label>
+<label for="noscript-onBeforePaste" id="l-noscript-onBeforePaste" >|&nbsp;onBeforePaste:<input name="noscript-onBeforePaste" disabled="1" id="noscript-onBeforePaste" type="checkbox"></label>
+<label for="noscript-onBeforePrint" id="l-noscript-onBeforePrint" >|&nbsp;onBeforePrint:<input name="noscript-onBeforePrint" disabled="1" id="noscript-onBeforePrint" type="checkbox"></label>
+<label for="noscript-onBeforeUnload" id="l-noscript-onBeforeUnload" >|&nbsp;onBeforeUnload:<input name="noscript-onBeforeUnload" disabled="1" id="noscript-onBeforeUnload" type="checkbox"></label>
+<label for="noscript-onBeforeUpdate" id="l-noscript-onBeforeUpdate" >|&nbsp;onBeforeUpdate:<input name="noscript-onBeforeUpdate" disabled="1" id="noscript-onBeforeUpdate" type="checkbox"></label>
+<label for="noscript-onBegin" id="l-noscript-onBegin" >|&nbsp;onBegin:<input name="noscript-onBegin" disabled="1" id="noscript-onBegin" type="checkbox"></label>
+<label for="noscript-onBlur" id="l-noscript-onBlur" >|&nbsp;onBlur:<input name="noscript-onBlur" disabled="1" id="noscript-onBlur" type="checkbox"></label>
+<label for="noscript-onBounce" id="l-noscript-onBounce" >|&nbsp;onBounce:<input name="noscript-onBounce" disabled="1" id="noscript-onBounce" type="checkbox"></label>
+<label for="noscript-onBroadcast" id="l-noscript-onBroadcast" >|&nbsp;onBroadcast:<input name="noscript-onBroadcast" disabled="1" id="noscript-onBroadcast" type="checkbox"></label>
+<label for="noscript-onCanPlay" id="l-noscript-onCanPlay" >|&nbsp;onCanPlay:<input name="noscript-onCanPlay" disabled="1" id="noscript-onCanPlay" type="checkbox"></label>
+<label for="noscript-onCanPlayThrough" id="l-noscript-onCanPlayThrough" >|&nbsp;onCanPlayThrough:<input name="noscript-onCanPlayThrough" disabled="1" id="noscript-onCanPlayThrough" type="checkbox"></label>
+<label for="noscript-onCellChange" id="l-noscript-onCellChange" >|&nbsp;onCellChange:<input name="noscript-onCellChange" disabled="1" id="noscript-onCellChange" type="checkbox"></label>
+<label for="noscript-onChange" id="l-noscript-onChange" >|&nbsp;onChange:<input name="noscript-onChange" disabled="1" id="noscript-onChange" type="checkbox"></label>
+<label for="noscript-onCharacterDataModified" id="l-noscript-onCharacterDataModified" >|&nbsp;onCharacterDataModified:<input name="noscript-onCharacterDataModified" disabled="1" id="noscript-onCharacterDataModified" type="checkbox"></label>
+<label for="noscript-onClick" id="l-noscript-onClick" >|&nbsp;onClick:<input name="noscript-onClick" disabled="1" id="noscript-onClick" type="checkbox"></label>
+<label for="noscript-onClose" id="l-noscript-onClose" >|&nbsp;onClose:<input name="noscript-onClose" disabled="1" id="noscript-onClose" type="checkbox"></label>
+<label for="noscript-onCommand" id="l-noscript-onCommand" >|&nbsp;onCommand:<input name="noscript-onCommand" disabled="1" id="noscript-onCommand" type="checkbox"></label>
+<label for="noscript-onCommandUpdate" id="l-noscript-onCommandUpdate" >|&nbsp;onCommandUpdate:<input name="noscript-onCommandUpdate" disabled="1" id="noscript-onCommandUpdate" type="checkbox"></label>
+<label for="noscript-onContextMenu" id="l-noscript-onContextMenu" >|&nbsp;onContextMenu:<input name="noscript-onContextMenu" disabled="1" id="noscript-onContextMenu" type="checkbox"></label>
+<label for="noscript-onControlSelect" id="l-noscript-onControlSelect" >|&nbsp;onControlSelect:<input name="noscript-onControlSelect" disabled="1" id="noscript-onControlSelect" type="checkbox"></label>
+<label for="noscript-onCopy" id="l-noscript-onCopy" >|&nbsp;onCopy:<input name="noscript-onCopy" disabled="1" id="noscript-onCopy" type="checkbox"></label>
+<label for="noscript-onCut" id="l-noscript-onCut" >|&nbsp;onCut:<input name="noscript-onCut" disabled="1" id="noscript-onCut" type="checkbox"></label>
+<label for="noscript-onDataAvailable" id="l-noscript-onDataAvailable" >|&nbsp;onDataAvailable:<input name="noscript-onDataAvailable" disabled="1" id="noscript-onDataAvailable" type="checkbox"></label>
+<label for="noscript-onDataSetChanged" id="l-noscript-onDataSetChanged" >|&nbsp;onDataSetChanged:<input name="noscript-onDataSetChanged" disabled="1" id="noscript-onDataSetChanged" type="checkbox"></label>
+<label for="noscript-onDataSetComplete" id="l-noscript-onDataSetComplete" >|&nbsp;onDataSetComplete:<input name="noscript-onDataSetComplete" disabled="1" id="noscript-onDataSetComplete" type="checkbox"></label>
+<label for="noscript-onDblClick" id="l-noscript-onDblClick" >|&nbsp;onDblClick:<input name="noscript-onDblClick" disabled="1" id="noscript-onDblClick" type="checkbox"></label>
+<label for="noscript-onDeactivate" id="l-noscript-onDeactivate" >|&nbsp;onDeactivate:<input name="noscript-onDeactivate" disabled="1" id="noscript-onDeactivate" type="checkbox"></label>
+<label for="noscript-onDOMActivate" id="l-noscript-onDOMActivate" >|&nbsp;onDOMActivate:<input name="noscript-onDOMActivate" disabled="1" id="noscript-onDOMActivate" type="checkbox"></label>
+<label for="noscript-onDOMAttrModified" id="l-noscript-onDOMAttrModified" >|&nbsp;onDOMAttrModified:<input name="noscript-onDOMAttrModified" disabled="1" id="noscript-onDOMAttrModified" type="checkbox"></label>
+<label for="noscript-onDOMAttributeNameChanged" id="l-noscript-onDOMAttributeNameChanged" >|&nbsp;onDOMAttributeNameChanged:<input name="noscript-onDOMAttributeNameChanged" disabled="1" id="noscript-onDOMAttributeNameChanged" type="checkbox"></label>
+<label for="noscript-onDOMCharacterDataModified" id="l-noscript-onDOMCharacterDataModified" >|&nbsp;onDOMCharacterDataModified:<input name="noscript-onDOMCharacterDataModified" disabled="1" id="noscript-onDOMCharacterDataModified" type="checkbox"></label>
+<label for="noscript-onDOMElementNameChanged" id="l-noscript-onDOMElementNameChanged" >|&nbsp;onDOMElementNameChanged:<input name="noscript-onDOMElementNameChanged" disabled="1" id="noscript-onDOMElementNameChanged" type="checkbox"></label>
+<label for="noscript-onDOMFocusIn" id="l-noscript-onDOMFocusIn" >|&nbsp;onDOMFocusIn:<input name="noscript-onDOMFocusIn" disabled="1" id="noscript-onDOMFocusIn" type="checkbox"></label>
+<label for="noscript-onDOMFocusOut" id="l-noscript-onDOMFocusOut" >|&nbsp;onDOMFocusOut:<input name="noscript-onDOMFocusOut" disabled="1" id="noscript-onDOMFocusOut" type="checkbox"></label>
+<label for="noscript-onDOMNodeInserted" id="l-noscript-onDOMNodeInserted" >|&nbsp;onDOMNodeInserted:<input name="noscript-onDOMNodeInserted" disabled="1" id="noscript-onDOMNodeInserted" type="checkbox"></label>
+<label for="noscript-onDOMNodeInsertedIntoDocument" id="l-noscript-onDOMNodeInsertedIntoDocument" >|&nbsp;onDOMNodeInsertedIntoDocument:<input name="noscript-onDOMNodeInsertedIntoDocument" disabled="1" id="noscript-onDOMNodeInsertedIntoDocument" type="checkbox"></label>
+<label for="noscript-onDOMNodeRemoved" id="l-noscript-onDOMNodeRemoved" >|&nbsp;onDOMNodeRemoved:<input name="noscript-onDOMNodeRemoved" disabled="1" id="noscript-onDOMNodeRemoved" type="checkbox"></label>
+<label for="noscript-onDOMNodeRemovedFromDocument" id="l-noscript-onDOMNodeRemovedFromDocument" >|&nbsp;onDOMNodeRemovedFromDocument:<input name="noscript-onDOMNodeRemovedFromDocument" disabled="1" id="noscript-onDOMNodeRemovedFromDocument" type="checkbox"></label>
+<label for="noscript-onDOMSubTreeModified" id="l-noscript-onDOMSubTreeModified" >|&nbsp;onDOMSubTreeModified:<input name="noscript-onDOMSubTreeModified" disabled="1" id="noscript-onDOMSubTreeModified" type="checkbox"></label>
+<label for="noscript-onDrag" id="l-noscript-onDrag" >|&nbsp;onDrag:<input name="noscript-onDrag" disabled="1" id="noscript-onDrag" type="checkbox"></label>
+<label for="noscript-onDragDrop" id="l-noscript-onDragDrop" >|&nbsp;onDragDrop:<input name="noscript-onDragDrop" disabled="1" id="noscript-onDragDrop" type="checkbox"></label>
+<label for="noscript-onDragEnd" id="l-noscript-onDragEnd" >|&nbsp;onDragEnd:<input name="noscript-onDragEnd" disabled="1" id="noscript-onDragEnd" type="checkbox"></label>
+<label for="noscript-onDragEnter" id="l-noscript-onDragEnter" >|&nbsp;onDragEnter:<input name="noscript-onDragEnter" disabled="1" id="noscript-onDragEnter" type="checkbox"></label>
+<label for="noscript-onDragExit" id="l-noscript-onDragExit" >|&nbsp;onDragExit:<input name="noscript-onDragExit" disabled="1" id="noscript-onDragExit" type="checkbox"></label>
+<label for="noscript-onDragGesture" id="l-noscript-onDragGesture" >|&nbsp;onDragGesture:<input name="noscript-onDragGesture" disabled="1" id="noscript-onDragGesture" type="checkbox"></label>
+<label for="noscript-onDragLeave" id="l-noscript-onDragLeave" >|&nbsp;onDragLeave:<input name="noscript-onDragLeave" disabled="1" id="noscript-onDragLeave" type="checkbox"></label>
+<label for="noscript-onDragOver" id="l-noscript-onDragOver" >|&nbsp;onDragOver:<input name="noscript-onDragOver" disabled="1" id="noscript-onDragOver" type="checkbox"></label>
+<label for="noscript-onDragStart" id="l-noscript-onDragStart" >|&nbsp;onDragStart:<input name="noscript-onDragStart" disabled="1" id="noscript-onDragStart" type="checkbox"></label>
+<label for="noscript-onDrop" id="l-noscript-onDrop" >|&nbsp;onDrop:<input name="noscript-onDrop" disabled="1" id="noscript-onDrop" type="checkbox"></label>
+<label for="noscript-onDurationChange" id="l-noscript-onDurationChange" >|&nbsp;onDurationChange:<input name="noscript-onDurationChange" disabled="1" id="noscript-onDurationChange" type="checkbox"></label>
+<label for="noscript-onEmtied" id="l-noscript-onEmtied" >|&nbsp;onEmtied:<input name="noscript-onEmtied" disabled="1" id="noscript-onEmtied" type="checkbox"></label>
+<label for="noscript-onEnded" id="l-noscript-onEnded" >|&nbsp;onEnded:<input name="noscript-onEnded" disabled="1" id="noscript-onEnded" type="checkbox"></label>
+<label for="noscript-onEnd" id="l-noscript-onEnd" >|&nbsp;onEnd:<input name="noscript-onEnd" disabled="1" id="noscript-onEnd" type="checkbox"></label>
+<label for="noscript-onError" id="l-noscript-onError" >|&nbsp;onError:<input name="noscript-onError" disabled="1" id="noscript-onError" type="checkbox"></label>
+<label for="noscript-onErrorUpdate" id="l-noscript-onErrorUpdate" >|&nbsp;onErrorUpdate:<input name="noscript-onErrorUpdate" disabled="1" id="noscript-onErrorUpdate" type="checkbox"></label>
+<label for="noscript-onExit" id="l-noscript-onExit" >|&nbsp;onExit:<input name="noscript-onExit" disabled="1" id="noscript-onExit" type="checkbox"></label>
+<label for="noscript-onFilterChange" id="l-noscript-onFilterChange" >|&nbsp;onFilterChange:<input name="noscript-onFilterChange" disabled="1" id="noscript-onFilterChange" type="checkbox"></label>
+<label for="noscript-onFinish" id="l-noscript-onFinish" >|&nbsp;onFinish:<input name="noscript-onFinish" disabled="1" id="noscript-onFinish" type="checkbox"></label>
+<label for="noscript-onFocus" id="l-noscript-onFocus" >|&nbsp;onFocus:<input name="noscript-onFocus" disabled="1" id="noscript-onFocus" type="checkbox"></label>
+<label for="noscript-onFocusIn" id="l-noscript-onFocusIn" >|&nbsp;onFocusIn:<input name="noscript-onFocusIn" disabled="1" id="noscript-onFocusIn" type="checkbox"></label>
+<label for="noscript-onFocusOut" id="l-noscript-onFocusOut" >|&nbsp;onFocusOut:<input name="noscript-onFocusOut" disabled="1" id="noscript-onFocusOut" type="checkbox"></label>
+<label for="noscript-onFormChange" id="l-noscript-onFormChange" >|&nbsp;onFormChange:<input name="noscript-onFormChange" disabled="1" id="noscript-onFormChange" type="checkbox"></label>
+<label for="noscript-onFormInput" id="l-noscript-onFormInput" >|&nbsp;onFormInput:<input name="noscript-onFormInput" disabled="1" id="noscript-onFormInput" type="checkbox"></label>
+<label for="noscript-onHashChange" id="l-noscript-onHashChange" >|&nbsp;onHashChange:<input name="noscript-onHashChange" disabled="1" id="noscript-onHashChange" type="checkbox"></label>
+<label for="noscript-onHelp" id="l-noscript-onHelp" >|&nbsp;onHelp:<input name="noscript-onHelp" disabled="1" id="noscript-onHelp" type="checkbox"></label>
+<label for="noscript-onInput" id="l-noscript-onInput" >|&nbsp;onInput:<input name="noscript-onInput" disabled="1" id="noscript-onInput" type="checkbox"></label>
+<label for="noscript-onInvalid" id="l-noscript-onInvalid" >|&nbsp;onInvalid:<input name="noscript-onInvalid" disabled="1" id="noscript-onInvalid" type="checkbox"></label>
+<label for="noscript-onKeyDown" id="l-noscript-onKeyDown" >|&nbsp;onKeyDown:<input name="noscript-onKeyDown" disabled="1" id="noscript-onKeyDown" type="checkbox"></label>
+<label for="noscript-onKeyPress" id="l-noscript-onKeyPress" >|&nbsp;onKeyPress:<input name="noscript-onKeyPress" disabled="1" id="noscript-onKeyPress" type="checkbox"></label>
+<label for="noscript-onKeyUp" id="l-noscript-onKeyUp" >|&nbsp;onKeyUp:<input name="noscript-onKeyUp" disabled="1" id="noscript-onKeyUp" type="checkbox"></label>
+<label for="noscript-onLayoutComplete" id="l-noscript-onLayoutComplete" >|&nbsp;onLayoutComplete:<input name="noscript-onLayoutComplete" disabled="1" id="noscript-onLayoutComplete" type="checkbox"></label>
+<label for="noscript-onLoad" id="l-noscript-onLoad" >|&nbsp;onLoad:<input disabled="disabled" name="noscript-onLoad" id="noscript-onLoad" type="checkbox"></label>
+<label for="noscript-onLoadedData" id="l-noscript-onLoadedData" >|&nbsp;onLoadedData:<input name="noscript-onLoadedData" disabled="1" id="noscript-onLoadedData" type="checkbox"></label>
+<label for="noscript-onLoadedMetaData" id="l-noscript-onLoadedMetaData" >|&nbsp;onLoadedMetaData:<input name="noscript-onLoadedMetaData" disabled="1" id="noscript-onLoadedMetaData" type="checkbox"></label>
+<label for="noscript-onLoadStart" id="l-noscript-onLoadStart" >|&nbsp;onLoadStart:<input name="noscript-onLoadStart" disabled="1" id="noscript-onLoadStart" type="checkbox"></label>
+<label for="noscript-onLoseCapture" id="l-noscript-onLoseCapture" >|&nbsp;onLoseCapture:<input name="noscript-onLoseCapture" disabled="1" id="noscript-onLoseCapture" type="checkbox"></label>
+<label for="noscript-onMediaComplete" id="l-noscript-onMediaComplete" >|&nbsp;onMediaComplete:<input name="noscript-onMediaComplete" disabled="1" id="noscript-onMediaComplete" type="checkbox"></label>
+<label for="noscript-onMediaError" id="l-noscript-onMediaError" >|&nbsp;onMediaError:<input name="noscript-onMediaError" disabled="1" id="noscript-onMediaError" type="checkbox"></label>
+<label for="noscript-onMessage" id="l-noscript-onMessage" >|&nbsp;onMessage:<input name="noscript-onMessage" disabled="1" id="noscript-onMessage" type="checkbox"></label>
+<label for="noscript-onMouseDown" id="l-noscript-onMouseDown" >|&nbsp;onMouseDown:<input name="noscript-onMouseDown" disabled="1" id="noscript-onMouseDown" type="checkbox"></label>
+<label for="noscript-onMouseEnter" id="l-noscript-onMouseEnter" >|&nbsp;onMouseEnter:<input name="noscript-onMouseEnter" disabled="1" id="noscript-onMouseEnter" type="checkbox"></label>
+<label for="noscript-onMouseLeave" id="l-noscript-onMouseLeave" >|&nbsp;onMouseLeave:<input name="noscript-onMouseLeave" disabled="1" id="noscript-onMouseLeave" type="checkbox"></label>
+<label for="noscript-onMouseMove" id="l-noscript-onMouseMove" >|&nbsp;onMouseMove:<input disabled="disabled" name="noscript-onMouseMove" id="noscript-onMouseMove" type="checkbox"></label>
+<label for="noscript-onMouseMultiWheel" id="l-noscript-onMouseMultiWheel" >|&nbsp;onMouseMultiWheel:<input name="noscript-onMouseMultiWheel" disabled="1" id="noscript-onMouseMultiWheel" type="checkbox"></label>
+<label for="noscript-onMouseOut" id="l-noscript-onMouseOut" >|&nbsp;onMouseOut:<input disabled="disabled" name="noscript-onMouseOut" id="noscript-onMouseOut" type="checkbox"></label>
+<label for="noscript-onMouseOver" id="l-noscript-onMouseOver" >|&nbsp;onMouseOver:<input disabled="disabled" name="noscript-onMouseOver" id="noscript-onMouseOver" type="checkbox"></label>
+<label for="noscript-onMouseUp" id="l-noscript-onMouseUp" >|&nbsp;onMouseUp:<input name="noscript-onMouseUp" disabled="1" id="noscript-onMouseUp" type="checkbox"></label>
+<label for="noscript-onMouseWheel" id="l-noscript-onMouseWheel" >|&nbsp;onMouseWheel:<input name="noscript-onMouseWheel" disabled="1" id="noscript-onMouseWheel" type="checkbox"></label>
+<label for="noscript-onMove" id="l-noscript-onMove" >|&nbsp;onMove:<input name="noscript-onMove" disabled="1" id="noscript-onMove" type="checkbox"></label>
+<label for="noscript-onMoveEnd" id="l-noscript-onMoveEnd" >|&nbsp;onMoveEnd:<input name="noscript-onMoveEnd" disabled="1" id="noscript-onMoveEnd" type="checkbox"></label>
+<label for="noscript-onMoveStart" id="l-noscript-onMoveStart" >|&nbsp;onMoveStart:<input name="noscript-onMoveStart" disabled="1" id="noscript-onMoveStart" type="checkbox"></label>
+<label for="noscript-onNodeInserted" id="l-noscript-onNodeInserted" >|&nbsp;onNodeInserted:<input name="noscript-onNodeInserted" disabled="1" id="noscript-onNodeInserted" type="checkbox"></label>
+<label for="noscript-onNodeRemoved" id="l-noscript-onNodeRemoved" >|&nbsp;onNodeRemoved:<input name="noscript-onNodeRemoved" disabled="1" id="noscript-onNodeRemoved" type="checkbox"></label>
+<label for="noscript-onOffline" id="l-noscript-onOffline" >|&nbsp;onOffline:<input name="noscript-onOffline" disabled="1" id="noscript-onOffline" type="checkbox"></label>
+<label for="noscript-onOnline" id="l-noscript-onOnline" >|&nbsp;onOnline:<input name="noscript-onOnline" disabled="1" id="noscript-onOnline" type="checkbox"></label>
+<label for="noscript-onOutOfSync" id="l-noscript-onOutOfSync" >|&nbsp;onOutOfSync:<input name="noscript-onOutOfSync" disabled="1" id="noscript-onOutOfSync" type="checkbox"></label>
+<label for="noscript-onOverFlow" id="l-noscript-onOverFlow" >|&nbsp;onOverFlow:<input name="noscript-onOverFlow" disabled="1" id="noscript-onOverFlow" type="checkbox"></label>
+<label for="noscript-onOverFlowChanged" id="l-noscript-onOverFlowChanged" >|&nbsp;onOverFlowChanged:<input name="noscript-onOverFlowChanged" disabled="1" id="noscript-onOverFlowChanged" type="checkbox"></label>
+<label for="noscript-onPaste" id="l-noscript-onPaste" >|&nbsp;onPaste:<input name="noscript-onPaste" disabled="1" id="noscript-onPaste" type="checkbox"></label>
+<label for="noscript-onPause" id="l-noscript-onPause" >|&nbsp;onPause:<input name="noscript-onPause" disabled="1" id="noscript-onPause" type="checkbox"></label>
+<label for="noscript-onPlay" id="l-noscript-onPlay" >|&nbsp;onPlay:<input name="noscript-onPlay" disabled="1" id="noscript-onPlay" type="checkbox"></label>
+<label for="noscript-onPlaying" id="l-noscript-onPlaying" >|&nbsp;onPlaying:<input name="noscript-onPlaying" disabled="1" id="noscript-onPlaying" type="checkbox"></label>
+<label for="noscript-onPopState" id="l-noscript-onPopState" >|&nbsp;onPopState:<input name="noscript-onPopState" disabled="1" id="noscript-onPopState" type="checkbox"></label>
+<label for="noscript-onPopupHidden" id="l-noscript-onPopupHidden" >|&nbsp;onPopupHidden:<input name="noscript-onPopupHidden" disabled="1" id="noscript-onPopupHidden" type="checkbox"></label>
+<label for="noscript-onPopupHiding" id="l-noscript-onPopupHiding" >|&nbsp;onPopupHiding:<input name="noscript-onPopupHiding" disabled="1" id="noscript-onPopupHiding" type="checkbox"></label>
+<label for="noscript-onPopupShowing" id="l-noscript-onPopupShowing" >|&nbsp;onPopupShowing:<input name="noscript-onPopupShowing" disabled="1" id="noscript-onPopupShowing" type="checkbox"></label>
+<label for="noscript-onPopupShown" id="l-noscript-onPopupShown" >|&nbsp;onPopupShown:<input name="noscript-onPopupShown" disabled="1" id="noscript-onPopupShown" type="checkbox"></label>
+<label for="noscript-onProgress" id="l-noscript-onProgress" >|&nbsp;onProgress:<input name="noscript-onProgress" disabled="1" id="noscript-onProgress" type="checkbox"></label>
+<label for="noscript-onPropertyChange" id="l-noscript-onPropertyChange" >|&nbsp;onPropertyChange:<input name="noscript-onPropertyChange" disabled="1" id="noscript-onPropertyChange" type="checkbox"></label>
+<label for="noscript-onRateChange" id="l-noscript-onRateChange" >|&nbsp;onRateChange:<input name="noscript-onRateChange" disabled="1" id="noscript-onRateChange" type="checkbox"></label>
+<label for="noscript-onReadyStateChange" id="l-noscript-onReadyStateChange" >|&nbsp;onReadyStateChange:<input name="noscript-onReadyStateChange" disabled="1" id="noscript-onReadyStateChange" type="checkbox"></label>
+<label for="noscript-onRedo" id="l-noscript-onRedo" >|&nbsp;onRedo:<input name="noscript-onRedo" disabled="1" id="noscript-onRedo" type="checkbox"></label>
+<label for="noscript-onRepeat" id="l-noscript-onRepeat" >|&nbsp;onRepeat:<input name="noscript-onRepeat" disabled="1" id="noscript-onRepeat" type="checkbox"></label>
+<label for="noscript-onReset" id="l-noscript-onReset" >|&nbsp;onReset:<input name="noscript-onReset" disabled="1" id="noscript-onReset" type="checkbox"></label>
+<label for="noscript-onResize" id="l-noscript-onResize" >|&nbsp;onResize:<input name="noscript-onResize" disabled="1" id="noscript-onResize" type="checkbox"></label>
+<label for="noscript-onResizeEnd" id="l-noscript-onResizeEnd" >|&nbsp;onResizeEnd:<input name="noscript-onResizeEnd" disabled="1" id="noscript-onResizeEnd" type="checkbox"></label>
+<label for="noscript-onResizeStart" id="l-noscript-onResizeStart" >|&nbsp;onResizeStart:<input name="noscript-onResizeStart" disabled="1" id="noscript-onResizeStart" type="checkbox"></label>
+<label for="noscript-onResume" id="l-noscript-onResume" >|&nbsp;onResume:<input name="noscript-onResume" disabled="1" id="noscript-onResume" type="checkbox"></label>
+<label for="noscript-onReverse" id="l-noscript-onReverse" >|&nbsp;onReverse:<input name="noscript-onReverse" disabled="1" id="noscript-onReverse" type="checkbox"></label>
+<label for="noscript-onRowDelete" id="l-noscript-onRowDelete" >|&nbsp;onRowDelete:<input name="noscript-onRowDelete" disabled="1" id="noscript-onRowDelete" type="checkbox"></label>
+<label for="noscript-onRowEnter" id="l-noscript-onRowEnter" >|&nbsp;onRowEnter:<input name="noscript-onRowEnter" disabled="1" id="noscript-onRowEnter" type="checkbox"></label>
+<label for="noscript-onRowExit" id="l-noscript-onRowExit" >|&nbsp;onRowExit:<input name="noscript-onRowExit" disabled="1" id="noscript-onRowExit" type="checkbox"></label>
+<label for="noscript-onRowInserted" id="l-noscript-onRowInserted" >|&nbsp;onRowInserted:<input name="noscript-onRowInserted" disabled="1" id="noscript-onRowInserted" type="checkbox"></label>
+<label for="noscript-onRowsDelete" id="l-noscript-onRowsDelete" >|&nbsp;onRowsDelete:<input name="noscript-onRowsDelete" disabled="1" id="noscript-onRowsDelete" type="checkbox"></label>
+<label for="noscript-onRowsInserted" id="l-noscript-onRowsInserted" >|&nbsp;onRowsInserted:<input name="noscript-onRowsInserted" disabled="1" id="noscript-onRowsInserted" type="checkbox"></label>
+<label for="noscript-onScroll" id="l-noscript-onScroll" >|&nbsp;onScroll:<input name="noscript-onScroll" disabled="1" id="noscript-onScroll" type="checkbox"></label>
+<label for="noscript-onSeek" id="l-noscript-onSeek" >|&nbsp;onSeek:<input name="noscript-onSeek" disabled="1" id="noscript-onSeek" type="checkbox"></label>
+<label for="noscript-onSeeked" id="l-noscript-onSeeked" >|&nbsp;onSeeked:<input name="noscript-onSeeked" disabled="1" id="noscript-onSeeked" type="checkbox"></label>
+<label for="noscript-onSeeking" id="l-noscript-onSeeking" >|&nbsp;onSeeking:<input name="noscript-onSeeking" disabled="1" id="noscript-onSeeking" type="checkbox"></label>
+<label for="noscript-onSelect" id="l-noscript-onSelect" >|&nbsp;onSelect:<input name="noscript-onSelect" disabled="1" id="noscript-onSelect" type="checkbox"></label>
+<label for="noscript-onSelectionChange" id="l-noscript-onSelectionChange" >|&nbsp;onSelectionChange:<input name="noscript-onSelectionChange" disabled="1" id="noscript-onSelectionChange" type="checkbox"></label>
+<label for="noscript-onSelectStart" id="l-noscript-onSelectStart" >|&nbsp;onSelectStart:<input name="noscript-onSelectStart" disabled="1" id="noscript-onSelectStart" type="checkbox"></label>
+<label for="noscript-onShow" id="l-noscript-onShow" >|&nbsp;onShow:<input name="noscript-onShow" disabled="1" id="noscript-onShow" type="checkbox"></label>
+<label for="noscript-onStalled" id="l-noscript-onStalled" >|&nbsp;onStalled:<input name="noscript-onStalled" disabled="1" id="noscript-onStalled" type="checkbox"></label>
+<label for="noscript-onStart" id="l-noscript-onStart" >|&nbsp;onStart:<input name="noscript-onStart" disabled="1" id="noscript-onStart" type="checkbox"></label>
+<label for="noscript-onStop" id="l-noscript-onStop" >|&nbsp;onStop:<input name="noscript-onStop" disabled="1" id="noscript-onStop" type="checkbox"></label>
+<label for="noscript-onStorage" id="l-noscript-onStorage" >|&nbsp;onStorage:<input name="noscript-onStorage" disabled="1" id="noscript-onStorage" type="checkbox"></label>
+<label for="noscript-onStorageCommit" id="l-noscript-onStorageCommit" >|&nbsp;onStorageCommit:<input name="noscript-onStorageCommit" disabled="1" id="noscript-onStorageCommit" type="checkbox"></label>
+<label for="noscript-onSubmit" id="l-noscript-onSubmit" >|&nbsp;onSubmit:<input name="noscript-onSubmit" disabled="1" id="noscript-onSubmit" type="checkbox"></label>
+<label for="noscript-onSubTreeModified" id="l-noscript-onSubTreeModified" >|&nbsp;onSubTreeModified:<input name="noscript-onSubTreeModified" disabled="1" id="noscript-onSubTreeModified" type="checkbox"></label>
+<label for="noscript-onSuspend" id="l-noscript-onSuspend" >|&nbsp;onSuspend:<input name="noscript-onSuspend" disabled="1" id="noscript-onSuspend" type="checkbox"></label>
+<label for="noscript-onSyncRestored" id="l-noscript-onSyncRestored" >|&nbsp;onSyncRestored:<input name="noscript-onSyncRestored" disabled="1" id="noscript-onSyncRestored" type="checkbox"></label>
+<label for="noscript-onSynchRestored" id="l-noscript-onSynchRestored" >|&nbsp;onSynchRestored:<input name="noscript-onSynchRestored" disabled="1" id="noscript-onSynchRestored" type="checkbox"></label>
+<label for="noscript-onTextInput" id="l-noscript-onTextInput" >|&nbsp;onTextInput:<input name="noscript-onTextInput" disabled="1" id="noscript-onTextInput" type="checkbox"></label>
+<label for="noscript-onTimeError" id="l-noscript-onTimeError" >|&nbsp;onTimeError:<input name="noscript-onTimeError" disabled="1" id="noscript-onTimeError" type="checkbox"></label>
+<label for="noscript-onTimeupdate" id="l-noscript-onTimeupdate" >|&nbsp;onTimeupdate:<input name="noscript-onTimeupdate" disabled="1" id="noscript-onTimeupdate" type="checkbox"></label>
+<label for="noscript-onTrackChange" id="l-noscript-onTrackChange" >|&nbsp;onTrackChange:<input name="noscript-onTrackChange" disabled="1" id="noscript-onTrackChange" type="checkbox"></label>
+<label for="noscript-onUnderflow" id="l-noscript-onUnderflow" >|&nbsp;onUnderflow:<input name="noscript-onUnderflow" disabled="1" id="noscript-onUnderflow" type="checkbox"></label>
+<label for="noscript-onUndo" id="l-noscript-onUndo" >|&nbsp;onUndo:<input name="noscript-onUndo" disabled="1" id="noscript-onUndo" type="checkbox"></label>
+<label for="noscript-onUnload" id="l-noscript-onUnload" >|&nbsp;onUnload:<input name="noscript-onUnload" disabled="1" id="noscript-onUnload" type="checkbox"></label>
+<label for="noscript-onURLFlip" id="l-noscript-onURLFlip" >|&nbsp;onURLFlip:<input name="noscript-onURLFlip" disabled="1" id="noscript-onURLFlip" type="checkbox"></label>
+<label for="noscript-onVolumeChange" id="l-noscript-onVolumeChange" >|&nbsp;onVolumeChange:<input name="noscript-onVolumeChange" disabled="1" id="noscript-onVolumeChange" type="checkbox"></label>
+<label for="noscript-onWaiting" id="l-noscript-onWaiting" >|&nbsp;onWaiting:<input name="noscript-onWaiting" disabled="1" id="noscript-onWaiting" type="checkbox"></label>
+<label for="noscript-seekSegmentTime" id="l-noscript-seekSegmentTime" >|&nbsp;seekSegmentTime:<input name="noscript-seekSegmentTime" disabled="1" id="noscript-seekSegmentTime" type="checkbox"></label>
+</body></html>
+</html>
