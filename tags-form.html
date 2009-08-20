@@ -1,0 +1,385 @@
+<html>
+<!--
+ vi:  ts=4:
+ vim: ts=4:
+-->
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>EMiR - Events Mappings in Reality (tags-form.html 1.1)</title>
+	<meta name="Author"         content="Achim Hoffmann">
+	<meta name="Generator"      content="me using vi ;-)">
+	<meta name="DC.Creator"     content="emir @at@ my -dash- stp .dot. net">
+	<meta name="DC.Date"        content="2009-08-02">
+	<meta name="DC.Source"      content="@(#) tags-form.html 1.1 09/08/20 18:22:25">
+	<meta name="DC.Identifier"  content="git://github .dot. com/EnDe/EMiR/">
+	<meta name="DC.Title"       content="EMiR">
+	<meta name="DC.Description" content="EMiR - Event Mapping in Reality, strange Browser behaviours">
+	<meta name="DC.Language"    content="en">
+	<meta name="DC.Rights"      content="Creative Commons 3.0, http://creativecommons.org/licenses/by-sa/3.0/">
+	<style  type="text/css">
+body            { font-weight:normal; font-size:12pt; }
+	</style>
+	<script type="text/javascript">
+function $e$(tag,evt) { //#? called for events of tag; sets corresponding checkbox
+	if (tag.id===undefined) { return true; } // take care for event bubbling
+	if (tag.id==='')        { return true; } // ..
+	var o = document.getElementById(tag.id + '-' + evt);
+	if (o===null)           { return false; }
+	o.disabled = false;
+	o.checked  = true;
+	o.disabled = true;
+	return false;
+}; // $e$
+	</script></head>
+<html>
+<body>
+<form name="form" id="form" action="#" 
+	seeksegmenttime="return $e$(this,'seekSegmentTime');"
+	onwaiting="return $e$(this,'onWaiting');"
+	onvolumechange="return $e$(this,'onVolumeChange');"
+	onurlflip="return $e$(this,'onURLFlip');"
+	onunload="return $e$(this,'onUnload');"
+	onundo="return $e$(this,'onUndo');"
+	onunderflow="return $e$(this,'onUnderflow');"
+	ontrackchange="return $e$(this,'onTrackChange');"
+	ontimeupdate="return $e$(this,'onTimeupdate');"
+	ontimeerror="return $e$(this,'onTimeError');"
+	ontextinput="return $e$(this,'onTextInput');"
+	onsynchrestored="return $e$(this,'onSynchRestored');"
+	onsyncrestored="return $e$(this,'onSyncRestored');"
+	onsuspend="return $e$(this,'onSuspend');"
+	onsubtreemodified="return $e$(this,'onSubTreeModified');"
+	onsubmit="return $e$(this,'onSubmit');"
+	onstoragecommit="return $e$(this,'onStorageCommit');"
+	onstorage="return $e$(this,'onStorage');"
+	onstop="return $e$(this,'onStop');"
+	onstart="return $e$(this,'onStart');"
+	onstalled="return $e$(this,'onStalled');"
+	onshow="return $e$(this,'onShow');"
+	onselectstart="return $e$(this,'onSelectStart');"
+	onselectionchange="return $e$(this,'onSelectionChange');"
+	onselect="return $e$(this,'onSelect');"
+	onseeking="return $e$(this,'onSeeking');"
+	onseeked="return $e$(this,'onSeeked');"
+	onseek="return $e$(this,'onSeek');"
+	onscroll="return $e$(this,'onScroll');"
+	onrowsinserted="return $e$(this,'onRowsInserted');"
+	onrowsdelete="return $e$(this,'onRowsDelete');"
+	onrowinserted="return $e$(this,'onRowInserted');"
+	onrowexit="return $e$(this,'onRowExit');"
+	onrowenter="return $e$(this,'onRowEnter');"
+	onrowdelete="return $e$(this,'onRowDelete');"
+	onreverse="return $e$(this,'onReverse');"
+	onresume="return $e$(this,'onResume');"
+	onresizestart="return $e$(this,'onResizeStart');"
+	onresizeend="return $e$(this,'onResizeEnd');"
+	onresize="return $e$(this,'onResize');"
+	onreset="return $e$(this,'onReset');"
+	onrepeat="return $e$(this,'onRepeat');"
+	onredo="return $e$(this,'onRedo');"
+	onreadystatechange="return $e$(this,'onReadyStateChange');"
+	onratechange="return $e$(this,'onRateChange');"
+	onpropertychange="return $e$(this,'onPropertyChange');"
+	onprogress="return $e$(this,'onProgress');"
+	onpopupshown="return $e$(this,'onPopupShown');"
+	onpopupshowing="return $e$(this,'onPopupShowing');"
+	onpopuphiding="return $e$(this,'onPopupHiding');"
+	onpopuphidden="return $e$(this,'onPopupHidden');"
+	onpopstate="return $e$(this,'onPopState');"
+	onplaying="return $e$(this,'onPlaying');"
+	onplay="return $e$(this,'onPlay');"
+	onpause="return $e$(this,'onPause');"
+	onpaste="return $e$(this,'onPaste');"
+	onoverflowchanged="return $e$(this,'onOverFlowChanged');"
+	onoverflow="return $e$(this,'onOverFlow');"
+	onoutofsync="return $e$(this,'onOutOfSync');"
+	ononline="return $e$(this,'onOnline');"
+	onoffline="return $e$(this,'onOffline');"
+	onnoderemoved="return $e$(this,'onNodeRemoved');"
+	onnodeinserted="return $e$(this,'onNodeInserted');"
+	onmovestart="return $e$(this,'onMoveStart');"
+	onmoveend="return $e$(this,'onMoveEnd');"
+	onmove="return $e$(this,'onMove');"
+	onmousewheel="return $e$(this,'onMouseWheel');"
+	onmouseup="return $e$(this,'onMouseUp');"
+	onmouseover="return $e$(this,'onMouseOver');"
+	onmouseout="return $e$(this,'onMouseOut');"
+	onmousemultiwheel="return $e$(this,'onMouseMultiWheel');"
+	onmousemove="return $e$(this,'onMouseMove');"
+	onmouseleave="return $e$(this,'onMouseLeave');"
+	onmouseenter="return $e$(this,'onMouseEnter');"
+	onmousedown="return $e$(this,'onMouseDown');"
+	onmessage="return $e$(this,'onMessage');"
+	onmediaerror="return $e$(this,'onMediaError');"
+	onmediacomplete="return $e$(this,'onMediaComplete');"
+	onlosecapture="return $e$(this,'onLoseCapture');"
+	onloadstart="return $e$(this,'onLoadStart');"
+	onloadedmetadata="return $e$(this,'onLoadedMetaData');"
+	onloadeddata="return $e$(this,'onLoadedData');"
+	onload="return $e$(this,'onLoad');"
+	onlayoutcomplete="return $e$(this,'onLayoutComplete');"
+	onkeyup="return $e$(this,'onKeyUp');"
+	onkeypress="return $e$(this,'onKeyPress');"
+	onkeydown="return $e$(this,'onKeyDown');"
+	oninvalid="return $e$(this,'onInvalid');"
+	oninput="return $e$(this,'onInput');"
+	onhelp="return $e$(this,'onHelp');"
+	onhashchange="return $e$(this,'onHashChange');"
+	onforminput="return $e$(this,'onFormInput');"
+	onformchange="return $e$(this,'onFormChange');"
+	onfocusout="return $e$(this,'onFocusOut');"
+	onfocusin="return $e$(this,'onFocusIn');"
+	onfocus="return $e$(this,'onFocus');"
+	onfinish="return $e$(this,'onFinish');"
+	onfilterchange="return $e$(this,'onFilterChange');"
+	onexit="return $e$(this,'onExit');"
+	onerrorupdate="return $e$(this,'onErrorUpdate');"
+	onerror="return $e$(this,'onError');"
+	onend="return $e$(this,'onEnd');"
+	onended="return $e$(this,'onEnded');"
+	onemtied="return $e$(this,'onEmtied');"
+	ondurationchange="return $e$(this,'onDurationChange');"
+	ondrop="return $e$(this,'onDrop');"
+	ondragstart="return $e$(this,'onDragStart');"
+	ondragover="return $e$(this,'onDragOver');"
+	ondragleave="return $e$(this,'onDragLeave');"
+	ondraggesture="return $e$(this,'onDragGesture');"
+	ondragexit="return $e$(this,'onDragExit');"
+	ondragenter="return $e$(this,'onDragEnter');"
+	ondragend="return $e$(this,'onDragEnd');"
+	ondragdrop="return $e$(this,'onDragDrop');"
+	ondrag="return $e$(this,'onDrag');"
+	ondomsubtreemodified="return $e$(this,'onDOMSubTreeModified');"
+	ondomnoderemovedfromdocument="return $e$(this,'onDOMNodeRemovedFromDocument');"
+	ondomnoderemoved="return $e$(this,'onDOMNodeRemoved');"
+	ondomnodeinsertedintodocument="return $e$(this,'onDOMNodeInsertedIntoDocument');"
+	ondomnodeinserted="return $e$(this,'onDOMNodeInserted');"
+	ondomfocusout="return $e$(this,'onDOMFocusOut');"
+	ondomfocusin="return $e$(this,'onDOMFocusIn');"
+	ondomelementnamechanged="return $e$(this,'onDOMElementNameChanged');"
+	ondomcharacterdatamodified="return $e$(this,'onDOMCharacterDataModified');"
+	ondomattributenamechanged="return $e$(this,'onDOMAttributeNameChanged');"
+	ondomattrmodified="return $e$(this,'onDOMAttrModified');"
+	ondomactivate="return $e$(this,'onDOMActivate');"
+	ondeactivate="return $e$(this,'onDeactivate');"
+	ondblclick="return $e$(this,'onDblClick');"
+	ondatasetcomplete="return $e$(this,'onDataSetComplete');"
+	ondatasetchanged="return $e$(this,'onDataSetChanged');"
+	ondataavailable="return $e$(this,'onDataAvailable');"
+	oncut="return $e$(this,'onCut');"
+	oncopy="return $e$(this,'onCopy');"
+	oncontrolselect="return $e$(this,'onControlSelect');"
+	oncontextmenu="return $e$(this,'onContextMenu');"
+	oncommandupdate="return $e$(this,'onCommandUpdate');"
+	oncommand="return $e$(this,'onCommand');"
+	onclose="return $e$(this,'onClose');"
+	onclick="return $e$(this,'onClick');"
+	oncharacterdatamodified="return $e$(this,'onCharacterDataModified');"
+	onchange="return $e$(this,'onChange');"
+	oncellchange="return $e$(this,'onCellChange');"
+	oncanplaythrough="return $e$(this,'onCanPlayThrough');"
+	oncanplay="return $e$(this,'onCanPlay');"
+	onbroadcast="return $e$(this,'onBroadcast');"
+	onbounce="return $e$(this,'onBounce');"
+	onblur="return $e$(this,'onBlur');"
+	onbegin="return $e$(this,'onBegin');"
+	onbeforeupdate="return $e$(this,'onBeforeUpdate');"
+	onbeforeunload="return $e$(this,'onBeforeUnload');"
+	onbeforeprint="return $e$(this,'onBeforePrint');"
+	onbeforepaste="return $e$(this,'onBeforePaste');"
+	onbeforeeditfocus="return $e$(this,'onBeforeEditFocus');"
+	onbeforedeactivate="return $e$(this,'onBeforeDeactivate');"
+	onbeforecut="return $e$(this,'onBeforeCut');"
+	onbeforecopy="return $e$(this,'onBeforeCopy');"
+	onbeforeactivate="return $e$(this,'onBeforeActivate');"
+	onattrmodified="return $e$(this,'onAttrModified');"
+	onafterupdate="return $e$(this,'onAfterUpdate');"
+	onafterprint="return $e$(this,'onAfterPrint');"
+	onactivate="return $e$(this,'onActivate');"
+	onabort="return $e$(this,'onAbort');"
+	invalid="return $e$(this,'invalid');"
+	forminput="return $e$(this,'forminput');"
+	formchange="return $e$(this,'formchange');"
+	fscommand="return $e$(this,'FSCommand');"
+	dommenuiteminactive="return $e$(this,'DOMMenuItemInactive');"
+	dommenuitemactive="return $e$(this,'DOMMenuItemActive');"
+	dommousescroll="return $e$(this,'DOMMouseScroll');"
+	domframecontentloaded="return $e$(this,'DOMFrameContentLoaded');"
+	domcontentloaded="return $e$(this,'DOMContentLoaded');"
+>-test me-
+<input type="submit" value="-no test- (dummy submit" >
+</form>
+<label for="form-DOMContentLoaded" id="l-form-DOMContentLoaded" >|&nbsp;DOMContentLoaded:<input name="form-DOMContentLoaded" disabled="1" id="form-DOMContentLoaded" type="checkbox"></label>
+<label for="form-DOMFrameContentLoaded" id="l-form-DOMFrameContentLoaded" >|&nbsp;DOMFrameContentLoaded:<input name="form-DOMFrameContentLoaded" disabled="1" id="form-DOMFrameContentLoaded" type="checkbox"></label>
+<label for="form-DOMMouseScroll" id="l-form-DOMMouseScroll" >|&nbsp;DOMMouseScroll:<input name="form-DOMMouseScroll" disabled="1" id="form-DOMMouseScroll" type="checkbox"></label>
+<label for="form-DOMMenuItemActive" id="l-form-DOMMenuItemActive" >|&nbsp;DOMMenuItemActive:<input name="form-DOMMenuItemActive" disabled="1" id="form-DOMMenuItemActive" type="checkbox"></label>
+<label for="form-DOMMenuItemInactive" id="l-form-DOMMenuItemInactive" >|&nbsp;DOMMenuItemInactive:<input name="form-DOMMenuItemInactive" disabled="1" id="form-DOMMenuItemInactive" type="checkbox"></label>
+<label for="form-FSCommand" id="l-form-FSCommand" >|&nbsp;FSCommand:<input name="form-FSCommand" disabled="1" id="form-FSCommand" type="checkbox"></label>
+<label for="form-formchange" id="l-form-formchange" >|&nbsp;formchange:<input name="form-formchange" disabled="1" id="form-formchange" type="checkbox"></label>
+<label for="form-forminput" id="l-form-forminput" >|&nbsp;forminput:<input name="form-forminput" disabled="1" id="form-forminput" type="checkbox"></label>
+<label for="form-invalid" id="l-form-invalid" >|&nbsp;invalid:<input name="form-invalid" disabled="1" id="form-invalid" type="checkbox"></label>
+<label for="form-onAbort" id="l-form-onAbort" >|&nbsp;onAbort:<input name="form-onAbort" disabled="1" id="form-onAbort" type="checkbox"></label>
+<label for="form-onActivate" id="l-form-onActivate" >|&nbsp;onActivate:<input name="form-onActivate" disabled="1" id="form-onActivate" type="checkbox"></label>
+<label for="form-onAfterPrint" id="l-form-onAfterPrint" >|&nbsp;onAfterPrint:<input name="form-onAfterPrint" disabled="1" id="form-onAfterPrint" type="checkbox"></label>
+<label for="form-onAfterUpdate" id="l-form-onAfterUpdate" >|&nbsp;onAfterUpdate:<input name="form-onAfterUpdate" disabled="1" id="form-onAfterUpdate" type="checkbox"></label>
+<label for="form-onAttrModified" id="l-form-onAttrModified" >|&nbsp;onAttrModified:<input name="form-onAttrModified" disabled="1" id="form-onAttrModified" type="checkbox"></label>
+<label for="form-onBeforeActivate" id="l-form-onBeforeActivate" >|&nbsp;onBeforeActivate:<input name="form-onBeforeActivate" disabled="1" id="form-onBeforeActivate" type="checkbox"></label>
+<label for="form-onBeforeCopy" id="l-form-onBeforeCopy" >|&nbsp;onBeforeCopy:<input name="form-onBeforeCopy" disabled="1" id="form-onBeforeCopy" type="checkbox"></label>
+<label for="form-onBeforeCut" id="l-form-onBeforeCut" >|&nbsp;onBeforeCut:<input name="form-onBeforeCut" disabled="1" id="form-onBeforeCut" type="checkbox"></label>
+<label for="form-onBeforeDeactivate" id="l-form-onBeforeDeactivate" >|&nbsp;onBeforeDeactivate:<input name="form-onBeforeDeactivate" disabled="1" id="form-onBeforeDeactivate" type="checkbox"></label>
+<label for="form-onBeforeEditFocus" id="l-form-onBeforeEditFocus" >|&nbsp;onBeforeEditFocus:<input name="form-onBeforeEditFocus" disabled="1" id="form-onBeforeEditFocus" type="checkbox"></label>
+<label for="form-onBeforePaste" id="l-form-onBeforePaste" >|&nbsp;onBeforePaste:<input name="form-onBeforePaste" disabled="1" id="form-onBeforePaste" type="checkbox"></label>
+<label for="form-onBeforePrint" id="l-form-onBeforePrint" >|&nbsp;onBeforePrint:<input name="form-onBeforePrint" disabled="1" id="form-onBeforePrint" type="checkbox"></label>
+<label for="form-onBeforeUnload" id="l-form-onBeforeUnload" >|&nbsp;onBeforeUnload:<input name="form-onBeforeUnload" disabled="1" id="form-onBeforeUnload" type="checkbox"></label>
+<label for="form-onBeforeUpdate" id="l-form-onBeforeUpdate" >|&nbsp;onBeforeUpdate:<input name="form-onBeforeUpdate" disabled="1" id="form-onBeforeUpdate" type="checkbox"></label>
+<label for="form-onBegin" id="l-form-onBegin" >|&nbsp;onBegin:<input name="form-onBegin" disabled="1" id="form-onBegin" type="checkbox"></label>
+<label for="form-onBlur" id="l-form-onBlur" >|&nbsp;onBlur:<input name="form-onBlur" disabled="1" id="form-onBlur" type="checkbox"></label>
+<label for="form-onBounce" id="l-form-onBounce" >|&nbsp;onBounce:<input name="form-onBounce" disabled="1" id="form-onBounce" type="checkbox"></label>
+<label for="form-onBroadcast" id="l-form-onBroadcast" >|&nbsp;onBroadcast:<input name="form-onBroadcast" disabled="1" id="form-onBroadcast" type="checkbox"></label>
+<label for="form-onCanPlay" id="l-form-onCanPlay" >|&nbsp;onCanPlay:<input name="form-onCanPlay" disabled="1" id="form-onCanPlay" type="checkbox"></label>
+<label for="form-onCanPlayThrough" id="l-form-onCanPlayThrough" >|&nbsp;onCanPlayThrough:<input name="form-onCanPlayThrough" disabled="1" id="form-onCanPlayThrough" type="checkbox"></label>
+<label for="form-onCellChange" id="l-form-onCellChange" >|&nbsp;onCellChange:<input name="form-onCellChange" disabled="1" id="form-onCellChange" type="checkbox"></label>
+<label for="form-onChange" id="l-form-onChange" >|&nbsp;onChange:<input name="form-onChange" disabled="1" id="form-onChange" type="checkbox"></label>
+<label for="form-onCharacterDataModified" id="l-form-onCharacterDataModified" >|&nbsp;onCharacterDataModified:<input name="form-onCharacterDataModified" disabled="1" id="form-onCharacterDataModified" type="checkbox"></label>
+<label for="form-onClick" id="l-form-onClick" >|&nbsp;onClick:<input name="form-onClick" disabled="1" id="form-onClick" type="checkbox"></label>
+<label for="form-onClose" id="l-form-onClose" >|&nbsp;onClose:<input name="form-onClose" disabled="1" id="form-onClose" type="checkbox"></label>
+<label for="form-onCommand" id="l-form-onCommand" >|&nbsp;onCommand:<input name="form-onCommand" disabled="1" id="form-onCommand" type="checkbox"></label>
+<label for="form-onCommandUpdate" id="l-form-onCommandUpdate" >|&nbsp;onCommandUpdate:<input name="form-onCommandUpdate" disabled="1" id="form-onCommandUpdate" type="checkbox"></label>
+<label for="form-onContextMenu" id="l-form-onContextMenu" >|&nbsp;onContextMenu:<input name="form-onContextMenu" disabled="1" id="form-onContextMenu" type="checkbox"></label>
+<label for="form-onControlSelect" id="l-form-onControlSelect" >|&nbsp;onControlSelect:<input name="form-onControlSelect" disabled="1" id="form-onControlSelect" type="checkbox"></label>
+<label for="form-onCopy" id="l-form-onCopy" >|&nbsp;onCopy:<input name="form-onCopy" disabled="1" id="form-onCopy" type="checkbox"></label>
+<label for="form-onCut" id="l-form-onCut" >|&nbsp;onCut:<input name="form-onCut" disabled="1" id="form-onCut" type="checkbox"></label>
+<label for="form-onDataAvailable" id="l-form-onDataAvailable" >|&nbsp;onDataAvailable:<input name="form-onDataAvailable" disabled="1" id="form-onDataAvailable" type="checkbox"></label>
+<label for="form-onDataSetChanged" id="l-form-onDataSetChanged" >|&nbsp;onDataSetChanged:<input name="form-onDataSetChanged" disabled="1" id="form-onDataSetChanged" type="checkbox"></label>
+<label for="form-onDataSetComplete" id="l-form-onDataSetComplete" >|&nbsp;onDataSetComplete:<input name="form-onDataSetComplete" disabled="1" id="form-onDataSetComplete" type="checkbox"></label>
+<label for="form-onDblClick" id="l-form-onDblClick" >|&nbsp;onDblClick:<input name="form-onDblClick" disabled="1" id="form-onDblClick" type="checkbox"></label>
+<label for="form-onDeactivate" id="l-form-onDeactivate" >|&nbsp;onDeactivate:<input name="form-onDeactivate" disabled="1" id="form-onDeactivate" type="checkbox"></label>
+<label for="form-onDOMActivate" id="l-form-onDOMActivate" >|&nbsp;onDOMActivate:<input name="form-onDOMActivate" disabled="1" id="form-onDOMActivate" type="checkbox"></label>
+<label for="form-onDOMAttrModified" id="l-form-onDOMAttrModified" >|&nbsp;onDOMAttrModified:<input name="form-onDOMAttrModified" disabled="1" id="form-onDOMAttrModified" type="checkbox"></label>
+<label for="form-onDOMAttributeNameChanged" id="l-form-onDOMAttributeNameChanged" >|&nbsp;onDOMAttributeNameChanged:<input name="form-onDOMAttributeNameChanged" disabled="1" id="form-onDOMAttributeNameChanged" type="checkbox"></label>
+<label for="form-onDOMCharacterDataModified" id="l-form-onDOMCharacterDataModified" >|&nbsp;onDOMCharacterDataModified:<input name="form-onDOMCharacterDataModified" disabled="1" id="form-onDOMCharacterDataModified" type="checkbox"></label>
+<label for="form-onDOMElementNameChanged" id="l-form-onDOMElementNameChanged" >|&nbsp;onDOMElementNameChanged:<input name="form-onDOMElementNameChanged" disabled="1" id="form-onDOMElementNameChanged" type="checkbox"></label>
+<label for="form-onDOMFocusIn" id="l-form-onDOMFocusIn" >|&nbsp;onDOMFocusIn:<input name="form-onDOMFocusIn" disabled="1" id="form-onDOMFocusIn" type="checkbox"></label>
+<label for="form-onDOMFocusOut" id="l-form-onDOMFocusOut" >|&nbsp;onDOMFocusOut:<input name="form-onDOMFocusOut" disabled="1" id="form-onDOMFocusOut" type="checkbox"></label>
+<label for="form-onDOMNodeInserted" id="l-form-onDOMNodeInserted" >|&nbsp;onDOMNodeInserted:<input name="form-onDOMNodeInserted" disabled="1" id="form-onDOMNodeInserted" type="checkbox"></label>
+<label for="form-onDOMNodeInsertedIntoDocument" id="l-form-onDOMNodeInsertedIntoDocument" >|&nbsp;onDOMNodeInsertedIntoDocument:<input name="form-onDOMNodeInsertedIntoDocument" disabled="1" id="form-onDOMNodeInsertedIntoDocument" type="checkbox"></label>
+<label for="form-onDOMNodeRemoved" id="l-form-onDOMNodeRemoved" >|&nbsp;onDOMNodeRemoved:<input name="form-onDOMNodeRemoved" disabled="1" id="form-onDOMNodeRemoved" type="checkbox"></label>
+<label for="form-onDOMNodeRemovedFromDocument" id="l-form-onDOMNodeRemovedFromDocument" >|&nbsp;onDOMNodeRemovedFromDocument:<input name="form-onDOMNodeRemovedFromDocument" disabled="1" id="form-onDOMNodeRemovedFromDocument" type="checkbox"></label>
+<label for="form-onDOMSubTreeModified" id="l-form-onDOMSubTreeModified" >|&nbsp;onDOMSubTreeModified:<input name="form-onDOMSubTreeModified" disabled="1" id="form-onDOMSubTreeModified" type="checkbox"></label>
+<label for="form-onDrag" id="l-form-onDrag" >|&nbsp;onDrag:<input name="form-onDrag" disabled="1" id="form-onDrag" type="checkbox"></label>
+<label for="form-onDragDrop" id="l-form-onDragDrop" >|&nbsp;onDragDrop:<input name="form-onDragDrop" disabled="1" id="form-onDragDrop" type="checkbox"></label>
+<label for="form-onDragEnd" id="l-form-onDragEnd" >|&nbsp;onDragEnd:<input name="form-onDragEnd" disabled="1" id="form-onDragEnd" type="checkbox"></label>
+<label for="form-onDragEnter" id="l-form-onDragEnter" >|&nbsp;onDragEnter:<input name="form-onDragEnter" disabled="1" id="form-onDragEnter" type="checkbox"></label>
+<label for="form-onDragExit" id="l-form-onDragExit" >|&nbsp;onDragExit:<input name="form-onDragExit" disabled="1" id="form-onDragExit" type="checkbox"></label>
+<label for="form-onDragGesture" id="l-form-onDragGesture" >|&nbsp;onDragGesture:<input name="form-onDragGesture" disabled="1" id="form-onDragGesture" type="checkbox"></label>
+<label for="form-onDragLeave" id="l-form-onDragLeave" >|&nbsp;onDragLeave:<input name="form-onDragLeave" disabled="1" id="form-onDragLeave" type="checkbox"></label>
+<label for="form-onDragOver" id="l-form-onDragOver" >|&nbsp;onDragOver:<input name="form-onDragOver" disabled="1" id="form-onDragOver" type="checkbox"></label>
+<label for="form-onDragStart" id="l-form-onDragStart" >|&nbsp;onDragStart:<input name="form-onDragStart" disabled="1" id="form-onDragStart" type="checkbox"></label>
+<label for="form-onDrop" id="l-form-onDrop" >|&nbsp;onDrop:<input name="form-onDrop" disabled="1" id="form-onDrop" type="checkbox"></label>
+<label for="form-onDurationChange" id="l-form-onDurationChange" >|&nbsp;onDurationChange:<input name="form-onDurationChange" disabled="1" id="form-onDurationChange" type="checkbox"></label>
+<label for="form-onEmtied" id="l-form-onEmtied" >|&nbsp;onEmtied:<input name="form-onEmtied" disabled="1" id="form-onEmtied" type="checkbox"></label>
+<label for="form-onEnded" id="l-form-onEnded" >|&nbsp;onEnded:<input name="form-onEnded" disabled="1" id="form-onEnded" type="checkbox"></label>
+<label for="form-onEnd" id="l-form-onEnd" >|&nbsp;onEnd:<input name="form-onEnd" disabled="1" id="form-onEnd" type="checkbox"></label>
+<label for="form-onError" id="l-form-onError" >|&nbsp;onError:<input name="form-onError" disabled="1" id="form-onError" type="checkbox"></label>
+<label for="form-onErrorUpdate" id="l-form-onErrorUpdate" >|&nbsp;onErrorUpdate:<input name="form-onErrorUpdate" disabled="1" id="form-onErrorUpdate" type="checkbox"></label>
+<label for="form-onExit" id="l-form-onExit" >|&nbsp;onExit:<input name="form-onExit" disabled="1" id="form-onExit" type="checkbox"></label>
+<label for="form-onFilterChange" id="l-form-onFilterChange" >|&nbsp;onFilterChange:<input name="form-onFilterChange" disabled="1" id="form-onFilterChange" type="checkbox"></label>
+<label for="form-onFinish" id="l-form-onFinish" >|&nbsp;onFinish:<input name="form-onFinish" disabled="1" id="form-onFinish" type="checkbox"></label>
+<label for="form-onFocus" id="l-form-onFocus" >|&nbsp;onFocus:<input name="form-onFocus" disabled="1" id="form-onFocus" type="checkbox"></label>
+<label for="form-onFocusIn" id="l-form-onFocusIn" >|&nbsp;onFocusIn:<input name="form-onFocusIn" disabled="1" id="form-onFocusIn" type="checkbox"></label>
+<label for="form-onFocusOut" id="l-form-onFocusOut" >|&nbsp;onFocusOut:<input name="form-onFocusOut" disabled="1" id="form-onFocusOut" type="checkbox"></label>
+<label for="form-onFormChange" id="l-form-onFormChange" >|&nbsp;onFormChange:<input name="form-onFormChange" disabled="1" id="form-onFormChange" type="checkbox"></label>
+<label for="form-onFormInput" id="l-form-onFormInput" >|&nbsp;onFormInput:<input name="form-onFormInput" disabled="1" id="form-onFormInput" type="checkbox"></label>
+<label for="form-onHashChange" id="l-form-onHashChange" >|&nbsp;onHashChange:<input name="form-onHashChange" disabled="1" id="form-onHashChange" type="checkbox"></label>
+<label for="form-onHelp" id="l-form-onHelp" >|&nbsp;onHelp:<input name="form-onHelp" disabled="1" id="form-onHelp" type="checkbox"></label>
+<label for="form-onInput" id="l-form-onInput" >|&nbsp;onInput:<input name="form-onInput" disabled="1" id="form-onInput" type="checkbox"></label>
+<label for="form-onInvalid" id="l-form-onInvalid" >|&nbsp;onInvalid:<input name="form-onInvalid" disabled="1" id="form-onInvalid" type="checkbox"></label>
+<label for="form-onKeyDown" id="l-form-onKeyDown" >|&nbsp;onKeyDown:<input name="form-onKeyDown" disabled="1" id="form-onKeyDown" type="checkbox"></label>
+<label for="form-onKeyPress" id="l-form-onKeyPress" >|&nbsp;onKeyPress:<input name="form-onKeyPress" disabled="1" id="form-onKeyPress" type="checkbox"></label>
+<label for="form-onKeyUp" id="l-form-onKeyUp" >|&nbsp;onKeyUp:<input name="form-onKeyUp" disabled="1" id="form-onKeyUp" type="checkbox"></label>
+<label for="form-onLayoutComplete" id="l-form-onLayoutComplete" >|&nbsp;onLayoutComplete:<input name="form-onLayoutComplete" disabled="1" id="form-onLayoutComplete" type="checkbox"></label>
+<label for="form-onLoad" id="l-form-onLoad" >|&nbsp;onLoad:<input disabled="disabled" name="form-onLoad" id="form-onLoad" type="checkbox"></label>
+<label for="form-onLoadedData" id="l-form-onLoadedData" >|&nbsp;onLoadedData:<input name="form-onLoadedData" disabled="1" id="form-onLoadedData" type="checkbox"></label>
+<label for="form-onLoadedMetaData" id="l-form-onLoadedMetaData" >|&nbsp;onLoadedMetaData:<input name="form-onLoadedMetaData" disabled="1" id="form-onLoadedMetaData" type="checkbox"></label>
+<label for="form-onLoadStart" id="l-form-onLoadStart" >|&nbsp;onLoadStart:<input name="form-onLoadStart" disabled="1" id="form-onLoadStart" type="checkbox"></label>
+<label for="form-onLoseCapture" id="l-form-onLoseCapture" >|&nbsp;onLoseCapture:<input name="form-onLoseCapture" disabled="1" id="form-onLoseCapture" type="checkbox"></label>
+<label for="form-onMediaComplete" id="l-form-onMediaComplete" >|&nbsp;onMediaComplete:<input name="form-onMediaComplete" disabled="1" id="form-onMediaComplete" type="checkbox"></label>
+<label for="form-onMediaError" id="l-form-onMediaError" >|&nbsp;onMediaError:<input name="form-onMediaError" disabled="1" id="form-onMediaError" type="checkbox"></label>
+<label for="form-onMessage" id="l-form-onMessage" >|&nbsp;onMessage:<input name="form-onMessage" disabled="1" id="form-onMessage" type="checkbox"></label>
+<label for="form-onMouseDown" id="l-form-onMouseDown" >|&nbsp;onMouseDown:<input name="form-onMouseDown" disabled="1" id="form-onMouseDown" type="checkbox"></label>
+<label for="form-onMouseEnter" id="l-form-onMouseEnter" >|&nbsp;onMouseEnter:<input name="form-onMouseEnter" disabled="1" id="form-onMouseEnter" type="checkbox"></label>
+<label for="form-onMouseLeave" id="l-form-onMouseLeave" >|&nbsp;onMouseLeave:<input name="form-onMouseLeave" disabled="1" id="form-onMouseLeave" type="checkbox"></label>
+<label for="form-onMouseMove" id="l-form-onMouseMove" >|&nbsp;onMouseMove:<input disabled="disabled" name="form-onMouseMove" id="form-onMouseMove" type="checkbox"></label>
+<label for="form-onMouseMultiWheel" id="l-form-onMouseMultiWheel" >|&nbsp;onMouseMultiWheel:<input name="form-onMouseMultiWheel" disabled="1" id="form-onMouseMultiWheel" type="checkbox"></label>
+<label for="form-onMouseOut" id="l-form-onMouseOut" >|&nbsp;onMouseOut:<input disabled="disabled" name="form-onMouseOut" id="form-onMouseOut" type="checkbox"></label>
+<label for="form-onMouseOver" id="l-form-onMouseOver" >|&nbsp;onMouseOver:<input disabled="disabled" name="form-onMouseOver" id="form-onMouseOver" type="checkbox"></label>
+<label for="form-onMouseUp" id="l-form-onMouseUp" >|&nbsp;onMouseUp:<input name="form-onMouseUp" disabled="1" id="form-onMouseUp" type="checkbox"></label>
+<label for="form-onMouseWheel" id="l-form-onMouseWheel" >|&nbsp;onMouseWheel:<input name="form-onMouseWheel" disabled="1" id="form-onMouseWheel" type="checkbox"></label>
+<label for="form-onMove" id="l-form-onMove" >|&nbsp;onMove:<input name="form-onMove" disabled="1" id="form-onMove" type="checkbox"></label>
+<label for="form-onMoveEnd" id="l-form-onMoveEnd" >|&nbsp;onMoveEnd:<input name="form-onMoveEnd" disabled="1" id="form-onMoveEnd" type="checkbox"></label>
+<label for="form-onMoveStart" id="l-form-onMoveStart" >|&nbsp;onMoveStart:<input name="form-onMoveStart" disabled="1" id="form-onMoveStart" type="checkbox"></label>
+<label for="form-onNodeInserted" id="l-form-onNodeInserted" >|&nbsp;onNodeInserted:<input name="form-onNodeInserted" disabled="1" id="form-onNodeInserted" type="checkbox"></label>
+<label for="form-onNodeRemoved" id="l-form-onNodeRemoved" >|&nbsp;onNodeRemoved:<input name="form-onNodeRemoved" disabled="1" id="form-onNodeRemoved" type="checkbox"></label>
+<label for="form-onOffline" id="l-form-onOffline" >|&nbsp;onOffline:<input name="form-onOffline" disabled="1" id="form-onOffline" type="checkbox"></label>
+<label for="form-onOnline" id="l-form-onOnline" >|&nbsp;onOnline:<input name="form-onOnline" disabled="1" id="form-onOnline" type="checkbox"></label>
+<label for="form-onOutOfSync" id="l-form-onOutOfSync" >|&nbsp;onOutOfSync:<input name="form-onOutOfSync" disabled="1" id="form-onOutOfSync" type="checkbox"></label>
+<label for="form-onOverFlow" id="l-form-onOverFlow" >|&nbsp;onOverFlow:<input name="form-onOverFlow" disabled="1" id="form-onOverFlow" type="checkbox"></label>
+<label for="form-onOverFlowChanged" id="l-form-onOverFlowChanged" >|&nbsp;onOverFlowChanged:<input name="form-onOverFlowChanged" disabled="1" id="form-onOverFlowChanged" type="checkbox"></label>
+<label for="form-onPaste" id="l-form-onPaste" >|&nbsp;onPaste:<input name="form-onPaste" disabled="1" id="form-onPaste" type="checkbox"></label>
+<label for="form-onPause" id="l-form-onPause" >|&nbsp;onPause:<input name="form-onPause" disabled="1" id="form-onPause" type="checkbox"></label>
+<label for="form-onPlay" id="l-form-onPlay" >|&nbsp;onPlay:<input name="form-onPlay" disabled="1" id="form-onPlay" type="checkbox"></label>
+<label for="form-onPlaying" id="l-form-onPlaying" >|&nbsp;onPlaying:<input name="form-onPlaying" disabled="1" id="form-onPlaying" type="checkbox"></label>
+<label for="form-onPopState" id="l-form-onPopState" >|&nbsp;onPopState:<input name="form-onPopState" disabled="1" id="form-onPopState" type="checkbox"></label>
+<label for="form-onPopupHidden" id="l-form-onPopupHidden" >|&nbsp;onPopupHidden:<input name="form-onPopupHidden" disabled="1" id="form-onPopupHidden" type="checkbox"></label>
+<label for="form-onPopupHiding" id="l-form-onPopupHiding" >|&nbsp;onPopupHiding:<input name="form-onPopupHiding" disabled="1" id="form-onPopupHiding" type="checkbox"></label>
+<label for="form-onPopupShowing" id="l-form-onPopupShowing" >|&nbsp;onPopupShowing:<input name="form-onPopupShowing" disabled="1" id="form-onPopupShowing" type="checkbox"></label>
+<label for="form-onPopupShown" id="l-form-onPopupShown" >|&nbsp;onPopupShown:<input name="form-onPopupShown" disabled="1" id="form-onPopupShown" type="checkbox"></label>
+<label for="form-onProgress" id="l-form-onProgress" >|&nbsp;onProgress:<input name="form-onProgress" disabled="1" id="form-onProgress" type="checkbox"></label>
+<label for="form-onPropertyChange" id="l-form-onPropertyChange" >|&nbsp;onPropertyChange:<input name="form-onPropertyChange" disabled="1" id="form-onPropertyChange" type="checkbox"></label>
+<label for="form-onRateChange" id="l-form-onRateChange" >|&nbsp;onRateChange:<input name="form-onRateChange" disabled="1" id="form-onRateChange" type="checkbox"></label>
+<label for="form-onReadyStateChange" id="l-form-onReadyStateChange" >|&nbsp;onReadyStateChange:<input name="form-onReadyStateChange" disabled="1" id="form-onReadyStateChange" type="checkbox"></label>
+<label for="form-onRedo" id="l-form-onRedo" >|&nbsp;onRedo:<input name="form-onRedo" disabled="1" id="form-onRedo" type="checkbox"></label>
+<label for="form-onRepeat" id="l-form-onRepeat" >|&nbsp;onRepeat:<input name="form-onRepeat" disabled="1" id="form-onRepeat" type="checkbox"></label>
+<label for="form-onReset" id="l-form-onReset" >|&nbsp;onReset:<input name="form-onReset" disabled="1" id="form-onReset" type="checkbox"></label>
+<label for="form-onResize" id="l-form-onResize" >|&nbsp;onResize:<input name="form-onResize" disabled="1" id="form-onResize" type="checkbox"></label>
+<label for="form-onResizeEnd" id="l-form-onResizeEnd" >|&nbsp;onResizeEnd:<input name="form-onResizeEnd" disabled="1" id="form-onResizeEnd" type="checkbox"></label>
+<label for="form-onResizeStart" id="l-form-onResizeStart" >|&nbsp;onResizeStart:<input name="form-onResizeStart" disabled="1" id="form-onResizeStart" type="checkbox"></label>
+<label for="form-onResume" id="l-form-onResume" >|&nbsp;onResume:<input name="form-onResume" disabled="1" id="form-onResume" type="checkbox"></label>
+<label for="form-onReverse" id="l-form-onReverse" >|&nbsp;onReverse:<input name="form-onReverse" disabled="1" id="form-onReverse" type="checkbox"></label>
+<label for="form-onRowDelete" id="l-form-onRowDelete" >|&nbsp;onRowDelete:<input name="form-onRowDelete" disabled="1" id="form-onRowDelete" type="checkbox"></label>
+<label for="form-onRowEnter" id="l-form-onRowEnter" >|&nbsp;onRowEnter:<input name="form-onRowEnter" disabled="1" id="form-onRowEnter" type="checkbox"></label>
+<label for="form-onRowExit" id="l-form-onRowExit" >|&nbsp;onRowExit:<input name="form-onRowExit" disabled="1" id="form-onRowExit" type="checkbox"></label>
+<label for="form-onRowInserted" id="l-form-onRowInserted" >|&nbsp;onRowInserted:<input name="form-onRowInserted" disabled="1" id="form-onRowInserted" type="checkbox"></label>
+<label for="form-onRowsDelete" id="l-form-onRowsDelete" >|&nbsp;onRowsDelete:<input name="form-onRowsDelete" disabled="1" id="form-onRowsDelete" type="checkbox"></label>
+<label for="form-onRowsInserted" id="l-form-onRowsInserted" >|&nbsp;onRowsInserted:<input name="form-onRowsInserted" disabled="1" id="form-onRowsInserted" type="checkbox"></label>
+<label for="form-onScroll" id="l-form-onScroll" >|&nbsp;onScroll:<input name="form-onScroll" disabled="1" id="form-onScroll" type="checkbox"></label>
+<label for="form-onSeek" id="l-form-onSeek" >|&nbsp;onSeek:<input name="form-onSeek" disabled="1" id="form-onSeek" type="checkbox"></label>
+<label for="form-onSeeked" id="l-form-onSeeked" >|&nbsp;onSeeked:<input name="form-onSeeked" disabled="1" id="form-onSeeked" type="checkbox"></label>
+<label for="form-onSeeking" id="l-form-onSeeking" >|&nbsp;onSeeking:<input name="form-onSeeking" disabled="1" id="form-onSeeking" type="checkbox"></label>
+<label for="form-onSelect" id="l-form-onSelect" >|&nbsp;onSelect:<input name="form-onSelect" disabled="1" id="form-onSelect" type="checkbox"></label>
+<label for="form-onSelectionChange" id="l-form-onSelectionChange" >|&nbsp;onSelectionChange:<input name="form-onSelectionChange" disabled="1" id="form-onSelectionChange" type="checkbox"></label>
+<label for="form-onSelectStart" id="l-form-onSelectStart" >|&nbsp;onSelectStart:<input name="form-onSelectStart" disabled="1" id="form-onSelectStart" type="checkbox"></label>
+<label for="form-onShow" id="l-form-onShow" >|&nbsp;onShow:<input name="form-onShow" disabled="1" id="form-onShow" type="checkbox"></label>
+<label for="form-onStalled" id="l-form-onStalled" >|&nbsp;onStalled:<input name="form-onStalled" disabled="1" id="form-onStalled" type="checkbox"></label>
+<label for="form-onStart" id="l-form-onStart" >|&nbsp;onStart:<input name="form-onStart" disabled="1" id="form-onStart" type="checkbox"></label>
+<label for="form-onStop" id="l-form-onStop" >|&nbsp;onStop:<input name="form-onStop" disabled="1" id="form-onStop" type="checkbox"></label>
+<label for="form-onStorage" id="l-form-onStorage" >|&nbsp;onStorage:<input name="form-onStorage" disabled="1" id="form-onStorage" type="checkbox"></label>
+<label for="form-onStorageCommit" id="l-form-onStorageCommit" >|&nbsp;onStorageCommit:<input name="form-onStorageCommit" disabled="1" id="form-onStorageCommit" type="checkbox"></label>
+<label for="form-onSubmit" id="l-form-onSubmit" >|&nbsp;onSubmit:<input name="form-onSubmit" disabled="1" id="form-onSubmit" type="checkbox"></label>
+<label for="form-onSubTreeModified" id="l-form-onSubTreeModified" >|&nbsp;onSubTreeModified:<input name="form-onSubTreeModified" disabled="1" id="form-onSubTreeModified" type="checkbox"></label>
+<label for="form-onSuspend" id="l-form-onSuspend" >|&nbsp;onSuspend:<input name="form-onSuspend" disabled="1" id="form-onSuspend" type="checkbox"></label>
+<label for="form-onSyncRestored" id="l-form-onSyncRestored" >|&nbsp;onSyncRestored:<input name="form-onSyncRestored" disabled="1" id="form-onSyncRestored" type="checkbox"></label>
+<label for="form-onSynchRestored" id="l-form-onSynchRestored" >|&nbsp;onSynchRestored:<input name="form-onSynchRestored" disabled="1" id="form-onSynchRestored" type="checkbox"></label>
+<label for="form-onTextInput" id="l-form-onTextInput" >|&nbsp;onTextInput:<input name="form-onTextInput" disabled="1" id="form-onTextInput" type="checkbox"></label>
+<label for="form-onTimeError" id="l-form-onTimeError" >|&nbsp;onTimeError:<input name="form-onTimeError" disabled="1" id="form-onTimeError" type="checkbox"></label>
+<label for="form-onTimeupdate" id="l-form-onTimeupdate" >|&nbsp;onTimeupdate:<input name="form-onTimeupdate" disabled="1" id="form-onTimeupdate" type="checkbox"></label>
+<label for="form-onTrackChange" id="l-form-onTrackChange" >|&nbsp;onTrackChange:<input name="form-onTrackChange" disabled="1" id="form-onTrackChange" type="checkbox"></label>
+<label for="form-onUnderflow" id="l-form-onUnderflow" >|&nbsp;onUnderflow:<input name="form-onUnderflow" disabled="1" id="form-onUnderflow" type="checkbox"></label>
+<label for="form-onUndo" id="l-form-onUndo" >|&nbsp;onUndo:<input name="form-onUndo" disabled="1" id="form-onUndo" type="checkbox"></label>
+<label for="form-onUnload" id="l-form-onUnload" >|&nbsp;onUnload:<input name="form-onUnload" disabled="1" id="form-onUnload" type="checkbox"></label>
+<label for="form-onURLFlip" id="l-form-onURLFlip" >|&nbsp;onURLFlip:<input name="form-onURLFlip" disabled="1" id="form-onURLFlip" type="checkbox"></label>
+<label for="form-onVolumeChange" id="l-form-onVolumeChange" >|&nbsp;onVolumeChange:<input name="form-onVolumeChange" disabled="1" id="form-onVolumeChange" type="checkbox"></label>
+<label for="form-onWaiting" id="l-form-onWaiting" >|&nbsp;onWaiting:<input name="form-onWaiting" disabled="1" id="form-onWaiting" type="checkbox"></label>
+<label for="form-seekSegmentTime" id="l-form-seekSegmentTime" >|&nbsp;seekSegmentTime:<input name="form-seekSegmentTime" disabled="1" id="form-seekSegmentTime" type="checkbox"></label>
+</body></html>
+</html>
