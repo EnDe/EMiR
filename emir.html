@@ -7,12 +7,12 @@
 	git clone git@github.com:EnDe/EMiR.git
 -->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>EMiR - Events Mappings in Reality (emir.html 1.4)</title>
+	<title>EMiR - Events Mappings in Reality (emir.html 1.5)</title>
 	<meta name="Author"         content="Achim Hoffmann">
 	<meta name="Generator"      content="me using vi ;-)">
 	<meta name="DC.Creator"     content="emir @at@ my -dash- stp .dot. net">
 	<meta name="DC.Date"        content="2009-08-02">
-	<meta name="DC.Source"      content="@(#) emir.html 1.4 09/08/22 11:12:58">
+	<meta name="DC.Source"      content="@(#) emir.html 1.5 09/12/06 10:18:15">
 	<meta name="DC.Identifier"  content="git://github .dot. com/EnDe/EMiR/">
 	<meta name="DC.Title"       content="EMiR">
 	<meta name="DC.Description" content="EMiR - Event Mapping in Reality, strange Browser behaviours">
@@ -241,6 +241,7 @@ window.JSevents = function() {
 			'Opera':    {desc:'spezial Opera events',    url:''},
 			'Safari':   {desc:'spezial Safari events',   url:''},
 			'IE':       {desc:'spezial IE events',       url:''},
+			'Webkit':   {desc:'spezial Webkit events',   url:''},
 			'XUL':      {desc:'spezial Mozilla XUL elements events', url:''}
 		}, // categories
 		// note that sequence of following hashes is important for display
@@ -361,6 +362,8 @@ window.JSevents = function() {
 			'onOutOfSync':      null,
 			'onOverFlow':       null,
 			'onOverFlowChanged':null,
+			'onPageHide':       null,
+			'onPageShow':       null,
 			'onPaste':          null,
 			'onPause':          null,
 			'onPlay':           null,
@@ -389,6 +392,7 @@ window.JSevents = function() {
 			'onRowsDelete':     null,
 			'onRowsInserted':   null,
 			'onScroll':         null,
+			'onSearch':         null,
 			'onSeek':           null,
 			'onSeeked':         null,
 			'onSeeking':        null,
@@ -416,6 +420,10 @@ window.JSevents = function() {
 			'onURLFlip':        null,
 			'onVolumeChange':   null,
 			'onWaiting':        null,
+			'onwebkitanimationend':      null,
+			'onwebkitanimationiteration':null,
+			'onwebkitanimationstart':    null,
+			'onwebkittransitionend':     null,
 			'seekSegmentTime':  null
 		}, // all
 		'HTML 4': {
@@ -757,6 +765,81 @@ window.JSevents = function() {
 			'onScroll':         null,
 			'onSelectStart':    null
 		}, // Opera
+		'Webkit': { // all Events as seen in r51708, but only unique ones enabled
+/*
+			'onAbort':          null,
+			'onBeforeUnload':   null,
+			'onBlur':           null,
+			'onCanPlay':        null,
+			'onCanPlayThrough': null,
+			'onChange':         null,
+			'onClick':          null,
+			'onContextMenu':    null,
+			'onDblClick':       null,
+			'onDrag':           null,
+			'onDragEnd':        null,
+			'onDragEnter':      null,
+			'onDragLeave':      null,
+			'onDragOver':       null,
+			'onDragStart':      null,
+			'onDrop':           null,
+			'onDurationChange': null,
+			'onEmtied':         null,
+			'onEnded':          null,
+			'onError':          null,
+			'onFocus':          null,
+			'onHashChange':     null,
+			'onInput':          null,
+			'onInvalid':        null,
+			'onKeyDown':        null,
+			'onKeyPress':       null,
+			'onKeyUp':          null,
+			'onLoad':           null,
+			'onLoadedData':     null,
+			'onLoadedMetaData': null,
+			'onLoadStart':      null,
+			'onMessage':        null,
+			'onMouseDown':      null,
+			'onMouseMove':      null,
+			'onMouseOut':       null,
+			'onMouseOver':      null,
+			'onMouseUp':        null,
+			'onMouseWheel':     null,
+			'onOffline':        null,
+			'onOnline':         null,
+*/
+			'onPageHide':       null,
+			'onPageShow':       null,
+/*
+			'onPause':          null,
+			'onPlay':           null,
+			'onPlaying':        null,
+			'onPopState':       null,
+			'onProgress':       null,
+			'onRateChange':     null,
+			'onReset':          null,
+			'onResize':         null,
+			'onScroll':         null,
+*/
+			'onSearch':         null,
+/*
+			'onSeeked':         null,
+			'onSeeking':        null,
+			'onSelect':         null,
+			'onStalled':        null,
+			'onStorage':        null,
+			'onSubmit':         null,
+			'onSuspend':        null,
+			'onTimeupdate':     null,
+			'onUnload':         null,
+			'onVolumeChange':   null,
+			'onWaiting':        null,
+*/
+			'onwebkitanimationend':      null,
+			'onwebkitanimationiteration':null,
+			'onwebkitanimationstart':    null,
+			'onwebkittransitionend':     null
+		}, // Webkit
 		'XUL': {
 			'DOMContentLoaded': null,	// ?
 			'DOMFrameContentLoaded': null,	// ?
@@ -1499,6 +1582,12 @@ window.JSevents = function() {
 	category.
 	<h3>Note</h3>
 	Note that some action may take 5-20 seconds, depending on the browser.
+<!-- Loading page and building DOM times:
+	Mac OS X, Safari 4.04:		~2 minutes
+	Mac OS X, Webkit r51708:	~2 minutes
+	Mac OS X, Firefox 2.0.20:	~20 seconds
+	Mac OS X, Opera 10.10:		~1 second
+-->
 	<h3>Closing Tags</h3>
 	See <a href="tags-close.html">tags-close.html</a> (<b>Warning:</b>~4.7MB)
 	<hr>
