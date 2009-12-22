@@ -7,19 +7,19 @@
 	git clone git@github.com:EnDe/EMiR.git
 -->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>EMiR - Events Mappings in Reality (emir.html 1.5)</title>
+	<title>EMiR - Events Mappings in Reality (emir.html 1.7)</title>
 	<meta name="Author"         content="Achim Hoffmann">
 	<meta name="Generator"      content="me using vi ;-)">
 	<meta name="DC.Creator"     content="emir @at@ my -dash- stp .dot. net">
 	<meta name="DC.Date"        content="2009-08-02">
-	<meta name="DC.Source"      content="@(#) emir.html 1.5 09/12/06 10:18:15">
+	<meta name="DC.Source"      content="@(#) emir.html 1.7 09/12/22 19:02:37">
 	<meta name="DC.Identifier"  content="git://github .dot. com/EnDe/EMiR/">
 	<meta name="DC.Title"       content="EMiR">
 	<meta name="DC.Description" content="EMiR - Event Mapping in Reality, strange Browser behaviours">
 	<meta name="DC.Language"    content="en">
 	<meta name="DC.Rights"      content="Creative Commons 3.0, http://creativecommons.org/licenses/by-sa/3.0/">
 	<style  type="text/css">
-body, h1        { font-weight:normal; font-family:monospace; font-size:8pt; }
+body, h1        { font-weight:normal; font-family:monospace; font-size:10pt; }
 .chck { }
 .otab ul {
 	padding-top:    1.0ex;
@@ -89,6 +89,7 @@ body, h1        { font-weight:normal; font-family:monospace; font-size:8pt; }
 .utab ul li a:focus { outline-style:none; }
 .utab_bg{ background:#d8d8d8; border-top:1px solid #a0a0a0; }
 .utab_fg{ background:#ffffff; border-top:1px solid #ffffff; }
+span.t  { background:#c0c0f0; }
 fieldset span.l { font-weight:bold; background:#c0c0f0; min-width:8em; float:left; }
 fieldset                    { background:#f0f0f0; padding:0px; }
 fieldset:first-child        { background:#ffffff; }
@@ -101,33 +102,36 @@ fieldset.e:first-child:hover{ background:#ffffff; }
 .err:first-child:hover      { background:#ff0000; }
 .table  { border:1px solid #000000; border-collapse:separate; border-spacing:1px 1px; }
 .status { border:1px solid #808080; color:#808080; background:#ffffcf; position:fixed; width:99.9%; left:0px; bottom:0px; }
-.status:before { content: "Status: "; }
+.status:before      { content: "Status: "; }
+label               { border:1px solid #ffffff; }
+#events label:hover { border:1px solid #a00000; }
+#tags   label:hover { border:1px solid #a00000; }
 	</style>
 	<script type="text/javascript">
 function $c$ (obj,typ) {//#? called when checkbox in "Show Events" clicked
 	var val = (obj.checked===true) ? 'inline' : 'none';
-	jse.status('checkbox: ' + typ);
-	jse.find.checked({type:typ});
-	jse.find.show(val);
-	jse.status('');
+	emir.status('checkbox: ' + typ);
+	emir.find.checked({type:typ});
+	emir.find.show(val);
+	emir.status('');
 	return true; // must return true, otherwise checkbox will not be activated
 }; // $c$
 function dumm(tag) {alert('Tag <'+tag+'> clicked');return false;}
 function $e$(tag,evt) { //#? called for events of tag; sets corresponding checkbox
 	if (tag.id===undefined) { return true; } // take care for event bubbling
 	if (tag.id==='')        { return true; } // ..
-	jse.status('event: ' + tag.id + '.' + evt + '()');  // does not show text in all browsers, even following code is called
+	emir.status('event: ' + tag.id + '.' + evt + '()');  // does not show text in all browsers, even following code is called
 	var o = document.getElementById(tag.id + '-' + evt);
 	if (o===null)           { return false; }
 	o.disabled = false;
 	o.checked  = true;
 	o.disabled = true;
-	//jse.status(''); // we want see the event for now
+	//emir.status(''); // we want see the event for now
 	return false;
 }; // $e$
 function $r$ () {//#? called when Result button clicked
-	if (jse.selected.event===undefined) { return false; }
-	jse.status('result: ');
+	if (emir.selected.event===undefined) { return false; }
+	emir.status('result: ');
 	var c = null;
 	var e = null;
 	var f = null;
@@ -149,7 +153,7 @@ function $r$ () {//#? called when Result button clicked
 		}
 	}
 	/* if the tag name contains a . (dot), then it's one of the special tags
-	 * which has child tags (see JSEvent.init() for details)
+	 * which has child tags (see EMiR.init() for details)
 	 * we simply replace the . in the name with >< which shows the tag tree
 	 * then
 	 */
@@ -164,25 +168,25 @@ function $r$ () {//#? called when Result button clicked
 		delete this.f; f = null;
 	}
 	c = null;
-	jse.status('');
+	emir.status('');
 	return false;
 }; // $r$
 function $s$ (obj,typ) {//#? called when highlight (un)check in "Show Events" clicked
-	if (jse.selected.event===undefined) { return false; }
-	jse.status('highlight: ' + typ);
+	if (emir.selected.event===undefined) { return false; }
+	emir.status('highlight: ' + typ);
 	var c = null;
-	var e = jse.get_events(jse.selected.event);
+	var e = emir.get_events(emir.selected.event);
 	for (var i=0; i<e.length; i++) {
 		c = document.getElementById('use-' + e[i] + '-' + e[i]);
 		if (typ==='check')   { c.checked = true; }
 		if (typ==='uncheck') { c.checked = false; }
 		$c$(c, e[i]);
 	}
-	jse.status('');
+	emir.status('');
 	return false;
 }; // $s$
 function $t$(obj,cls){  //#? called when tab in "Show Events", "Show Tags" clicked
-	jse.status('tab: ' + obj.id);
+	emir.status('tab: ' + obj.id);
 	var c   = '';
 	var arr = obj.id.split('-'); // we get: use-event-* or use-tag-*
 	var typ = arr[1];
@@ -199,17 +203,17 @@ function $t$(obj,cls){  //#? called when tab in "Show Events", "Show Tags" click
 		
 	}
 	switch (typ) {
-	  case 'event': jse.selected.event = tab; break;
-	  case 'tag':   jse.selected.tag   = tab; break;
+	  case 'event': emir.selected.event = tab; break;
+	  case 'tag':   emir.selected.tag   = tab; break;
 	}
-	jse.find.mark(obj);  //
+	emir.find.mark(obj);  //
 	obj.setAttribute('class',c);
 	c = null; delete this.arr;
-	jse.status('');
+	emir.status('');
    	return false;
 }; // $t$
 
-window.JSevents = function() {
+window.EMiR = function() {
 	function $(id) { return document.getElementById(id); }
 	var events  = {
 		'w3c': {
@@ -1065,7 +1069,7 @@ window.JSevents = function() {
 			// ToDo 'html': this.html,
 			'innerHTML':function(parent,html) {
 				//#? set innerHTML attribute
-				if (html != '') {
+				if (html !== '') {
 					try{ parent.innerHTML = html; }
 					catch(e){}; // contribution to w3c-conform browsers
 				}
@@ -1083,10 +1087,10 @@ window.JSevents = function() {
 				//#? set all events[typ] attributes for <body> (excluding 'onload')
 				var err = '';
 				for (var x in events[typ]) {
-					if (x.match(/^onLoad/i)!==null) { alert('onload');continue; }
+					if (x.match(/^onLoad/i)!==null) {        alert('onload');continue; }
 					if (x.match(/^onContextMenu/i)!==null) { alert('onContextMenu');continue; }
-					//if (x.match(/^onFocus/i)!==null) { alert('onFocus');continue; }
-					//if (x.match(/^onActivate/i)!==null) { alert('onActivate');continue; }
+					//if (x.match(/^onFocus/i)!==null) {       alert('onFocus');continue; }
+					//if (x.match(/^onActivate/i)!==null) {    alert('onActivate');continue; }
 					try { parent.setAttribute(x, "return $e$(this,'"+ x +"');"); }
 					catch(e) { err += '\n** ' + x + '\t"' + e + '"'; }
 				}
@@ -1097,7 +1101,7 @@ window.JSevents = function() {
 				var t = null;
 				var i = id;
 				//parent.appendChild(document.createElement('BR')); // nur bei inline Elementen
-				if (err!='') {
+				if (err !== '') {
 					t = document.createElement('DIV');
 					t.innerHTML = err;
 					parent.setAttribute('class', 'err');
@@ -1334,7 +1338,7 @@ window.JSevents = function() {
 		'find':     { //#? ###################################### find elements
 			'reset':    function() { var c = null; while((c=objects.shift())!=null){} },
 			'checked':  function(arg_hash) {
-				//#? find all checkboxes in tags of givven type
+				//#? find all checkboxes in tags of given type
 				var args= arg_hash;
 				var arr = document.getElementsByTagName('LABEL');
 				var c   = null;
@@ -1342,14 +1346,14 @@ window.JSevents = function() {
 				this.reset();
 				for (c in arr) {
 					if (c==='indexOf')                    { continue; } // contribution to old Mozilla 1.x
-					if (arr[c].id            ==undefined) { continue; } // some browers like this ..
+					if (arr[c].id           ===undefined) { continue; } // some browers like this ..
 					if (arr[c].id                ===null) { continue; } // .. others like this
 					if (arr[c].id.match(/^useal/)!==null) { continue; } // ignore ower own
 					if (arr[c].id.match(/^use-/) !==null) { continue; } // ignore ower own
 					if (arr[c].id.match(/^l-use/)!==null) { continue; } // ignore labels in "Show Events"
 					if (args.type===undefined) { objects.push(arr[c].id); }
 					if (args.type!==null) {
-						if (arr[c].id.match(new RegExp(args.type+'$'))===null) { continue; }
+						if (arr[c].id.match(new RegExp('-'+args.type+'$'))===null) { continue; }
 					}
 					objects.push(arr[c].id);
 				}
@@ -1544,7 +1548,7 @@ window.JSevents = function() {
 			//# DOM not yet finished, needs to be don in onload=# $t$($('HTML 4'),'o');
 
 			// ------------- link
-			$('testing').appendChild(this.create.tag('INPUT', {'id':'submit', type:'submit', value:'Submit', onClick:'return true;'}, ''));
+			$('testing').appendChild(this.create.tag('INPUT', {'id':'submit', type:'submit', value:'Submit', onClick:'return true;',  title:'*do nothing*'}, ''));
 			$('testing').appendChild(document.createTextNode('  '));
 			$('testing').appendChild(this.create.tag('INPUT', {'id':'result', type:'button', value:'Result', onClick:'return $r$();', title:'show results'}, ''));
 			delete this.t; t = null;
@@ -1555,10 +1559,11 @@ window.JSevents = function() {
 	return function() { return new obj(); };
 }();
 	</script></head>
-<body id="body" onload="jse=JSevents(); $t$(document.getElementById('use-event-HTML 4'),'o');" >
+<body id="body">
 <h2>Test Suite for Events in Tag Attributes</h2>
 	<h3>How it works</h3>
-	Each tag listed in its on fieldset below contains a text <b>-test me-</b>.
+	In the <b>Testing</b> section below, each <span class="t">&lt;tag&gt;</span> listed
+	in its on fieldset contains a text <b>-test me-</b>.
 	All known JavaScript events are bound to that tag as tag attribute. If the
 	event is triggered, the corresponding checkbox will be ticked.
 	<br>
@@ -1578,8 +1583,10 @@ window.JSevents = function() {
 	Clicking the appropriate checkbox in the <b>Show Events for each tag</b>
 	area shows this event checkbox for each tag. Unchecking the checkbox hides
 	the tag's event checkbox.<br>
-	The tabs (like "HTML 4" or "Keys") are used to highligh all events of this
-	category.
+	The [Result] button at the end of the <b>Testing</b> area will show all triggered
+	events for each tag.<br>
+	The tabs (like "HTML 4" or "Keys") are just used to highlight all events of
+	this category. These tabs provide no other functionality.
 	<h3>Note</h3>
 	Note that some action may take 5-20 seconds, depending on the browser.
 <!-- Loading page and building DOM times:
@@ -1589,15 +1596,24 @@ window.JSevents = function() {
 	Mac OS X, Opera 10.10:		~1 second
 -->
 	<h3>Closing Tags</h3>
-	See <a href="tags-close.html">tags-close.html</a> (<b>Warning:</b>~4.7MB)
+	For events in closing tags see <a href="tags-close.html">tags-close.html</a> (<b>Warning:</b> ~4.7MB)
+	<h3>Not (yet) automatically testable</h3>
+	Some tag attributes if used invoke an event too, for example:
+	<b>checked</b>, <b>selected</b> or <b>autofocus</b><br>
+	A working test case for these events is currently missing.
 	<hr>
 	<h3>Selection</h3>
 	<form id="events"  action="don-know-where-to-send-to" method="POST"></form>
-	<form id="tags"    action="don-know-where-to-send-to" method="POST"></form>
+	<form id="tags"    action="don-know-where-to-send-to" method="POST">
+		<sub>checking these boxes have currently no effect, it's just informational</sub>
+	</form>
 	<h3>Testing</h3>
 	<form id="testing" action="don-know-where-to-send-to" method="POST"></form>
 	<!-- <br /><a href="grid.html">BACK</a> -->
 	<h3>Result</h3>
 	<div id="tag-result"></div><br>
 	<div id="status" class="status"></div>
+	<script type="text/javascript">
+emir=EMiR(); $t$(document.getElementById('use-event-HTML 4'),'o');
+	</script>
 </body></html>
