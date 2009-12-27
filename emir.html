@@ -7,12 +7,12 @@
 	git clone git@github.com:EnDe/EMiR.git
 -->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>EMiR - Events Mappings in Reality (emir.html 1.8)</title>
+	<title>EMiR - Events Mappings in Reality (emir.html 1.12)</title>
 	<meta name="Author"         content="Achim Hoffmann">
 	<meta name="Generator"      content="me using vi ;-)">
 	<meta name="DC.Creator"     content="emir @at@ my -dash- stp .dot. net">
 	<meta name="DC.Date"        content="2009-08-02">
-	<meta name="DC.Source"      content="@(#) emir.html 1.8 09/12/22 23:01:09">
+	<meta name="DC.Source"      content="@(#) emir.html 1.12 09/12/27 09:45:40">
 	<meta name="DC.Identifier"  content="git://github .dot. com/EnDe/EMiR/">
 	<meta name="DC.Title"       content="EMiR">
 	<meta name="DC.Description" content="EMiR - Event Mapping in Reality, strange Browser behaviours">
@@ -31,7 +31,7 @@ ul.conf li {
 ul.conf:hover li {
 	display:        block;
 	position:       absolute;
-	margin-top:     -1em;
+	margin-top:     -6em;
 	z-index:        1;
 }
 .otab ul {
@@ -121,8 +121,9 @@ label               { border:1px solid #ffffff; padding:2px; margin:2px; }
 #events label:hover { border:1px solid #a00000; }
 #tags   label:hover { border:1px solid #a00000; }
 #config label:hover { border:1px solid #a00000; }
-#config fieldset    { padding:1em; }
+#config fieldset    { padding:1em; border:2px outset #f6f6f6; }
 	</style>
+<!--[if IE]><style  type="text/css">ul.conf li {display:block;}</style> <![endif] -->
 	<script type="text/javascript">
 function $c$ (obj,typ) {//#? called when checkbox in "Show Events" clicked
 	var val = (obj.checked===true) ? 'inline' : 'none';
@@ -136,13 +137,22 @@ function dumm(tag) {alert('Tag <'+tag+'> clicked');return false;}
 function $e$(tag,evt) { //#? called for events of tag; sets corresponding checkbox
 	if (tag.id===undefined) { return true; } // take care for event bubbling
 	if (tag.id==='')        { return true; } // ..
-	if (emir.cfg.e_show===true) { emir.status('event: ' + tag.id + '.' + evt + '()'); } // does not show text in all browsers, even following code is called
+	if (emir.cfg.e_show===true) { emir.status('event: ' + tag.id + '.' + evt + '()'); } // does not show text in all browsers
 	var o = document.getElementById(tag.id + '-' + evt);
 	if (o===null)           { return false; }
-	o.disabled = false;
+	if (!o.emirsend) {
+		// only send for first occurance
+		// otherwise huge amount of onMouse* events may flood the server
+		// and slow down the browser
+		if (emir.cfg.e_send===true) {
+			emir.http.post_event(tag.tagName, evt);
+			o.emirsend = true;
+		}
+	}
+	o.disabled = false; // tweak some browsers to display new text
 	o.checked  = true;
 	o.disabled = true;
-	//emir.status(''); // we want see the event for now
+	//emir.status('');  // we want see the event for now
 	return false;
 }; // $e$
 function $r$ () {//#? called when Result button clicked
@@ -224,7 +234,7 @@ function $t$(obj,cls){  //#? called when tab in "Show Events", "Show Tags" click
 	}
 	emir.find.mark(obj);  //
 	obj.setAttribute('class',c);
-	c = null; delete this.arr;
+	c = null; try { delete this.arr; }catch(e){ /* some browsers crash */ }
 	emir.status('');
    	return false;
 }; // $t$
@@ -885,7 +895,7 @@ window.EMiR = function() {
 			'onPopupHiding':    null,	// User
 			'onPopupShowing':   null,	// User
 			'onPopupShown':     null,	// User
-			'onUnderflow':      null	// User
+			'onUnderflow':      null
 		} // XUL
 	}; // events
 	var tags    = {
@@ -895,7 +905,7 @@ window.EMiR = function() {
 							 url:'http://www.w3.org/TR/html4/'},
 			'HTML 5':       {desc:'w3c tags: HTML 5',
 							url:'http://dev.w3.org/html5/spec/Overview.html'},
-			'&nbsp;':       {desc:'reset all highlights', url:''},
+			'&nbsp;':       {desc:'reset all highlights', url:''}
 		}, // w3c
 		/*
 		 * values in each hash are used as follows:
@@ -1065,10 +1075,6 @@ window.EMiR = function() {
 	obj = function(){ this.init(); },
 	obj.prototype = {
 		'cfg':{ // runtime configurations
-			'ua':       navigator.userAgent,
-			'host':     location.host,
-			'result':   '/wasc/scriptmapping/result.php',
-			'gettoken': '/wasc/scriptmapping/getheaders.php',
 			'e_send':   false,
 			'e_show':   true
 		}, // cfg
@@ -1088,9 +1094,97 @@ window.EMiR = function() {
 			for (var e in events[typ]) { t.push(e); }
 			return t;
 		}, // get_events
+		'http': {   //#? ####################################### XMLHttpRequest
+			// variables set in GUI
+			'ua':       navigator.userAgent,
+			'host':     location.host,
+			'result':   '/result.php',
+			'gettoken': '/getheaders.php',
+			// following variables are used internal only
+			'url':      null,
+			'schema':   'http://',
+			'token':    '',
+			'ctype':    'application/x-www-form-urlencoded',
+			'xmlhttp':  new function () {
+			//#? get XMLHttpRequest object
+				if (window.XMLHttpRequest) {
+					return new XMLHttpRequest();
+				} else {
+					if (window.ActiveXObject){
+                        try {      return new ActiveXObject("Msxml2.XMLHTTP"); }
+                        catch(e) { return new ActiveXObject("Microsoft.XMLHTTP"); }
+					}
+				}
+				return null;
+			}, // xmlhttp
+			'prepare': function (url) {
+			//#? prepare URL to be used in XMLHttpRequest
+				if (this.url!==null) { return; }
+				if (this.host!=='') { // take care for same origin policy
+					this.url = (this.host===location.host) ?  '' : this.schema + this.host;
+					this.url += url;
+				}
+			}, // prepare
+			'post_event': function (tag, evt) {
+			//#? send tag and event type to remote server
+				if (this.xmlhttp) {
+					this.prepare(this.result);
+					this.xmlhttp.open('POST', this.url, false);
+					this.xmlhttp.setRequestHeader('Content-Type', this.ctype);
+					this.xmlhttp.setRequestHeader('User-Agent',   this.ua);
+					this.xmlhttp.onreadystatechange=function(){
+						// need absolute variable names for async mode
+						if (emir.http.xmlhttp.readyState===4) {
+							if (emir.http.xmlhttp.status==="200"){ return true; }
+						}
+					}
+					this.xmlhttp.send('&event='+evt+'&tag='+tag+'&type='+'1'+'&token='+this.token);
+				}
+				return true;
+			}, // post_event
+			'get_token': function () {
+			//#? get token from remote server
+				if (this.xmlhttp) {
+					this.url = null; // reset to force correct url
+					this.prepare(this.gettoken);
+					this.xmlhttp.open('POST', this.url, false);
+					this.xmlhttp.setRequestHeader('Content-Type', this.ctype);
+					this.xmlhttp.setRequestHeader('User-Agent',   this.ua);
+					this.xmlhttp.send('foo=1');
+					this.url = null;
+					return this.xmlhttp.getResponseHeader('Token');
+				}
+			} // get_token
+		}, // http
+		'set_config': function (src) { //#? ############ configuration settings
+		//#? set configuration data for tool itself and AJAX requests;
+			// updates internal data structure and display
+			if (!src) { return false; }
+			if (src.id===undefined) { return false; }
+			switch (src.id) {
+			  case 'emir.e.show':
+				this.cfg.e_show = src.checked;
+				document.getElementById(src.id).checked  = src.checked;
+				break;
+			  case 'emir.e.send':
+				this.cfg.e_send = src.checked;
+				document.getElementById(src.id).checked  = src.checked;
+				break;
+			  case 'emir.e.get':
+				this.http.token = this.http.get_token();
+				document.getElementById('emir.e.token').value = this.http.token;
+				break;
+			  case 'emir.e.ua':       this.http.ua       = src.value; break;
+			  case 'emir.e.host':     this.http.host     = src.value; break;
+			  case 'emir.e.result':   this.http.result   = src.value; break;
+			  case 'emir.e.gettoken': this.http.gettoken = src.value; break;
+			}
+			return false;
+		}, // set_config
+
 		'create':   { //#? ######################################## create tags
 			// ToDo 'self': this,
-			// ToDo 'html': this.html,
+			'html': '-test me-', // ToDo: should be this.html;
 			'innerHTML':function(parent,html) {
 				//#? set innerHTML attribute
 				if (html !== '') {
@@ -1160,8 +1254,9 @@ window.EMiR = function() {
 			'tags': function(parent,typ) {
 				//#? create all tags of given typ (returns void)
 				var i   = 0;
+				var obj = null;
 				var tag = null;
-				var html= '-test me-'; // ToDo: should be self.html;
+				var html= this.html;
 				if (typ==='SELECT') {
 					parent.appendChild(this.SELECT('SELECT',   {}, html));
 					parent.appendChild(this.SELECT('OPTGROUP', {}, html));
@@ -1181,7 +1276,7 @@ window.EMiR = function() {
 				// otherwise use tags from specified list
 				for (tag in tags[typ]) {
 					i++;
-					html= '-test me-'; // ToDo: should be this.html;
+					html= this.html;
 					if (tags[typ][tag]!=null) {
 						if (tags[typ][tag].use!=null)   { /*alert('skip:'+tag);*/ continue; }
 						if (tags[typ][tag].notext!=null){ /*alert('html:'+tag);*/ html = ''; }
@@ -1201,6 +1296,7 @@ window.EMiR = function() {
 						// status does not work, 'cause rendering engine is not called
 //break; // speed up for testing
 				}
+alert ('tags\n'+ t);
 			}, // tags
 			'CHECKBOX': function(dummytag,arg_hash) {
 				//#? return <label><input type=checkbox></label>
@@ -1257,7 +1353,7 @@ window.EMiR = function() {
 					err = this.onEvent(t, 'all');
 					f.appendChild(t);  delete this.t;
 				//}
-				for (var arg in args) { t.setAttribute(arg, args[arg]); }
+				for (var arg in args) { try { t.setAttribute(arg, args[arg]); }catch(e){/*IE hack*/} }
 				this.checkboxes(tag, id, f, err);
 				t = this.tag('DIV', {'id':'z-'+tag}, '');
 				t.appendChild(f);  delete this.f;
@@ -1428,10 +1524,11 @@ window.EMiR = function() {
 			var html = '';
 
 			// ------------- config
-			$('emir.e.host').value     = this.cfg.host;
-			$('emir.e.ua').value       = this.cfg.ua;
-			$('emir.e.result').value   = this.cfg.result;
-			$('emir.e.gettoken').value = this.cfg.gettoken;
+			$('emir.e.host').value     = this.http.host;
+			$('emir.e.ua').value       = this.http.ua;
+			$('emir.e.result').value   = this.http.result;
+			$('emir.e.gettoken').value = this.http.gettoken;
+			$('emir.e.token').value    = this.http.token;
 			$('emir.e.send').checked   = this.cfg.e_send;
 			$('emir.e.show').checked   = this.cfg.e_show;
 
@@ -1563,20 +1660,13 @@ window.EMiR = function() {
 			for (tag in tags['HTML 5']) { a++; }
 			for (tag in events.all)     { b++; }
 			alert('creating approx. '+a+'*'+b+' (='+a*b+') elements, will take some seconds ...');
-/* some performance values for following loop:
- * 15sec	IE7
- * 10sec	Mozilla 1.7
- *  8sec	FF2
- * hence no need for using a template node and then cloning it.
- */
 			this.status('common tags');  // -----------------------
-			this.create.tags($('testing'), 'HTML 4');   // create all tags to be tested
+			this.create.tags($('testing'), 'HTML 4');   // create all tags to be tested; IE most likely crashes here
 			this.create.tags($('testing'), 'HTML 5');   // ..
 			this.status('special tags'); // -----------------------
 			this.create.tags($('testing'), 'SELECT');   // create special select tags
 			this.create.tags($('testing'), 'TABLE');    // create special table tags
 		// more specials for: (MAP, AREA); (UL, OL, LI); (DD, DL, DT); (OBJECT, PARAM)
-			//# DOM not yet finished, needs to be don in onload=# $t$($('HTML 4'),'o');
 
 			// ------------- link
 			$('testing').appendChild(this.create.tag('INPUT', {'id':'submit', type:'submit', value:'Submit', onClick:'return true;',  title:'*do nothing*'}, ''));
@@ -1644,14 +1734,15 @@ window.EMiR = function() {
 <li>
 	<form id="config"  action="#">
 	<span>&#160;</span><fieldset>
-		<label for="emir.e.send">&#160;send each event to server:  <input id="emir.e.send"   type="checkbox" onChange="emir.cfg.e_send=this.checked;"/></label>
-		<label for="emir.e.show">&#160;show status for each event: <input id="emir.e.show"   type="checkbox" onChange="emir.cfg.e_show=this.checked;"/></label>
+		<label for="emir.e.send">&#160;send each event to server:  <input id="emir.e.send"   type="checkbox" onChange="emir.set_config(this);"/></label>
+		<label for="emir.e.show">&#160;show status for each event: <input id="emir.e.show"   type="checkbox" onChange="emir.set_config(this);"/></label>
 		<br>
-		<label for="emir.e.host">&#160;&#160;FQDN to send event to:<input id="emir.e.host"   type="text"     onChange="emir.cfg.host=this.value;"     size="20" value="" /></label>
-		<label for="emir.e.result" >    &#160;URL to send event to:<input id="emir.e.result" type="text"     onChange="emir.cfg.result=this.value;"   size="60" value="" /></label><br>
-		<label for="emir.e.token">         token for sending event:<input id="emir.e.token"  type="text"     onChange="emir.cfg.token=this.value;"    size="20" value="" /></label>
-		<label for="emir.e.gettoken" >     URL to get token from:<input id="emir.e.gettoken" type="text"     onChange="emir.cfg.gettoken=this.value;" size="60" value="" /></label><br>
-		<label for="emir.e.ua">  &#160;&#160;User-Agent to be send:<input id="emir.e.ua"     type="text"     onChange="emir.cfg.ua=this.value;"       size="80" value="" /></label><br>
+		<label for="emir.e.host">&#160;&#160;FQDN to send event to:<input id="emir.e.host"   type="text"     onChange="emir.set_config(this);" size="20" value="" /></label>
+		<label for="emir.e.result" >    &#160;URL to send event to:<input id="emir.e.result" type="text"     onChange="emir.set_config(this);" size="60" value="" /></label><br>
+		<label for="emir.e.token">         token for sending event:<input id="emir.e.token"  type="text"     onChange="emir.set_config(this);" size="20" value="" /></label>
+		<label for="emir.e.gettoken" >     URL to get token from:<input id="emir.e.gettoken" type="text"     onChange="emir.set_config(this);" size="60" value="" /></label><br>
+		<label for="emir.e.ua">  &#160;&#160;User-Agent to be send:<input id="emir.e.ua"     type="text"     onChange="emir.set_config(this);" size="80" value="" /></label>
+		<button id="emir.e.get" onClick="return emir.set_config(this);">get token</button><br>
 	</fieldset>
 	</form>
 </li>
