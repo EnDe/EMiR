@@ -7,12 +7,12 @@
 	git clone git@github.com:EnDe/EMiR.git
 -->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>EMiR - Events Mappings in Reality (emir.html 1.12)</title>
+	<title>EMiR - Events Mappings in Reality (emir.html 1.13)</title>
 	<meta name="Author"         content="Achim Hoffmann">
 	<meta name="Generator"      content="me using vi ;-)">
 	<meta name="DC.Creator"     content="emir @at@ my -dash- stp .dot. net">
 	<meta name="DC.Date"        content="2009-08-02">
-	<meta name="DC.Source"      content="@(#) emir.html 1.12 09/12/27 09:45:40">
+	<meta name="DC.Source"      content="@(#) emir.html 1.13 09/12/28 13:36:03">
 	<meta name="DC.Identifier"  content="git://github .dot. com/EnDe/EMiR/">
 	<meta name="DC.Title"       content="EMiR">
 	<meta name="DC.Description" content="EMiR - Event Mapping in Reality, strange Browser behaviours">
@@ -21,6 +21,9 @@
 	<style  type="text/css">
 body, h1        { font-weight:normal; font-family:monospace; font-size:10pt; }
 .chck { }
+.nav a         { color:#000000; text-decoration:none; background: #f0f0f0; border:1px outset #f6f6f6; padding-left:0.5em; padding-right:0.5em; }
+.nav a:hover   { color:#000000; text-decoration:none; }
+.nav a:active  { color:#000000; text-decoration:none; }
 ul.conf { padding: 0px; }
 ul.conf li {
 	display:        none;
@@ -155,28 +158,30 @@ function $e$(tag,evt) { //#? called for events of tag; sets corresponding checkb
 	//emir.status('');  // we want see the event for now
 	return false;
 }; // $e$
-function $r$ () {//#? called when Result button clicked
+function $r$ (mode) {//#? called when Result button clicked
 	if (emir.selected.event===undefined) { return false; }
 	emir.status('result: ');
 	var c = null;
-	var e = null;
 	var f = null;
+	var i = 0;
+	var e = '';
 	var arr = document.getElementsByTagName('INPUT');
 	var tags= {};
 	var r = document.getElementById('tag-result');
-	r.innerHTML = '';
-	for (c in arr) {
-		if (c==='indexOf')                   { continue; } // contribution to old Mozilla 1.x
-		if (arr[c].id          ===undefined) { continue; } // some browers like this ..
-		if (arr[c].id               ===null) { continue; } // .. others like this
-		if (arr[c].checked===true) {
-			e = arr[c].id.split('-'); // [0] is tag name, [1] is event name
-			if(e.length==2) {   // all others are unexpected
+	if (mode!=='show') { r.innerHTML = ''; }
+	for (i=0; i<arr.length; i++) {
+		c=arr[i];
+		if (c.id===undefined) { continue; } // some browers like this ..
+		if (c.id     ===null) { continue; } // .. others like this
+		if (c.checked===true) {
+			e = c.id.split('-'); // id='tag-event': [0] is tag name, [1] is event name
+			if(e.length===2) {  // all others are unexpected
 				if (tags[e[0]]===undefined) { tags[e[0]] = []; }
-				//e[1] = e[1].replace(/\./g, '><');
 				tags[e[0]].push(e[1]);
 			}
+			while (e.pop()) {}
 		}
+		delete arr[i];
 	}
 	/* if the tag name contains a . (dot), then it's one of the special tags
 	 * which has child tags (see EMiR.init() for details)
@@ -184,18 +189,23 @@ function $r$ () {//#? called when Result button clicked
 	 * then
 	 */
 	for (c in tags) {
-		f = document.createElement('B');
-		f.appendChild(document.createTextNode('<' + c.replace(/\./g, '><').toUpperCase() + '>: '));
-		r.appendChild(f);
-		f = document.createElement('SPAN');
-		f.appendChild(document.createTextNode(tags[c].join(', ')));
-		r.appendChild(f);
-		r.appendChild(document.createElement('BR'));
-		delete this.f; f = null;
+		if (mode==='show') {
+			e += '\n<' + c.replace(/\./g, '><').toUpperCase() + '>, ' + tags[c].join(', ');
+		} else {
+			e = false;
+			f = document.createElement('B');
+			f.appendChild(document.createTextNode('<' + c.replace(/\./g, '><').toUpperCase() + '>, '));
+			r.appendChild(f);
+			f = document.createElement('SPAN');
+			f.appendChild(document.createTextNode(tags[c].join(', ')));
+			r.appendChild(f);
+			r.appendChild(document.createElement('BR'));
+			delete this.f; f = null;
+		}
 	}
-	c = null;
+	c = null; r = null;
 	emir.status('');
-	return false;
+	return e;
 }; // $r$
 function $s$ (obj,typ) {//#? called when highlight (un)check in "Show Events" clicked
 	if (emir.selected.event===undefined) { return false; }
@@ -1095,6 +1105,10 @@ window.EMiR = function() {
 			return t;
 		}, // get_events
 		'http': {   //#? ####################################### XMLHttpRequest
+			/*
+			 * NOTE that most modern browsers will not allow to use XMLHttpRequest
+			 * to other domains due to the Same Origin Policy
+			 */
 			// variables set in GUI
 			'ua':       navigator.userAgent,
 			'host':     location.host,
@@ -1132,6 +1146,7 @@ window.EMiR = function() {
 					this.xmlhttp.open('POST', this.url, false);
 					this.xmlhttp.setRequestHeader('Content-Type', this.ctype);
 					this.xmlhttp.setRequestHeader('User-Agent',   this.ua);
+					this.xmlhttp.setRequestHeader('Connection',   'close');
 					this.xmlhttp.onreadystatechange=function(){
 						// need absolute variable names for async mode
 						if (emir.http.xmlhttp.readyState===4) {
@@ -1150,6 +1165,7 @@ window.EMiR = function() {
 					this.xmlhttp.open('POST', this.url, false);
 					this.xmlhttp.setRequestHeader('Content-Type', this.ctype);
 					this.xmlhttp.setRequestHeader('User-Agent',   this.ua);
+					this.xmlhttp.setRequestHeader('Connection',   'close');
 					this.xmlhttp.send('foo=1');
 					this.url = null;
 					return this.xmlhttp.getResponseHeader('Token');
@@ -1294,9 +1310,7 @@ window.EMiR = function() {
 					}
 					//if ((i%10)==0) {$('status').innerHTML += '.'; } // ugly hack
 						// status does not work, 'cause rendering engine is not called
-//break; // speed up for testing
 				}
-alert ('tags\n'+ t);
 			}, // tags
 			'CHECKBOX': function(dummytag,arg_hash) {
 				//#? return <label><input type=checkbox></label>
@@ -1660,18 +1674,18 @@ alert ('tags\n'+ t);
 			for (tag in tags['HTML 5']) { a++; }
 			for (tag in events.all)     { b++; }
 			alert('creating approx. '+a+'*'+b+' (='+a*b+') elements, will take some seconds ...');
-			this.status('common tags');  // -----------------------
+			this.status('create common tags');  // -----------------------
 			this.create.tags($('testing'), 'HTML 4');   // create all tags to be tested; IE most likely crashes here
 			this.create.tags($('testing'), 'HTML 5');   // ..
-			this.status('special tags'); // -----------------------
+			this.status('create special tags'); // -----------------------
 			this.create.tags($('testing'), 'SELECT');   // create special select tags
 			this.create.tags($('testing'), 'TABLE');    // create special table tags
 		// more specials for: (MAP, AREA); (UL, OL, LI); (DD, DL, DT); (OBJECT, PARAM)
 
 			// ------------- link
-			$('testing').appendChild(this.create.tag('INPUT', {'id':'submit', type:'submit', value:'Submit', onClick:'return true;',  title:'*do nothing*'}, ''));
+			$('testing').appendChild(this.create.tag('INPUT', {'id':'submit', type:'submit', value:'Submit', onClick:'alert($r$("show"));return false;', title:'*do nothing*'}, ''));
 			$('testing').appendChild(document.createTextNode('  '));
-			$('testing').appendChild(this.create.tag('INPUT', {'id':'result', type:'button', value:'Result', onClick:'return $r$();', title:'show results'}, ''));
+			$('testing').appendChild(this.create.tag('INPUT', {'id':'result', type:'button', value:'Result', onClick:'return $r$("tags");', title:'show results'}, ''));
 			delete this.t; t = null;
 			this.status('.'); // -----------------------
 		}, // init
@@ -1682,7 +1696,7 @@ alert ('tags\n'+ t);
 	</script></head>
 <body id="body">
 <h2>Test Suite for Events in Tag Attributes</h2>
-	<h3>How it works</h3>
+	<a name="Top"><h3>How it works</h3></a>
 	In the <b>Testing</b> section below, each <span class="t">&lt;tag&gt;</span> listed
 	in its on fieldset contains a text <b>-test me-</b>.
 	All known JavaScript events are bound to that tag as tag attribute. If the
@@ -1723,14 +1737,22 @@ alert ('tags\n'+ t);
 	<b>checked</b>, <b>selected</b> or <b>autofocus</b><br>
 	A working test case for these events is currently missing.
 	<hr>
-	<h3>Selection</h3>
+	<div class="nav">Go to: &#160;
+	<a href="#Top">Top</a> &#160;
+	<a href="#Selection">Selection</a> &#160;
+	<a href="#Config">Config</a> &#160;
+	<a href="#Testing">Testing</a> &#160;
+	<a href="#Results">Results</a> &#160;
+	</div>
+	<hr>
+	<a name="Selection"><h3>Selection</h3></a>
 	<form id="events"  action="dont-know-where-to-send-to" method="POST"></form>
 	<form id="tags"    action="dont-know-where-to-send-to" method="POST">
 	</form>
 		<sub>checking these boxes have currently no effect, it's just informational</sub>
 	<hr>
 <ul class="conf">
-	<h3>Config</h3>
+	<a name="Config"><h3>Config</h3></a>
 <li>
 	<form id="config"  action="#">
 	<span>&#160;</span><fieldset>
@@ -1748,11 +1770,21 @@ alert ('tags\n'+ t);
 </li>
 </ul>
 	<hr>
-	<h3>Testing</h3>
+	<a name="Testing"><h3>Testing</h3></a>
 	<form id="testing" action="dont-know-where-to-send-to" method="POST"></form>
 	<!-- <br /><a href="grid.html">BACK</a> -->
-	<h3>Result</h3>
+	<a name="Results"><h3>Result</h3></a>
 	<div id="tag-result"></div><br>
+	<hr>
+	<div class="nav">Go to: &#160;
+		<a href="#Top">Top</a> &#160;
+		<a href="#Selection">Selection</a> &#160;
+		<a href="#Config">Config</a> &#160;
+		<a href="#Testing">Testing</a> &#160;
+		<a href="#Results">Results</a> &#160;
+	</div>
+	<hr>
+	<br>
 	<div id="status" class="status"></div>
 	<script type="text/javascript">
 emir=EMiR(); $t$(document.getElementById('use-event-HTML 4'),'o');
