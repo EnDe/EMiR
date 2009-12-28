@@ -7,12 +7,12 @@
 	git clone git@github.com:EnDe/EMiR.git
 -->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>EMiR - Events Mappings in Reality (emir.html 1.13)</title>
+	<title>EMiR - Events Mappings in Reality (emir.html 1.14)</title>
 	<meta name="Author"         content="Achim Hoffmann">
 	<meta name="Generator"      content="me using vi ;-)">
 	<meta name="DC.Creator"     content="emir @at@ my -dash- stp .dot. net">
 	<meta name="DC.Date"        content="2009-08-02">
-	<meta name="DC.Source"      content="@(#) emir.html 1.13 09/12/28 13:36:03">
+	<meta name="DC.Source"      content="@(#) emir.html 1.14 09/12/28 17:44:12">
 	<meta name="DC.Identifier"  content="git://github .dot. com/EnDe/EMiR/">
 	<meta name="DC.Title"       content="EMiR">
 	<meta name="DC.Description" content="EMiR - Event Mapping in Reality, strange Browser behaviours">
@@ -166,7 +166,7 @@ function $r$ (mode) {//#? called when Result button clicked
 	var i = 0;
 	var e = '';
 	var arr = document.getElementsByTagName('INPUT');
-	var tags= {};
+	var keys= {};
 	var r = document.getElementById('tag-result');
 	if (mode!=='show') { r.innerHTML = ''; }
 	for (i=0; i<arr.length; i++) {
@@ -176,8 +176,8 @@ function $r$ (mode) {//#? called when Result button clicked
 		if (c.checked===true) {
 			e = c.id.split('-'); // id='tag-event': [0] is tag name, [1] is event name
 			if(e.length===2) {  // all others are unexpected
-				if (tags[e[0]]===undefined) { tags[e[0]] = []; }
-				tags[e[0]].push(e[1]);
+				if (keys[e[0]]===undefined) { keys[e[0]] = []; }
+				keys[e[0]].push(e[1]);
 			}
 			while (e.pop()) {}
 		}
@@ -188,20 +188,27 @@ function $r$ (mode) {//#? called when Result button clicked
 	 * we simply replace the . in the name with >< which shows the tag tree
 	 * then
 	 */
-	for (c in tags) {
+	for (c in keys) {
 		if (mode==='show') {
-			e += '\n<' + c.replace(/\./g, '><').toUpperCase() + '>, ' + tags[c].join(', ');
+			e += '%0a<' + c.replace(/\./g, '><').toUpperCase() + '>,' + keys[c].join(',');
 		} else {
 			e = false;
 			f = document.createElement('B');
 			f.appendChild(document.createTextNode('<' + c.replace(/\./g, '><').toUpperCase() + '>, '));
 			r.appendChild(f);
 			f = document.createElement('SPAN');
-			f.appendChild(document.createTextNode(tags[c].join(', ')));
+			f.appendChild(document.createTextNode(keys[c].join(', ')));
 			r.appendChild(f);
 			r.appendChild(document.createElement('BR'));
 			delete this.f; f = null;
 		}
+	}
+	if (mode==='show') {
+		r = document.getElementById('mailto');
+		r.href = 'mailto:some@where?subject=Events for: ' + emir.http.ua + '&body=' + e;
+		r.focus();
+		r.click();
+		e = false;
 	}
 	c = null; r = null;
 	emir.status('');
@@ -1145,8 +1152,10 @@ window.EMiR = function() {
 					this.prepare(this.result);
 					this.xmlhttp.open('POST', this.url, false);
 					this.xmlhttp.setRequestHeader('Content-Type', this.ctype);
+					try { // as http://www.w3.org/TR/XMLHttpRequest/ does not allow it
 					this.xmlhttp.setRequestHeader('User-Agent',   this.ua);
 					this.xmlhttp.setRequestHeader('Connection',   'close');
+					} catch(e) { alert('**ERROR setting request headers: '+e); }
 					this.xmlhttp.onreadystatechange=function(){
 						// need absolute variable names for async mode
 						if (emir.http.xmlhttp.readyState===4) {
@@ -1164,8 +1173,10 @@ window.EMiR = function() {
 					this.prepare(this.gettoken);
 					this.xmlhttp.open('POST', this.url, false);
 					this.xmlhttp.setRequestHeader('Content-Type', this.ctype);
+					try { // as http://www.w3.org/TR/XMLHttpRequest/ does not allow it
 					this.xmlhttp.setRequestHeader('User-Agent',   this.ua);
 					this.xmlhttp.setRequestHeader('Connection',   'close');
+					} catch(e) { alert('**ERROR setting request headers: '+e); }
 					this.xmlhttp.send('foo=1');
 					this.url = null;
 					return this.xmlhttp.getResponseHeader('Token');
@@ -1683,7 +1694,8 @@ window.EMiR = function() {
 		// more specials for: (MAP, AREA); (UL, OL, LI); (DD, DL, DT); (OBJECT, PARAM)
 
 			// ------------- link
-			$('testing').appendChild(this.create.tag('INPUT', {'id':'submit', type:'submit', value:'Submit', onClick:'alert($r$("show"));return false;', title:'*do nothing*'}, ''));
+			$('testing').appendChild(this.create.tag('A', {'id':'mailto', href:'', style:'display:none', title:'dummy for mailto:'}, 'm'));
+			$('testing').appendChild(this.create.tag('INPUT', {'id':'submit', type:'submit', value:'Submit', onClick:'return $r$("show");', title:'send result as mail'}, ''));
 			$('testing').appendChild(document.createTextNode('  '));
 			$('testing').appendChild(this.create.tag('INPUT', {'id':'result', type:'button', value:'Result', onClick:'return $r$("tags");', title:'show results'}, ''));
 			delete this.t; t = null;
@@ -1697,14 +1709,17 @@ window.EMiR = function() {
 <body id="body">
 <h2>Test Suite for Events in Tag Attributes</h2>
 	<a name="Top"><h3>How it works</h3></a>
+	<p>
 	In the <b>Testing</b> section below, each <span class="t">&lt;tag&gt;</span> listed
 	in its on fieldset contains a text <b>-test me-</b>.
 	All known JavaScript events are bound to that tag as tag attribute. If the
 	event is triggered, the corresponding checkbox will be ticked.
-	<br>
+	</p>
+	<p>
 	If the tag contains a link to be clicked, the "onClick" attribute is not set.<br>
 	The content of the called link uses the tag in its intented context.
-	<br>
+	</p>
+	<p>
 	As some events are interactive, they must be triggered manually by:
 	<ol>
 		<li>move the mouse over the <b>-test me-</b> text</li>
@@ -1713,17 +1728,31 @@ window.EMiR = function() {
 		<li>double click the mouse's select button on the <b>-test me-</b> text</li>
 		<li>press a key after selcting <b>-test me-</b> text</li>
 	</ol>
+	</p>
 	<h3>GUI</h3>
+	</p>
 	All checkboxes for the events in the tags are invisible by default.<br>
 	Clicking the appropriate checkbox in the <b>Show Events for each tag</b>
 	area shows this event checkbox for each tag. Unchecking the checkbox hides
-	the tag's event checkbox.<br>
-	The [Result] button at the end of the <b>Testing</b> area will show all triggered
-	events for each tag.<br>
+	the tag's event checkbox.
+	</p>
+	<p>
+	The <b>[Submit]</b> button at the end of the <b>Testing</b> area will open the
+	default mail client to send all triggered events for each tag.
+	</p>
+	<p>
+	The <b>[Result]</b> button at the end of the <b>Testing</b> area will show all
+	triggered events for each tag.
+	</p>
+	<p>
 	The tabs (like "HTML 4" or "Keys") are just used to highlight all events of
 	this category. These tabs provide no other functionality.
+	</p>
 	<h3>Note</h3>
-	Note that some action may take 5-20 seconds, depending on the browser.
+	<ul>
+		<li>some action may take 5-20 seconds, depending on the browser</li>
+		<li>there is no additional garbage collection implemented, some browsers may consume huge amount of memory</li>
+	</ul>
 <!-- Loading page and building DOM times:
 	Mac OS X, Safari 4.04:		~2 minutes
 	Mac OS X, Webkit r51708:	~2 minutes
