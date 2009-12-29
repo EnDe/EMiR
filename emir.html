@@ -7,12 +7,12 @@
 	git clone git@github.com:EnDe/EMiR.git
 -->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>EMiR - Events Mappings in Reality (emir.html 1.16)</title>
+	<title>EMiR - Events Mappings in Reality (emir.html 1.17)</title>
 	<meta name="Author"         content="Achim Hoffmann">
 	<meta name="Generator"      content="me using vi ;-)">
 	<meta name="DC.Creator"     content="emir @at@ my -dash- stp .dot. net">
 	<meta name="DC.Date"        content="2009-08-02">
-	<meta name="DC.Source"      content="@(#) emir.html 1.16 09/12/28 20:01:16">
+	<meta name="DC.Source"      content="@(#) emir.html 1.17 09/12/29 15:19:28">
 	<meta name="DC.Identifier"  content="git://github .dot. com/EnDe/EMiR/">
 	<meta name="DC.Title"       content="EMiR">
 	<meta name="DC.Description" content="EMiR - Event Mapping in Reality, strange Browser behaviours">
@@ -21,8 +21,8 @@
 	<style  type="text/css">
 body, h1        { font-weight:normal; font-family:monospace; font-size:10pt; }
 .chck { }
-.c1 { float:left; background:#fafafa; width:1em; position:fixed;top:0px;left:0px;margin:0px;padding:0px; height:100%; border-right:1px solid #000000; }
-.c2 { margin-left:1em; }
+.c1 { float:left; background:#fafafa; max-width:1em; position:fixed;top:0px;left:0px;margin:0px;padding:0px; height:100%; border-right:1px solid #000000; }
+.c2 { margin-left:2em; }
 .c1       ul { display:none; background:#fafafa; position:fixed; top:10em; left:1em; z-index:1; border-top:1px solid #000000;border-right:1px solid #000000;  border-bottom:1px solid #000000; }
 .c1:hover ul { display:block; }
 .c1    ul li { list-style:none; margin-left:0px; }
@@ -1241,6 +1241,8 @@ window.EMiR = function() {
 		'create':   { //#? ######################################## create tags
 			// ToDo 'self': this,
 			'html': '-test me-', // ToDo: should be this.html;
+			'inputID':  function(id,txt) { return id += '\ttype=' + txt; },
+				//#? create special id for INPUT tags
 			'innerHTML':function(parent,html) {
 				//#? set innerHTML attribute
 				if (html !== '') {
@@ -1383,7 +1385,7 @@ window.EMiR = function() {
 				var id  = tag;
 				var t   = null;
 				if (tag.match(/^INPUT$/i)!=null) {  // need special id 'cause multiple tags
-					if(args.type!=null) { id += ' type=' + args.type; }
+					if(args.type!=null) { id = this.inputID(tag, args.type); }
 				}
 				var f = this.FIELDSET(tag, {}, '');
 				if(args.url!==undefined) {
@@ -1507,7 +1509,7 @@ window.EMiR = function() {
 				t.appendChild(this.tag('A', arg_hash, html));
 				return t;
 			} // LI
-		},
+		}, // create
 
 		'find':     { //#? ###################################### find elements
 			'reset':    function() { var c = null; while((c=objects.shift())!=null){} },
@@ -1568,6 +1570,55 @@ window.EMiR = function() {
 				rex = null;
 			} // mark
 		}, // find
+		'fire': function() {//#? ######################################### fire
+		//#? called to fire all known events
+			if (emir.selected.event===undefined) { return false; }
+			emir.status('fire: ');
+			var f = [];
+			var e = '';
+			var i = 0;
+			var obj = null;
+			var err = '';
+			var tag = '';
+			var typ = '';
+			for (typ in tags) {
+				if (typ==='w3c') { continue; }
+				for (tag in tags[typ]) {
+					if (tags[typ][tag]===undefined)       {   continue; }
+					if (tags[typ][tag]===null) { f.push(tag); continue; }
+					if (tags[typ][tag].use!==undefined)   {   continue; }
+					if (tags[typ][tag].input!==undefined) {
+						for (e in tags[typ][tag].input) {
+							f.push(emir.create.inputID(tag, e));
+						}
+					}
+					if (tags[typ][tag].select!==undefined) {
+							f.push('select.' + tag);
+					}
+					if (tags[typ][tag].table!==undefined) {
+							f.push('table.' + tag);
+					}
+				}
+			}
+			e = this.get_events('all');
+			while ((tag=f.shift())!==undefined) {
+				obj = document.getElementById(tag);
+				if (obj===null) { continue; }
+				for (i=0; i<e.length; i++) {
+					//typ = e[i].replace(/^on/,'').toLowerCase();
+					typ = e[i].replace(/^on/,'');
+					if (typ.match(/^DOM/)===null) {
+						typ = typ.replace(/(^.)/, function(c){return c.toLowerCase();});
+					}
+					try      { obj[typ](42); }
+					catch(e) { err += '\t' + tag + '[' + typ + ']'; } // ToDo: collect failed events
+				}
+			}
+			while (typ=e.pop()) {}
+			obj = document.getElementById('err-result');
+			obj.innerHTML = err;
+			return false;
+		}, // fire
 		'status': function(txt) {   //#? ############################### status
 			$('status').innerHTML = txt;
 		}, // status
@@ -1727,6 +1778,8 @@ window.EMiR = function() {
 			$('testing').appendChild(this.create.tag('INPUT', {'id':'submit', type:'submit', value:'Submit', onClick:'return $r$("show");', title:'send result as mail'}, ''));
 			$('testing').appendChild(document.createTextNode('  '));
 			$('testing').appendChild(this.create.tag('INPUT', {'id':'result', type:'button', value:'Result', onClick:'return $r$("tags");', title:'show results'}, ''));
+			$('testing').appendChild(document.createTextNode('  '));
+			$('testing').appendChild(this.create.tag('INPUT', {'id':'fire',   type:'button', value:'fire',   onClick:'return emir.fire();', title:'try to fire all events'}, ''));
 			delete this.t; t = null;
 			this.status('.'); // -----------------------
 		}, // init
@@ -1742,6 +1795,7 @@ window.EMiR = function() {
 		<li><a href="#Config">Config</a> &#160;
 		<li><a href="#Testing">Testing</a> &#160;
 		<li><a href="#Results">Results</a> &#160;
+		<li><a href="#Errors">Event Errors</a> &#160;
 </ul></a>
 <div class="c2">
 	<a name="Top"></a>
@@ -1764,7 +1818,9 @@ window.EMiR = function() {
 		<li>click the mouse's select button on the <b>-test me-</b> text</li>
 		<li>click the mouse's context button on the <b>-test me-</b> text</li>
 		<li>double click the mouse's select button on the <b>-test me-</b> text</li>
+		<li>click the mouse's select button on the <b>-test me-</b> text and move while button clicked</li>
 		<li>press a key after selcting <b>-test me-</b> text</li>
+		<li>try to paste something on the <b>-test me-</b> text</li>
 	</ol>
 	</p>
 	<h3>GUI</h3>
@@ -1774,29 +1830,33 @@ window.EMiR = function() {
 	area shows this event checkbox for each tag. Unchecking the checkbox hides
 	the tag's event checkbox.
 	</p>
-	<p>
-	The <b>[Submit]</b> button at the end of the <b>Testing</b> area will open the
-	default mail client to send all triggered events for each tag.
-	</p>
-	<p>
-	The <b>[Result]</b> button at the end of the <b>Testing</b> area will show all
-	triggered events for each tag.
-	</p>
-	<p>
+	<h4>GUI Buttons</h4>
+	Buttons at the end of the <b>Testing</b> area.
+	<ul>
+		<li><b>[Submit]</b><br>
+			will open the default mail client to send all triggered events for each tag.</li>
+		<li><b>[Result]</b><br>
+			will show all triggered events for each tag.</li>
+		<li><b>[fire]</b><br>
+			tries to trigger all events for each tag.</li>
+	</ul>
 	The tabs (like "HTML 4" or "Keys") are just used to highlight all events of
 	this category. These tabs provide no other functionality.
-	</p>
 	<h3>Note</h3>
 	<ul>
 		<li>some action may take 5-20 seconds, depending on the browser</li>
-		<li>there is no additional garbage collection implemented, some browsers may consume huge amount of memory</li>
-	</ul>
-<!-- Loading page and building DOM times:
-	Mac OS X, Safari 4.04:		~2 minutes
-	Mac OS X, Webkit r51708:	~2 minutes
-	Mac OS X, Firefox 2.0.20:	~20 seconds
-	Mac OS X, Opera 10.10:		~1 second
+<!-- times: loading page and building DOM (Intel Dual-Core 2.8GHz)
+	Mac OS X,  Safari 4.04:		~2 minutes
+	Mac OS X,  Webkit r51708:	~2 minutes
+	Mac OS X,  Firefox 2.0.20:	~20 seconds
+	Mac OS X,  Opera 10.10:		~1 second
+	WindowsXP, Chrome 3.0.195.33 ~2 minutes
+	WindowsXP, Firefox 2.0.20:	~20 seconds
+	WindowsXP, Opera 10.10:		~10 second
 -->
+		<li>there is no additional garbage collection implemented, some browsers may consume huge amount of memory</li>
+		<li>the [fire] butten triggers "onClick", "onChange", "onFocus", "onSelect" and "onBlur" in most browsers only.</li>
+	</ul>
 	<h3>Closing Tags</h3>
 	For events in closing tags see <a href="tags-close.html">tags-close.html</a> (<b>Warning:</b> ~4.7MB)
 	<h3>Not (yet) automatically testable</h3>
@@ -1840,6 +1900,8 @@ window.EMiR = function() {
 	<a name="Results"><h3>Result</h3></a>
 	<div id="tag-result"></div><br>
 	<hr>
+	<a name="Errors"><h3>Event Errors</h3></a>
+	<div id="err-result"></div><br>
 	<br>
 	</div>
 	<div id="status" class="status"></div>
