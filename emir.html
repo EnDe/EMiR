@@ -7,12 +7,12 @@
 	git clone git@github.com:EnDe/EMiR.git
 -->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>EMiR - Events Mappings in Reality (emir.html 1.19)</title>
+	<title>EMiR - Events Mappings in Reality (emir.html 1.20)</title>
 	<meta name="Author"         content="Achim Hoffmann">
 	<meta name="Generator"      content="me using vi ;-)">
 	<meta name="DC.Creator"     content="emir @at@ my -dash- stp .dot. net">
 	<meta name="DC.Date"        content="2009-08-02">
-	<meta name="DC.Source"      content="@(#) emir.html 1.19 10/01/05 12:11:27">
+	<meta name="DC.Source"      content="@(#) emir.html 1.20 10/01/05 17:08:18">
 	<meta name="DC.Identifier"  content="git://github .dot. com/EnDe/EMiR/">
 	<meta name="DC.Title"       content="EMiR">
 	<meta name="DC.Description" content="EMiR - Event Mapping in Reality, strange Browser behaviours">
@@ -21,10 +21,11 @@
 	<style  type="text/css">
 body, h1     { font-weight:normal; font-family:monospace; font-size:10pt; }
 .chck { }
-.c1 { float:left; background:#fafafa; max-width:1em; position:fixed;top:0px;left:0px;margin:0px;padding:0px; height:100%; border-right:1px solid #000000; }
+.c1 { float:left; background:#fafafa; width:1em; max-width:1em; position:fixed;top:0px;left:0px;margin:0px;padding:0px; height:100%; border-right:1px solid #000000; padding-left:0.3em; }
 .c2 { margin-left:2em; }
-.c1       ul { display:none; background:#fafafa; position:fixed; top:10em; left:1em; z-index:1; border-top:1px solid #000000;border-right:1px solid #000000;  border-bottom:1px solid #000000; }
-.c1:hover ul { display:block; }
+.c1       ul { display:none; background:#fafafa; position:fixed; top:0.5em; left:1em; z-index:1; border-top:1px solid #000000;border-right:1px solid #000000;  border-bottom:1px solid #000000; padding:0.5em; }
+.c1 li:hover ul { display:block; }
+.c1       li { list-style:none; margin-left:0px; }
 .c1    ul li { list-style:none; margin-left:0px; }
 .nav a         { color:#000000; text-decoration:none; background: #f0f0f0; border:1px outset #f6f6f6; padding-left:0.5em; padding-right:0.5em; width:100%; }
 .nav a:hover   { color:#0000ff; text-decoration:none; }
@@ -1798,14 +1799,19 @@ window.EMiR = function() {
 }();
 	</script></head>
 <body id="body">
-<a class="c1" href="" onClick="return false;" ><ul class="nav">Go To:
-		<li><a href="#Top">Top</a> &#160;
-		<li><a href="#Selection">Selection</a> &#160;
-		<li><a href="#Config">Config</a> &#160;
-		<li><a href="#Testing">Testing</a> &#160;
-		<li><a href="#Results">Results</a> &#160;
-		<li><a href="#Errors">Event Errors</a> &#160;
-</ul></a>
+<ul class="c1" href="" ><li>&#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
+	&#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
+	&#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
+	&#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;
+	<ul class="nav">
+		<li><a href="#Top">Top</a> &#160;</li>
+		<li><a href="#Selection">Selection</a> &#160;</li>
+		<li><a href="#Config">Config</a> &#160;</li>
+		<li><a href="#Testing">Testing</a> &#160;</li>
+		<li><a href="#Results">Results</a> &#160;</li>
+		<li><a href="#Errors">Event Errors</a> &#160;</li>
+	</ul>
+</li></ul>
 <div class="c2">
 	<a name="Top"></a>
 <h2>Test Suite for Events in Tag Attributes</h2>
