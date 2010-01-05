@@ -7,12 +7,12 @@
 	git clone git@github.com:EnDe/EMiR.git
 -->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>EMiR - Events Mappings in Reality (emir.html 1.17)</title>
+	<title>EMiR - Events Mappings in Reality (emir.html 1.18)</title>
 	<meta name="Author"         content="Achim Hoffmann">
 	<meta name="Generator"      content="me using vi ;-)">
 	<meta name="DC.Creator"     content="emir @at@ my -dash- stp .dot. net">
 	<meta name="DC.Date"        content="2009-08-02">
-	<meta name="DC.Source"      content="@(#) emir.html 1.17 09/12/29 15:19:28">
+	<meta name="DC.Source"      content="@(#) emir.html 1.18 10/01/05 11:37:59">
 	<meta name="DC.Identifier"  content="git://github .dot. com/EnDe/EMiR/">
 	<meta name="DC.Title"       content="EMiR">
 	<meta name="DC.Description" content="EMiR - Event Mapping in Reality, strange Browser behaviours">
@@ -164,6 +164,9 @@ function $e$(tag,evt) { //#? called for events of tag; sets corresponding checkb
 	return false;
 }; // $e$
 function $r$ (mode) {//#? called when Result button clicked
+	//#mode? show: show result in mailto: application
+	//#mode? tags: show reult in "Result" area
+	//#mode? ajax: send a request to the remote server for each recorded event
 	if (emir.selected.event===undefined) { return false; }
 	emir.status('result: ');
 	var sort = emir.cfg.sortkey;
@@ -179,16 +182,16 @@ function $r$ (mode) {//#? called when Result button clicked
 		c=arr[i];
 		if (c.id===undefined) { continue; } // some browers like this ..
 		if (c.id     ===null) { continue; } // .. others like this
-		if (c.checked===true) {
+		if ((emir.cfg.e_empty===true)||(c.checked===true)) {
 			e = c.id.split('-'); // id='tag-event': [0] is tag name, [1] is event name
 			if(e.length===2) {  // all others are unexpected
 				if (sort==='tags') {
 					e[0] = e[0].toUpperCase();
 					if (keys[e[0]]===undefined) { keys[e[0]] = []; }
-					keys[e[0]].push(e[1]);
+					if (c.checked===true) { keys[e[0]].push(e[1]); }
 				} else {
 					if (keys[e[1]]===undefined) { keys[e[1]] = []; }
-					keys[e[1]].push(e[0].toUpperCase());
+					if (c.checked===true) { keys[e[1]].push(e[0].toUpperCase()); }
 				}
 			}
 			while (e.pop()) {}
@@ -1119,6 +1122,7 @@ window.EMiR = function() {
 	obj.prototype = {
 		'cfg':{ // runtime configurations
 			'sortkey':  'tags',
+			'e_empty':  true,
 			'e_send':   false,
 			'e_show':   true
 		}, // cfg
@@ -1218,6 +1222,10 @@ window.EMiR = function() {
 			switch (src.id) {
 			  case 'emir.e.stag':     this.cfg.sortkey   = 'tags';   return true; break;
 			  case 'emir.e.sevent':   this.cfg.sortkey   = 'events'; return true; break;
+			  case 'emir.e.empty':
+				this.cfg.e_empty = src.checked;
+				document.getElementById(src.id).checked  = src.checked;
+				break;
 			  case 'emir.e.show':
 				this.cfg.e_show = src.checked;
 				document.getElementById(src.id).checked  = src.checked;
@@ -1821,6 +1829,7 @@ window.EMiR = function() {
 		<li>click the mouse's select button on the <b>-test me-</b> text and move while button clicked</li>
 		<li>press a key after selcting <b>-test me-</b> text</li>
 		<li>try to paste something on the <b>-test me-</b> text</li>
+		<li>use the mouse wheel on the <b>-test me-</b> text</li>
 	</ol>
 	</p>
 	<h3>GUI</h3>
@@ -1830,8 +1839,12 @@ window.EMiR = function() {
 	area shows this event checkbox for each tag. Unchecking the checkbox hides
 	the tag's event checkbox.
 	</p>
+	<p>
+	The <b>Event Errors</b> section shows all all tag events which thew an exception
+	when triggered with the [fire] button.
+	</p>
 	<h4>GUI Buttons</h4>
-	Buttons at the end of the <b>Testing</b> area.
+	Buttons at the end of the <b>Testing</b> area:
 	<ul>
 		<li><b>[Submit]</b><br>
 			will open the default mail client to send all triggered events for each tag.</li>
@@ -1840,11 +1853,19 @@ window.EMiR = function() {
 		<li><b>[fire]</b><br>
 			tries to trigger all events for each tag.</li>
 	</ul>
+	Some of these action may take 5-20 seconds, depending on the browser.
+	<p>
 	The tabs (like "HTML 4" or "Keys") are just used to highlight all events of
 	this category. These tabs provide no other functionality.
+	</p>
 	<h3>Note</h3>
 	<ul>
-		<li>some action may take 5-20 seconds, depending on the browser</li>
+		<li>automatic event generation ([fire] button) works on some FORM tags only</li>
+		<li>some (all?) FORM tags (INPUT, TEXTAREA, SELECT ..) may not get, and hence
+			list, all events 'cause of the assiged tag attributes to catch the event</li>
+		<li>some tags are not inside correct hierachy (i.e. PARAM inside OBJECT or EMBED)</li>
+		<li>FF3 seems to have changed the event bubbling, hence tests are unreliable</li>
+
 <!-- times: loading page and building DOM (Intel Dual-Core 2.8GHz)
 	Mac OS X,  Safari 4.04:		~2 minutes
 	Mac OS X,  Webkit r51708:	~2 minutes
@@ -1879,6 +1900,7 @@ window.EMiR = function() {
 		&#160;sort result by:
 		<label for="emir.e.stag">   <input id="emir.e.stag"   name="sort" type="radio" onChange="emir.set_config(this);" checked />tags&#160 </label>
 		<label for="emir.e.sevent"> <input id="emir.e.sevent" name="sort" type="radio" onChange="emir.set_config(this);"/>events</label>
+		<label for="emir.e.empty">&#160;  list empty events, tags: <input id="emir.e.empty"  type="checkbox" onChange="emir.set_config(this);" checked /></label>
 		<hr>
 		<label for="emir.e.send">&#160;send each event to server:  <input id="emir.e.send"   type="checkbox" onChange="emir.set_config(this);"/></label>
 		<br>
