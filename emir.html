@@ -7,19 +7,19 @@
 	git clone git@github.com:EnDe/EMiR.git
 -->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>EMiR - Events Mappings in Reality (emir.html 1.18)</title>
+	<title>EMiR - Events Mappings in Reality (emir.html 1.19)</title>
 	<meta name="Author"         content="Achim Hoffmann">
 	<meta name="Generator"      content="me using vi ;-)">
 	<meta name="DC.Creator"     content="emir @at@ my -dash- stp .dot. net">
 	<meta name="DC.Date"        content="2009-08-02">
-	<meta name="DC.Source"      content="@(#) emir.html 1.18 10/01/05 11:37:59">
+	<meta name="DC.Source"      content="@(#) emir.html 1.19 10/01/05 12:11:27">
 	<meta name="DC.Identifier"  content="git://github .dot. com/EnDe/EMiR/">
 	<meta name="DC.Title"       content="EMiR">
 	<meta name="DC.Description" content="EMiR - Event Mapping in Reality, strange Browser behaviours">
 	<meta name="DC.Language"    content="en">
 	<meta name="DC.Rights"      content="Creative Commons 3.0, http://creativecommons.org/licenses/by-sa/3.0/">
 	<style  type="text/css">
-body, h1        { font-weight:normal; font-family:monospace; font-size:10pt; }
+body, h1     { font-weight:normal; font-family:monospace; font-size:10pt; }
 .chck { }
 .c1 { float:left; background:#fafafa; max-width:1em; position:fixed;top:0px;left:0px;margin:0px;padding:0px; height:100%; border-right:1px solid #000000; }
 .c2 { margin-left:2em; }
@@ -163,86 +163,6 @@ function $e$(tag,evt) { //#? called for events of tag; sets corresponding checkb
 	//emir.status('');  // we want see the event for now
 	return false;
 }; // $e$
-function $r$ (mode) {//#? called when Result button clicked
-	//#mode? show: show result in mailto: application
-	//#mode? tags: show reult in "Result" area
-	//#mode? ajax: send a request to the remote server for each recorded event
-	if (emir.selected.event===undefined) { return false; }
-	emir.status('result: ');
-	var sort = emir.cfg.sortkey;
-	var c = null;
-	var f = null;
-	var i = 0;
-	var e = '';
-	var arr = document.getElementsByTagName('INPUT');
-	var keys= {};
-	var r = document.getElementById('tag-result');
-	if (mode!=='show') { r.innerHTML = ''; }
-	for (i=0; i<arr.length; i++) {
-		c=arr[i];
-		if (c.id===undefined) { continue; } // some browers like this ..
-		if (c.id     ===null) { continue; } // .. others like this
-		if ((emir.cfg.e_empty===true)||(c.checked===true)) {
-			e = c.id.split('-'); // id='tag-event': [0] is tag name, [1] is event name
-			if(e.length===2) {  // all others are unexpected
-				if (sort==='tags') {
-					e[0] = e[0].toUpperCase();
-					if (keys[e[0]]===undefined) { keys[e[0]] = []; }
-					if (c.checked===true) { keys[e[0]].push(e[1]); }
-				} else {
-					if (keys[e[1]]===undefined) { keys[e[1]] = []; }
-					if (c.checked===true) { keys[e[1]].push(e[0].toUpperCase()); }
-				}
-			}
-			while (e.pop()) {}
-		}
-		delete arr[i];
-	}
-	/* if the tag name contains a . (dot), then it's one of the special tags
-	 * which has child tags (see EMiR.init() for details)
-	 * we simply replace the . in the name with >< which shows the tag tree
-	 * then
-	 */
-	for (c in keys) {
-		if (mode==='ajax') { // ToDo: NOT YET implemented
-			for (i=0; i<keys[c].length; i++) {
-				emir.http.post_event(tag.tagName, evt);
-			}
-			continue;
-		}
-		if (mode==='show') {
-			if (sort==='tags') {
-				e += '%0a<' + c.replace(/\./g, '><') + '>,' + keys[c].join(',');
-			} else {
-				e += '%0a' + c + ':,' + keys[c].join(',');
-			}
-		} else {
-			e = false;
-			f = document.createElement('B');
-			if (sort==='tags') {
-				f.appendChild(document.createTextNode('<' + c.replace(/\./g, '><') + '>, '));
-			} else {
-				f.appendChild(document.createTextNode( c + ', '));
-			}
-			r.appendChild(f);
-			f = document.createElement('SPAN');
-			f.appendChild(document.createTextNode(keys[c].join(', ')));
-			r.appendChild(f);
-			r.appendChild(document.createElement('BR'));
-			delete this.f; f = null;
-		}
-	}
-	if (mode==='show') {
-		r = document.getElementById('mailto');
-		r.href = 'mailto:some@where?subject=Events for: ' + emir.http.ua + '&body=' + e;
-		r.focus();
-		r.click();
-		e = false;
-	}
-	c = null; r = null;
-	emir.status('');
-	return e;
-}; // $r$
 function $s$ (obj,typ) {//#? called when highlight (un)check in "Show Events" clicked
 	if (emir.selected.event===undefined) { return false; }
 	emir.status('highlight: ' + typ);
@@ -1214,6 +1134,7 @@ window.EMiR = function() {
 				}
 			} // get_token
 		}, // http
+
 		'set_config': function (src) { //#? ############ configuration settings
 		//#? set configuration data for tool itself and AJAX requests;
 			// updates internal data structure and display
@@ -1578,10 +1499,91 @@ window.EMiR = function() {
 				rex = null;
 			} // mark
 		}, // find
+		'result':   function (mode) { //#? ############################# result
+		//#? called when Result button clicked
+			//#mode? show: show result in mailto: application
+			//#mode? tags: show reult in "Result" area
+			//#mode? ajax: send a request to the remote server for each recorded event
+			if (emir.selected.event===undefined) { return false; }
+			this.status('result: ');
+			var sort = this.cfg.sortkey;
+			var c = null;
+			var f = null;
+			var i = 0;
+			var e = '';
+			var arr = document.getElementsByTagName('INPUT');
+			var keys= {};
+			var r = document.getElementById('tag-result');
+			if (mode!=='show') { r.innerHTML = ''; }
+			for (i=0; i<arr.length; i++) {
+				c=arr[i];
+				if (c.id===undefined) { continue; } // some browers like this ..
+				if (c.id     ===null) { continue; } // .. others like this
+				if ((this.cfg.e_empty===true)||(c.checked===true)) {
+					e = c.id.split('-'); // id='tag-event': [0] is tag name, [1] is event name
+					if(e.length===2) {  // all others are unexpected
+						if (sort==='tags') {
+							e[0] = e[0].toUpperCase();
+							if (keys[e[0]]===undefined) { keys[e[0]] = []; }
+							if (c.checked===true) { keys[e[0]].push(e[1]); }
+						} else {
+							if (keys[e[1]]===undefined) { keys[e[1]] = []; }
+							if (c.checked===true) { keys[e[1]].push(e[0].toUpperCase()); }
+						}
+					}
+					while (e.pop()) {}
+				}
+				delete arr[i];
+			}
+			/* if the tag name contains a . (dot), then it's one of the special tags
+			 * which has child tags (see EMiR.init() for details)
+			 * we simply replace the . in the name with >< which shows the tag tree
+			 * then
+			 */
+			for (c in keys) {
+				if (mode==='ajax') { // ToDo: NOT YET implemented
+					for (i=0; i<keys[c].length; i++) {
+						this.http.post_event(tag.tagName, evt);
+					}
+					continue;
+				}
+				if (mode==='show') {
+					if (sort==='tags') {
+						e += '%0a<' + c.replace(/\./g, '><') + '>,' + keys[c].join(',');
+					} else {
+						e += '%0a' + c + ':,' + keys[c].join(',');
+					}
+				} else {
+					e = false;
+					f = document.createElement('B');
+					if (sort==='tags') {
+						f.appendChild(document.createTextNode('<' + c.replace(/\./g, '><') + '>, '));
+					} else {
+						f.appendChild(document.createTextNode( c + ', '));
+					}
+					r.appendChild(f);
+					f = document.createElement('SPAN');
+					f.appendChild(document.createTextNode(keys[c].join(', ')));
+					r.appendChild(f);
+					r.appendChild(document.createElement('BR'));
+					delete this.f; f = null;
+				}
+			}
+			if (mode==='show') {
+				r = document.getElementById('mailto');
+				r.href = 'mailto:some@where?subject=Events for: ' + this.http.ua + '&body=' + e;
+				r.focus();
+				r.click();
+				e = false;
+			}
+			c = null; r = null;
+			this.status('');
+			return e;
+		}, // result
 		'fire': function() {//#? ######################################### fire
 		//#? called to fire all known events
 			if (emir.selected.event===undefined) { return false; }
-			emir.status('fire: ');
+			this.status('fire: ');
 			var f = [];
 			var e = '';
 			var i = 0;
@@ -1597,7 +1599,7 @@ window.EMiR = function() {
 					if (tags[typ][tag].use!==undefined)   {   continue; }
 					if (tags[typ][tag].input!==undefined) {
 						for (e in tags[typ][tag].input) {
-							f.push(emir.create.inputID(tag, e));
+							f.push(this.create.inputID(tag, e));
 						}
 					}
 					if (tags[typ][tag].select!==undefined) {
@@ -1613,7 +1615,6 @@ window.EMiR = function() {
 				obj = document.getElementById(tag);
 				if (obj===null) { continue; }
 				for (i=0; i<e.length; i++) {
-					//typ = e[i].replace(/^on/,'').toLowerCase();
 					typ = e[i].replace(/^on/,'');
 					if (typ.match(/^DOM/)===null) {
 						typ = typ.replace(/(^.)/, function(c){return c.toLowerCase();});
@@ -1783,9 +1784,9 @@ window.EMiR = function() {
 
 			// ------------- link
 			$('testing').appendChild(this.create.tag('A', {'id':'mailto', href:'', style:'display:none', title:'dummy for mailto:'}, 'm'));
-			$('testing').appendChild(this.create.tag('INPUT', {'id':'submit', type:'submit', value:'Submit', onClick:'return $r$("show");', title:'send result as mail'}, ''));
+			$('testing').appendChild(this.create.tag('INPUT', {'id':'submit', type:'submit', value:'Submit', onClick:'return emir.result("show");', title:'send result as mail'}, ''));
 			$('testing').appendChild(document.createTextNode('  '));
-			$('testing').appendChild(this.create.tag('INPUT', {'id':'result', type:'button', value:'Result', onClick:'return $r$("tags");', title:'show results'}, ''));
+			$('testing').appendChild(this.create.tag('INPUT', {'id':'result', type:'button', value:'Result', onClick:'return emir.result("tags");', title:'show results'}, ''));
 			$('testing').appendChild(document.createTextNode('  '));
 			$('testing').appendChild(this.create.tag('INPUT', {'id':'fire',   type:'button', value:'fire',   onClick:'return emir.fire();', title:'try to fire all events'}, ''));
 			delete this.t; t = null;
