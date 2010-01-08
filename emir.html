@@ -7,12 +7,12 @@
 	git clone git@github.com:EnDe/EMiR.git
 -->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>EMiR - Events Mappings in Reality (emir.html 1.20)</title>
+	<title>EMiR - Events Mappings in Reality (emir.html 1.21)</title>
 	<meta name="Author"         content="Achim Hoffmann">
 	<meta name="Generator"      content="me using vi ;-)">
 	<meta name="DC.Creator"     content="emir @at@ my -dash- stp .dot. net">
 	<meta name="DC.Date"        content="2009-08-02">
-	<meta name="DC.Source"      content="@(#) emir.html 1.20 10/01/05 17:08:18">
+	<meta name="DC.Source"      content="@(#) emir.html 1.21 10/01/08 16:01:24">
 	<meta name="DC.Identifier"  content="git://github .dot. com/EnDe/EMiR/">
 	<meta name="DC.Title"       content="EMiR">
 	<meta name="DC.Description" content="EMiR - Event Mapping in Reality, strange Browser behaviours">
@@ -257,6 +257,7 @@ window.EMiR = function() {
 			'onAfterPrint':     null,
 			'onAfterUpdate':    null,
 			'onAttrModified':   null,	// typo?
+			'onBack':           null,
 			'onBeforeActivate': null,
 			'onBeforeCopy':     null,
 			'onBeforeCut':      null,
@@ -324,6 +325,7 @@ window.EMiR = function() {
 			'onFocusOut':       null,
 			'onFormChange':     null,
 			'onFormInput':      null,
+			'onForward':        null,
 			'onHashChange':     null,
 			'onHelp':           null,
 			'onInput':          null,
@@ -336,11 +338,13 @@ window.EMiR = function() {
 			'onLoadedData':     null,
 			'onLoadedMetaData': null,
 			'onLoadStart':      null,
+			'onLocate':         null,
 			'onLoseCapture':    null,
 			'onMediaComplete':  null,
 			'onMediaError':     null,
 			'onMessage':        null,
 			'onMouseDown':      null,
+			'onMouseDrag':      null,
 			'onMouseEnter':     null,
 			'onMouseLeave':     null,
 			'onMouseMove':      null,
@@ -407,6 +411,7 @@ window.EMiR = function() {
 			'onSuspend':        null,
 			'onSyncRestored':   null,
 			'onSynchRestored':  null,	// typo?
+			'onText':           null,
 			'onTextInput':      null,
 			'onTimeError':      null,
 			'onTimeupdate':     null,
@@ -417,6 +422,7 @@ window.EMiR = function() {
 			'onURLFlip':        null,
 			'onVolumeChange':   null,
 			'onWaiting':        null,
+			'onXfer_Done':      null,
 			'onwebkitanimationend':      null,
 			'onwebkitanimationiteration':null,
 			'onwebkitanimationstart':    null,
@@ -639,6 +645,7 @@ window.EMiR = function() {
 			'onScroll':         null,	// or Object?
 			'onTextInput':      null	// also Text Event
 			}, // User
+		'&nbsp;': {},
 		'Safari': {
 			'onBeforeCopy':     null,
 			'onBeforeCut':      null,
@@ -676,7 +683,14 @@ window.EMiR = function() {
 			'onSubmit':         null,
 			'onUnload':         null
 		}, // Safari
-		'&nbsp;': {},
+		'Firefox3': {
+			'onBack':           null,
+			'onForward':        null,
+			'onLocate':         null,
+			'onMouseDrag':      null,
+			'onText':           null,
+			'onXfer_Done':      null
+		}, // Firefox3
 		'IE': {
 			'onActivate':       null,
 			'onAfterPrint':     null,	// Misc.
@@ -1587,12 +1601,14 @@ window.EMiR = function() {
 			this.status('fire: ');
 			var f = [];
 			var e = '';
+			var x = '';
 			var i = 0;
+			var evt = null;
 			var obj = null;
 			var err = '';
 			var tag = '';
 			var typ = '';
-			for (typ in tags) {
+			for (typ in tags) { // collect tags and their events
 				if (typ==='w3c') { continue; }
 				for (tag in tags[typ]) {
 					if (tags[typ][tag]===undefined)       {   continue; }
@@ -1612,6 +1628,13 @@ window.EMiR = function() {
 				}
 			}
 			e = this.get_events('all');
+			for (i=0; i<e.length; i++) {
+// ToDo: does not work
+				typ = e[i].replace(/^on/,'');
+				evt = document.createEvent('Events');
+				evt.initEvent(typ, true, true);
+				document.dispatchEvent(evt);
+			}
 			while ((tag=f.shift())!==undefined) {
 				obj = document.getElementById(tag);
 				if (obj===null) { continue; }
@@ -1620,8 +1643,23 @@ window.EMiR = function() {
 					if (typ.match(/^DOM/)===null) {
 						typ = typ.replace(/(^.)/, function(c){return c.toLowerCase();});
 					}
-					try      { obj[typ](42); }
-					catch(e) { err += '\t' + tag + '[' + typ + ']'; } // ToDo: collect failed events
+					var xxx = 0;
+					try      { obj[typ](42); } // fire
+					catch(x) {
+						xxx = 1;
+						err += '\t' + tag + '[' + typ + ']'; // collect failed events
+					}
+					if (xxx==1) {
+/* ToDo: does not work
+						evt = obj.createEvent('Events');
+						evt.initEvent(typ, true, true);
+						obj.dispatchEvent(evt);
+						try  { obj[typ](42); } // fire
+						catch(x) {
+							err += '\t' + tag + '[' + typ + ']'; // collect failed events
+						}
+					}
+*/
 				}
 			}
 			while (typ=e.pop()) {}
@@ -1652,9 +1690,10 @@ window.EMiR = function() {
 			var t = this.create.tag('FIELDSET',  {cls:'e'}, '');
 			    t.appendChild(this.create.tag('LEGEND', {}, 'Show Events for each tag'));
 			var u = this.create.tag('UL',  {}, '');
+			var e = null;
 			var f = null;
 			var c = 'otab_fg';  // ToDo: need to have at least on *_fg, otherwise $t$ will not work
-			for (var e in events.w3c) {
+			for (e in events.w3c) {
 				u.appendChild(this.create.LI('',
 					{'id':typ + e, 'cls':c, 'href':'', 'onClick':'return $t$(this,"o");', title:events.w3c[e].desc},
 					e)
@@ -1665,7 +1704,7 @@ window.EMiR = function() {
 			f.appendChild(u);
 			t.appendChild(f);
 			f = this.create.tag('DIV', {cls:'text'}, '');
-			for (var e in events.all) {
+			for (e in events.all) {
 				f.appendChild(this.create.CHECKBOX( 'LABEL INPUT checkbox',
 				   {'id':       typ + e,
 					'type':     'checkbox',
@@ -1680,7 +1719,7 @@ window.EMiR = function() {
 			t.appendChild(f);
 			u = this.create.tag('UL',  {}, '');
 			c = 'utab_fg';
-			for (var e in events) {
+			for (e in events) {
 				if (e==='w3c')        { continue; }
 				if (e==='categories') { continue; }
 				if (events.categories[e]===undefined) { continue; }
@@ -1728,7 +1767,7 @@ window.EMiR = function() {
 			t.appendChild(this.create.tag('LEGEND', {}, 'Tag Categories'));
 			u = this.create.tag('UL',  {}, '');
 			c = 'otab_fg';  // ToDo:
-			for (var e in tags.w3c) {
+			for (e in tags.w3c) {
 				u.appendChild(this.create.LI('',
 					{'id':typ + e, 'cls':c, 'href':'', 'onClick':'return $t$(this,"o");', title:tags.w3c[e].desc},
 					e)
@@ -1739,7 +1778,7 @@ window.EMiR = function() {
 			f.appendChild(u);
 			t.appendChild(f);
 			f = this.create.tag('DIV', {cls:'text'}, '');
-			for (var e in tags['HTML 4']) {
+			for (e in tags['HTML 4']) {
 				f.appendChild(this.create.CHECKBOX( 'LABEL INPUT checkbox',
 				   {'id':       typ + e,
 					'type':     'checkbox',
@@ -1751,7 +1790,7 @@ window.EMiR = function() {
 				   }
 				));
 			}
-			for (var e in tags['HTML 5']) {
+			for (e in tags['HTML 5']) {
 				f.appendChild(this.create.CHECKBOX( 'LABEL INPUT checkbox',
 				   {'id':       typ + e,
 					'type':     'checkbox',
@@ -1769,6 +1808,15 @@ window.EMiR = function() {
 			delete this.u; u = null;
 			delete this.t; t = null;
 
+/* / ToDo: does not work (destroys event handling in some browsers completely
+			e = this.get_events('all');
+			for (c=0; c<e.length; c++) {
+				typ = e[c].replace(/^on/,'');
+				f = document.createEvent('Events');
+				f.initEvent(typ, true, true);
+				document.dispatchEvent(f);
+			}
+*/
 			var a = 0, b = 0;
 			var tag;
 			for (tag in tags['HTML 4']) { a++; }
