@@ -1,5 +1,7 @@
 <html><head>
 <!--
+	ToDo: zu allen generierten Tags das Attribute  autofocus  dazu; extra Seite
+
  vi:  ts=4:
  vim: ts=4:
 -->
@@ -7,12 +9,12 @@
 	git clone git@github.com:EnDe/EMiR.git
 -->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>EMiR - Events Mappings in Reality (emir.html 1.21)</title>
+	<title>EMiR - Events Mappings in Reality (emir.html 1.23)</title>
 	<meta name="Author"         content="Achim Hoffmann">
 	<meta name="Generator"      content="me using vi ;-)">
 	<meta name="DC.Creator"     content="emir @at@ my -dash- stp .dot. net">
 	<meta name="DC.Date"        content="2009-08-02">
-	<meta name="DC.Source"      content="@(#) emir.html 1.21 10/01/08 16:01:24">
+	<meta name="DC.Source"      content="@(#) emir.html 1.23 10/08/28 01:17:44">
 	<meta name="DC.Identifier"  content="git://github .dot. com/EnDe/EMiR/">
 	<meta name="DC.Title"       content="EMiR">
 	<meta name="DC.Description" content="EMiR - Event Mapping in Reality, strange Browser behaviours">
@@ -898,6 +900,7 @@ window.EMiR = function() {
 		 *  notext: do not generate text node, causes JavaScript DOM error
 		 *          (except the script tag, this should occour for tags marked
 		 *           empty:true only)
+		 *  action: generate an action= attribute
 		 *  input:  special behaviour for INPUT tag
 		 *  table:  special behaviour for TABLE, TR, TD, etc. tags
 		 *  select: special behaviour for SELECT, OPTION, etc. tags
@@ -945,7 +948,7 @@ window.EMiR = function() {
 			'fieldset':     null,
 			'fn':           null,
 			'font':         null,
-			'form':         {file:true},
+			'form':         {file:true,action:true},
 			'frame':        {file:true},
 			//'frameset':     {attr:{width:'15px',height:'15px'}},
 			'frameset':     {attr:{width:'200px',height:'30px',border:'1px',src:'data:text/html,ein <b>fetter text</b> im frameset'}},
@@ -960,7 +963,7 @@ window.EMiR = function() {
 			'input':        {input:{'button':true,'hidden':true,'text':true,'password':true,'reset':true,'submit':true,'file':true,'checkbox':true,'radio':true,'image':true},empty:true},
 	//HTML5	'input':        {input:{'search':true,'tel':true,'url':true,'email':true,'datetime':true,'date':true,'month':true,'week':true,'time':true,'datetime-local':true,'number':true,'range':true,'color':true},empty:true},
 			'ins':          null,
-			'isindex':      {empty:true,meta:true},
+			'isindex':      {empty:true,meta:true,action:true},
 			'kbd':          null,
 			'label':        null,
 			'layer':        null,
@@ -1147,7 +1150,7 @@ window.EMiR = function() {
 					this.url = null;
 					return this.xmlhttp.getResponseHeader('Token');
 				}
-			} // get_token
+			} // get_token;
 		}, // http
 
 		'set_config': function (src) { //#? ############ configuration settings
@@ -1284,14 +1287,14 @@ window.EMiR = function() {
 						if (tags[typ][tag].notext!=null){ /*alert('html:'+tag);*/ html = ''; }
 						if (tags[typ][tag].input!=null) {
 							for (var a in tags[typ][tag].input) { // create INPUT tags with of all types
-								parent.appendChild(this.tag_form(tag, {type:a}, html));
+								parent.appendChild(this.tag_form(tag, typ, {type:a}, html));
 							}
 						}
 					}
-					parent.appendChild(this.tag_form(tag, {}, html)); // ToDo: inline should be configurable
+					parent.appendChild(this.tag_form(tag, typ, {}, html)); // ToDo: inline should be configurable
 					if (tags[typ][tag]!==null) {
 						if (tags[typ][tag].file!==undefined) {
-						parent.appendChild(this.tag_form(tag, {'url':'tags-'+tag.toLowerCase()+'.html'}, html));
+						parent.appendChild(this.tag_form(tag, typ, {'url':'tags-'+tag.toLowerCase()+'.html'}, html));
 						}
 					}
 					//if ((i%10)==0) {$('status').innerHTML += '.'; } // ugly hack
@@ -1322,7 +1325,7 @@ window.EMiR = function() {
 				this.innerHTML(t,html);
 				return t;
 			}, // FIELDSET
-			'tag_form': function(tag,arg_hash,html) {
+			'tag_form': function(tag,typ,arg_hash,html) {
 				//#? return <div><fieldset><span> tag </span> <tag>..</tag> </fieldset></div>
 				var args= arg_hash; // attributes for generated tag
 				var err = '';
@@ -1344,9 +1347,12 @@ window.EMiR = function() {
 				//	err = this.on_body(t, 'all');
 				//} else {
 					t = this.tag( tag, {'id':id}, '');
-					if(tags[tag]!=null) {
-						if(tags[tag].attr!=null) {
-							for (var a in tags[tag].attr) { t.setAttribute(a, tags[tag].attr[a]); }
+					if(tags[typ][tag]!=null) {
+						if(tags[typ][tag].attr!=null) {
+							for (var a in tags[typ][tag].attr) { t.setAttribute(a, tags[typ][tag].attr[a]); }
+						}
+						if(tags[typ][tag].action) {
+							t.setAttribute('action', "return $e$(this,'action');");
 						}
 					}
 					this.innerHTML(t,html);
@@ -1658,11 +1664,11 @@ window.EMiR = function() {
 						catch(x) {
 							err += '\t' + tag + '[' + typ + ']'; // collect failed events
 						}
-					}
 */
+					}
 				}
 			}
-			while (typ=e.pop()) {}
+			//while (typ=e.pop()) {}
 			obj = document.getElementById('err-result');
 			obj.innerHTML = err;
 			return false;
@@ -1894,8 +1900,12 @@ window.EMiR = function() {
 	area shows this event checkbox for each tag. Unchecking the checkbox hides
 	the tag's event checkbox.
 	</p>
+	<h4>Config</h4>
+	Moving the mouse over the <b>Config</b> section pops up a inset window with some
+	configuration settings which are used for the result.
 	<p>
-	The <b>Event Errors</b> section shows all all tag events which thew an exception
+	<h4>Event Errors</h4>
+	The <b>Event Errors</b> section shows all all tag events which threw an exception
 	when triggered with the [fire] button.
 	</p>
 	<h4>GUI Buttons</h4>
