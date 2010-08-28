@@ -9,12 +9,12 @@
 	git clone git@github.com:EnDe/EMiR.git
 -->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>EMiR - Events Mappings in Reality (emir.html 1.23)</title>
+	<title>EMiR - Events Mappings in Reality (emir.html 1.24)</title>
 	<meta name="Author"         content="Achim Hoffmann">
 	<meta name="Generator"      content="me using vi ;-)">
 	<meta name="DC.Creator"     content="emir @at@ my -dash- stp .dot. net">
 	<meta name="DC.Date"        content="2009-08-02">
-	<meta name="DC.Source"      content="@(#) emir.html 1.23 10/08/28 01:17:44">
+	<meta name="DC.Source"      content="@(#) emir.html 1.24 10/08/28 02:28:32">
 	<meta name="DC.Identifier"  content="git://github .dot. com/EnDe/EMiR/">
 	<meta name="DC.Title"       content="EMiR">
 	<meta name="DC.Description" content="EMiR - Event Mapping in Reality, strange Browser behaviours">
@@ -136,6 +136,34 @@ label               { border:1px solid #ffffff; padding:2px; margin:2px; }
 	</style>
 <!--[if IE]><style  type="text/css">ul.conf li {display:block;}</style> <![endif] -->
 	<script type="text/javascript">
+function $l$ (typ) {//#? called when "get list of .." clicked
+	var o = [];
+	switch (typ) {
+	  case 'events': o = emir.get_events('all'); break;
+	  case 'tags':   o = emir.get_tags('all');   break;
+	}
+	var win = null;
+	try {
+		win = window.open('', typ,
+				'resizable=yes,scrollbars=yes,dependent=yes'
+				+',status=no,menubar=no,toolbar=no,location=no'
+				+',innerHeight=400,innerWidth=400,width=400,height=400'
+			);
+	} catch (e) { alert('window.open: ',e); }
+	try {
+		// if (isKonqueror===true) { // some browsers behave strange ..
+			//win.document.body.innerHTML = '<textarea rows="28" cols="99" id="scratch"></textarea>';
+		//} else {
+			var area  = document.createElement('TEXTAREA');
+			area.setAttribute('rows',25);
+			area.setAttribute('cols',40);
+			area.id   = 'events';
+			area.innerHTML = o.join('\n');
+			win.document.body.appendChild(area);
+		//}
+	} catch (e) { alert('create area',e); }
+	return false;
+}; // $l$
 function $c$ (obj,typ) {//#? called when checkbox in "Show Events" clicked
 	var val = (obj.checked===true) ? 'inline' : 'none';
 	emir.status('checkbox: ' + typ);
@@ -1080,6 +1108,18 @@ window.EMiR = function() {
 			for (var e in events[typ]) { t.push(e); }
 			return t;
 		}, // get_events
+		'get_tags':function(typ) {
+			//#? get array of all tags[typ]
+			var t = [];
+			var e = null;
+			if (typ==='all') {
+				for (e in tags['HTML 4']) { t.push(e); }
+				for (e in tags['HTML 5']) { t.push(e); }
+			} else {
+				for (e in tags[typ])      { t.push(e); }
+			}
+			return t;
+		}, // get_events
 		'http': {   //#? ####################################### XMLHttpRequest
 			/*
 			 * NOTE that most modern browsers will not allow to use XMLHttpRequest
@@ -1742,6 +1782,10 @@ window.EMiR = function() {
 			delete this.u; u = null;
 			delete this.f; f = null;
 			t.appendChild(document.createElement('HR'));
+			f = document.createElement('BUTTON');
+			f.innerHTML = 'get list of events ';
+			f.setAttribute('onClick', 'return $l$("events");');
+			t.appendChild(f);
 			t.appendChild(document.createTextNode(' highlighted:\xa0\xa0'));
 			t.appendChild(this.create.CHECKBOX( 'LABEL INPUT button',
 			   {'id':       typ + 'check',
@@ -1760,7 +1804,7 @@ window.EMiR = function() {
 			   }
 			));
 			f = document.createElement('SUB');
-			f.innerHTML = ' (NOTE: will take up to 10 seconds)';
+			f.innerHTML = ' (NOTE: will take up to 10 seconds)  ';
 			t.appendChild(f);
 			$('events').appendChild(t);
 			$('events').appendChild(document.createElement('HR'));
@@ -1808,6 +1852,11 @@ window.EMiR = function() {
 				   }
 				));
 			}
+			t.appendChild(f);
+			t.appendChild(document.createElement('HR'));
+			f = document.createElement('BUTTON');
+			f.innerHTML = 'get list of tags ';
+			f.setAttribute('onClick', 'return $l$("tags");');
 			t.appendChild(f);
 			$('tags').appendChild(t);
 			delete this.f; f = null;
