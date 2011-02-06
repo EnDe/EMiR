@@ -1732,6 +1732,45 @@ window.EMiR = function() {
 		}, // status_
 		//                  //# ########################################## init
 		'initdone': false,  // avoid multiple calls
+		'initevents':function(){ //#? reset
+			//#? initialize "Testing"
+			var a = 0, b = 0;
+			var tag;
+			// remove all existing content first
+			this.delete.tags($('testing'));
+			this.delete.tags($('tag-result'));
+			this.delete.tags($('err-result'));
+			for (tag in tags['HTML 4']) { a++; }
+			for (tag in tags['HTML 5']) { a++; }
+			for (tag in events.all)     { b++; }
+			if (confirm('creating approx. '+a+'*'+b+' (='+a*b+') elements, will take some seconds ...')===false) {
+				this.status('elements not created; please reload page.');  // -----------------------
+				$('testing').appendChild(this.create.tag('INPUT', {'id':'reset', type:'button', value:'Reset', onClick:'return emir.resetevents();', title:'destroy and re-create events'}, ''));
+				this.initdone = false;
+				return;
+			}
+			this.status('create common tags');  // -----------------------
+			this.create.tags($('testing'), 'HTML 4');   // create all tags to be tested; IE most likely crashes here
+			this.create.tags($('testing'), 'HTML 5');   // ..
+			this.status('create special tags'); // -----------------------
+			this.create.tags($('testing'), 'SELECT');   // create special select tags
+			this.create.tags($('testing'), 'TABLE');    // create special table tags
+		// more specials for: (MAP, AREA); (UL, OL, LI); (DD, DL, DT); (OBJECT, PARAM)
+
+			// ------------- link
+			$('testing').appendChild(this.create.tag('A', {'id':'mailto', href:'', style:'display:none', title:'dummy for mailto:'}, 'm'));
+			$('testing').appendChild(this.create.tag('INPUT', {'id':'reset', type:'button', value:'Reset', onClick:'return emir.resetevents();', title:'destroy and re-create events'}, ''));
+			$('testing').appendChild(document.createTextNode('  '));
+			$('testing').appendChild(this.create.tag('INPUT', {'id':'submit', type:'submit', value:'Submit', onClick:'return emir.result("show");', title:'send result as mail'}, ''));
+			$('testing').appendChild(document.createTextNode('  '));
+			$('testing').appendChild(this.create.tag('INPUT', {'id':'result', type:'button', value:'Result', onClick:'return emir.result("tags");', title:'show results'}, ''));
+			$('testing').appendChild(document.createTextNode('  '));
+			$('testing').appendChild(this.create.tag('INPUT', {'id':'fire',   type:'button', value:'fire',   onClick:'return emir.fire();', title:'try to fire all events'}, ''));
+			return;
+		}, // initevents
+		'resetevents':function(){ //#? resetevents
+			this.initevents();
+		}, // resetevents
 		'init': function(){ //#? init
 			var html = '';
 			//#dbx# alert ('done '+this.initdone);
@@ -1888,45 +1927,10 @@ window.EMiR = function() {
 				document.dispatchEvent(f);
 			}
 */
-			// remove all existing content first (Reset button will create again)
-			this.delete.tags($('testing'));
-			this.delete.tags($('tag-result'));
-			this.delete.tags($('err-result'));
-			var a = 0, b = 0;
-			var tag;
-			for (tag in tags['HTML 4']) { a++; }
-			for (tag in tags['HTML 5']) { a++; }
-			for (tag in events.all)     { b++; }
-			if (confirm('creating approx. '+a+'*'+b+' (='+a*b+') elements, will take some seconds ...')===false) {
-				this.status('elements not created; please reload page.');  // -----------------------
-				$('testing').appendChild(this.create.tag('INPUT', {'id':'reset', type:'button', value:'Reset', onClick:'return emir.reset();', title:'destroy and re-create events'}, ''));
-				this.initdone = false;
-				return;
-			}
-			this.status('create common tags');  // -----------------------
-			this.create.tags($('testing'), 'HTML 4');   // create all tags to be tested; IE most likely crashes here
-			this.create.tags($('testing'), 'HTML 5');   // ..
-			this.status('create special tags'); // -----------------------
-			this.create.tags($('testing'), 'SELECT');   // create special select tags
-			this.create.tags($('testing'), 'TABLE');    // create special table tags
-		// more specials for: (MAP, AREA); (UL, OL, LI); (DD, DL, DT); (OBJECT, PARAM)
-
-			// ------------- link
-			$('testing').appendChild(this.create.tag('A', {'id':'mailto', href:'', style:'display:none', title:'dummy for mailto:'}, 'm'));
-			$('testing').appendChild(this.create.tag('INPUT', {'id':'reset', type:'button', value:'Reset', onClick:'return emir.reset();', title:'destroy and re-create events'}, ''));
-			$('testing').appendChild(document.createTextNode('  '));
-			$('testing').appendChild(this.create.tag('INPUT', {'id':'submit', type:'submit', value:'Submit', onClick:'return emir.result("show");', title:'send result as mail'}, ''));
-			$('testing').appendChild(document.createTextNode('  '));
-			$('testing').appendChild(this.create.tag('INPUT', {'id':'result', type:'button', value:'Result', onClick:'return emir.result("tags");', title:'show results'}, ''));
-			$('testing').appendChild(document.createTextNode('  '));
-			$('testing').appendChild(this.create.tag('INPUT', {'id':'fire',   type:'button', value:'fire',   onClick:'return emir.fire();', title:'try to fire all events'}, ''));
+			this.initevents();
 			delete this.t; t = null;
 			this.status('.'); // -----------------------
 		}, // init
-		'reset':function(){ //#? reset
-			this.initdone = false;
-			this.init();
-		}, // reset
 		uselessdummytokeepjavascriptsyntaxhappy: null
 	}; // obj
 	return function() { return new obj(); };
