@@ -1501,6 +1501,17 @@ window.EMiR = function() {
 			} // LI
 		}, // create
 
+		'delete':   { //#? ######################################## delete tags
+			'tags':     function(obj) {
+				//#? delete all tags in DOM for given element
+				if (obj.hasChildNodes()) {
+					while (obj.childNodes.length>=1) {
+						obj.removeChild(obj.firstChild);       
+					} 
+				}
+			} // tags
+		}, // delete
+
 		'find':     { //#? ###################################### find elements
 			'reset':    function() { var c = null; while((c=objects.shift())!=null){} },
 			'checked':  function(arg_hash) {
@@ -1719,8 +1730,13 @@ window.EMiR = function() {
 		'status_': function(txt) {
 			$('status').innerHTML += txt;
 		}, // status_
-		'init': function(){ //#? ######################################### init
+		//                  //# ########################################## init
+		'initdone': false,  // avoid multiple calls
+		'init': function(){ //#? init
 			var html = '';
+			//#dbx# alert ('done '+this.initdone);
+			if (this.initdone===true) { return; }
+			this.initdone = true;
 
 			// ------------- config
 			$('emir.e.host').value     = this.http.host;
@@ -1872,12 +1888,21 @@ window.EMiR = function() {
 				document.dispatchEvent(f);
 			}
 */
+			// remove all existing content first (Reset button will create again)
+			this.delete.tags($('testing'));
+			this.delete.tags($('tag-result'));
+			this.delete.tags($('err-result'));
 			var a = 0, b = 0;
 			var tag;
 			for (tag in tags['HTML 4']) { a++; }
 			for (tag in tags['HTML 5']) { a++; }
 			for (tag in events.all)     { b++; }
-			alert('creating approx. '+a+'*'+b+' (='+a*b+') elements, will take some seconds ...');
+			if (confirm('creating approx. '+a+'*'+b+' (='+a*b+') elements, will take some seconds ...')===false) {
+				this.status('elements not created; please reload page.');  // -----------------------
+				$('testing').appendChild(this.create.tag('INPUT', {'id':'reset', type:'button', value:'Reset', onClick:'return emir.reset();', title:'destroy and re-create events'}, ''));
+				this.initdone = false;
+				return;
+			}
 			this.status('create common tags');  // -----------------------
 			this.create.tags($('testing'), 'HTML 4');   // create all tags to be tested; IE most likely crashes here
 			this.create.tags($('testing'), 'HTML 5');   // ..
@@ -1888,6 +1913,8 @@ window.EMiR = function() {
 
 			// ------------- link
 			$('testing').appendChild(this.create.tag('A', {'id':'mailto', href:'', style:'display:none', title:'dummy for mailto:'}, 'm'));
+			$('testing').appendChild(this.create.tag('INPUT', {'id':'reset', type:'button', value:'Reset', onClick:'return emir.reset();', title:'destroy and re-create events'}, ''));
+			$('testing').appendChild(document.createTextNode('  '));
 			$('testing').appendChild(this.create.tag('INPUT', {'id':'submit', type:'submit', value:'Submit', onClick:'return emir.result("show");', title:'send result as mail'}, ''));
 			$('testing').appendChild(document.createTextNode('  '));
 			$('testing').appendChild(this.create.tag('INPUT', {'id':'result', type:'button', value:'Result', onClick:'return emir.result("tags");', title:'show results'}, ''));
@@ -1896,6 +1923,10 @@ window.EMiR = function() {
 			delete this.t; t = null;
 			this.status('.'); // -----------------------
 		}, // init
+		'reset':function(){ //#? reset
+			this.initdone = false;
+			this.init();
+		}, // reset
 		uselessdummytokeepjavascriptsyntaxhappy: null
 	}; // obj
 	return function() { return new obj(); };
@@ -1981,13 +2012,19 @@ window.EMiR = function() {
 		<li>FF3 seems to have changed the event bubbling, hence tests are unreliable</li>
 
 <!-- times: loading page and building DOM (Intel Dual-Core 2.8GHz)
-	Mac OS X,  Safari 4.04:		~2 minutes
-	Mac OS X,  Webkit r51708:	~2 minutes
+	Mac OS X,  Safari 4.04:		>120 seconds
+	Mac OS X,  Safari 5.03:		>180 seconds
+	Mac OS X,  Webkit r51708:	>120 seconds
 	Mac OS X,  Firefox 2.0.20:	~20 seconds
 	Mac OS X,  Opera 10.10:		~1 second
-	WindowsXP, Chrome 3.0.195.33 ~2 minutes
+	WindowsXP, Chrome 3.0.195.33	>120 seconds
 	WindowsXP, Firefox 2.0.20:	~20 seconds
 	WindowsXP, Opera 10.10:		~10 second
+     times: loading page and building DOM (Intel Quat-Core 3.1GHz)
+	Linux,     Chrome 8.0.552.237	>180 seconds
+	Linux,     Epiphany 2.30.2 (WebKit): ~120 seconds
+	Linux,     Firefox 3.6.13:	~2 seconds
+	Linux,     Midori 2.30.2 (WebKit): ~120 seconds
 -->
 		<li>there is no additional garbage collection implemented, some browsers may consume huge amount of memory</li>
 		<li>the [fire] butten triggers "onClick", "onChange", "onFocus", "onSelect" and "onBlur" in most browsers only.</li>
