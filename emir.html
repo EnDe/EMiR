@@ -9,12 +9,12 @@
 	git clone git@github.com:EnDe/EMiR.git
 -->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>EMiR - Events Mappings in Reality (emir.html 1.24)</title>
+	<title>EMiR - Events Mappings in Reality (emir.html 1.26)</title>
 	<meta name="Author"         content="Achim Hoffmann">
 	<meta name="Generator"      content="me using vi ;-)">
-	<meta name="DC.Creator"     content="EMiR @at@ sic -dash- sec .dot. org">
+	<meta name="DC.Creator"     content="emir @at@ my -dash- stp .dot. net">
 	<meta name="DC.Date"        content="2009-08-02">
-	<meta name="DC.Source"      content="@(#) emir.html 1.24 10/08/28 02:28:32">
+	<meta name="DC.Source"      content="@(#) emir.html 1.26 11/02/17 15:53:33">
 	<meta name="DC.Identifier"  content="git://github .dot. com/EnDe/EMiR/">
 	<meta name="DC.Title"       content="EMiR">
 	<meta name="DC.Description" content="EMiR - Event Mapping in Reality, strange Browser behaviours">
@@ -140,6 +140,7 @@ function $l$ (typ) {//#? called when "get list of .." clicked
 	var o = [];
 	switch (typ) {
 	  case 'events': o = emir.get_events('all'); break;
+	  case 'html':   // no break;
 	  case 'tags':   o = emir.get_tags('all');   break;
 	}
 	var win = null;
@@ -154,11 +155,22 @@ function $l$ (typ) {//#? called when "get list of .." clicked
 		// if (isKonqueror===true) { // some browsers behave strange ..
 			//win.document.body.innerHTML = '<textarea rows="28" cols="99" id="scratch"></textarea>';
 		//} else {
-			var area  = document.createElement('TEXTAREA');
-			area.setAttribute('rows',25);
-			area.setAttribute('cols',40);
-			area.id   = 'events';
-			area.innerHTML = o.join('\n');
+			var area = null;
+			if (typ === 'html') {
+				var obj  = null;
+				area  = document.createElement('DIV');
+				for (var a=0; a<o.length; a++) {
+					obj  = document.createElement('SPAN');
+					obj.innerHTML = ' ' + o[a] + ': &lt;' + o[a] + '&gt;&lt;/' + o[a] + '&gt;';
+					area.appendChild(obj);
+				}
+			} else {
+				area  = document.createElement('TEXTAREA');
+				area.setAttribute('rows',25);
+				area.setAttribute('cols',40);
+				area.id   = typ;
+				area.innerHTML = o.join('\n');
+			}
 			win.document.body.appendChild(area);
 		//}
 	} catch (e) { alert('create area',e); }
@@ -1128,8 +1140,8 @@ window.EMiR = function() {
 			// variables set in GUI
 			'ua':       navigator.userAgent,
 			'host':     location.host,
-			'result':   '/emir_result.cgi',
-			'gettoken': '/emir_token.cgi',
+			'result':   '/result.php',
+			'gettoken': '/getheaders.php',
 			// following variables are used internal only
 			'url':      null,
 			'schema':   'http://',
@@ -1912,6 +1924,10 @@ window.EMiR = function() {
 			f = document.createElement('BUTTON');
 			f.innerHTML = 'get list of tags ';
 			f.setAttribute('onClick', 'return $l$("tags");');
+			t.appendChild(f);
+			f = document.createElement('BUTTON');
+			f.innerHTML = 'get list of HTML tags ';
+			f.setAttribute('onClick', 'return $l$("html");');
 			t.appendChild(f);
 			$('tags').appendChild(t);
 			delete this.f; f = null;
