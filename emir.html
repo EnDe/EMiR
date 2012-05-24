@@ -9,7 +9,7 @@
 	git clone git@github.com:EnDe/EMiR.git
 -->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>EMiR - Events Mappings in Reality (emir.html 1.26)</title>
+	<title>EMiR - Events Mappings in Reality (emir.html 1.27)</title>
 	<meta name="Author"         content="Achim Hoffmann">
 	<meta name="Generator"      content="me using vi ;-)">
 	<meta name="DC.Creator"     content="emir @at@ my -dash- stp .dot. net">
@@ -29,7 +29,7 @@ body, h1     { font-weight:normal; font-family:monospace; font-size:10pt; }
 .c1 li:hover ul { display:block; }
 .c1       li { list-style:none; margin-left:0px; }
 .c1    ul li { list-style:none; margin-left:0px; }
-.nav a         { color:#000000; text-decoration:none; background: #f0f0f0; border:1px outset #f6f6f6; padding-left:0.5em; padding-right:0.5em; width:100%; }
+.nav a         { color:#000000; text-decoration:none; background: #f0f0f0; border:1px outset #f6f6f6; padding-left:0.5em; padding-right:0.5em; width:100%; font-weight:bold; }
 .nav a:hover   { color:#0000ff; text-decoration:none; }
 .nav a:active  { color:#000000; text-decoration:none; }
 ul.conf { padding: 0px; }
@@ -406,8 +406,8 @@ window.EMiR = function() {
 			'onmsGestureStart':                null,  // IE9 ??
 			'onmsGestureTap':                  null,  // IE9 ??
 			'onmsSiteModeJumpListitemRemoved': null,  // IE9 ??
-			'onmsSiteModeShowJumpList ':       null,  // IE9 ??
-			'onmsThumbnailClick ':             null,  // IE9 ??
+			'onmsSiteModeShowJumpList':        null,  // IE9 ??
+			'onmsThumbnailClick':              null,  // IE9 ??
 			'onNodeInserted':   null,	// typo?
 			'onNodeRemoved':    null,	// typo?
 			'onOffline':        null,
@@ -812,8 +812,8 @@ window.EMiR = function() {
 			'onmsGestureStart':                null,  // IE9 ??
 			'onmsGestureTap':                  null,  // IE9 ??
 			'onmsSiteModeJumpListitemRemoved': null,  // IE9 ??
-			'onmsSiteModeShowJumpList ':       null,  // IE9 ??
-			'onmsThumbnailClick ':             null,  // IE9 ??
+			'onmsSiteModeShowJumpList':        null,  // IE9 ??
+			'onmsThumbnailClick':              null,  // IE9 ??
 			'onOffline':        null,       // IE9 ??
 			'onOnline':         null,       // IE9 ??
 			'onPage':           null,       // IE9 ??
@@ -1414,6 +1414,7 @@ window.EMiR = function() {
 				var t   = document.createElement('LABEL');
 				var id  = args.id;
 				if (args.event!==undefined) { id += '-' + args.event; }
+				if (args.title!==undefined) { t.title   = args.title; }
 				if (args.display===false)   { t.setAttribute('style', 'display:none'); }
 				t.id    = 'l-' + id;
 				t.setAttribute('for', id);
@@ -2026,7 +2027,7 @@ window.EMiR = function() {
 <h2>Test Suite for Events in Tag Attributes</h2>
 	<h3>How it works</h3>
 	<p>
-	In the <b>Testing</b> section below, each <span class="t">&lt;tag&gt;</span> listed
+	In the <span class="nav"><a href="#Testing">Testing</a></span> section below, each <span class="t">&lt;tag&gt;</span> listed
 	in its on fieldset contains a text <b>-test me-</b>.
 	All known JavaScript events are bound to that tag as tag attribute. If the
 	event is triggered, the corresponding checkbox will be ticked.
@@ -2048,23 +2049,29 @@ window.EMiR = function() {
 		<li>use the mouse wheel on the <b>-test me-</b> text</li>
 	</ol>
 	</p>
-	<h3>GUI</h3>
+	<p>
+	Finally click the <b>[Result]</b> button at end of the <span class="nav"><a href="#Testing">Testing</a></span>
+    section to get the triggerd events for the tags in the <span class="nav"><a href="#Results">Results</a></span> section.
 	</p>
+	<h3>GUI</h3>
+	<p>
 	All checkboxes for the events in the tags are invisible by default.<br>
 	Clicking the appropriate checkbox in the <b>Show Events for each tag</b>
 	area shows this event checkbox for each tag. Unchecking the checkbox hides
 	the tag's event checkbox.
 	</p>
 	<h4>Config</h4>
-	Moving the mouse over the <b>Config</b> section pops up a inset window with some
-	configuration settings which are used for the result.
 	<p>
+	Moving the mouse over the <span class="nav"><a href="#Config">Config</a></span> section pops up a inset window with some
+	configuration settings which are used for the result.
+	</p>
 	<h4>Event Errors</h4>
-	The <b>Event Errors</b> section shows all all tag events which threw an exception
-	when triggered with the [fire] button.
+	<p>
+	The <span class="nav"><a href="#Errors">Event Errors</a></span> section shows all tag events which threw an exception
+	when triggered with the <b>[fire]</b> button.
 	</p>
 	<h4>GUI Buttons</h4>
-	Buttons at the end of the <b>Testing</b> area:
+	Buttons at the end of the <span class="nav"><a href="#Testing">Testing</a></span> area:
 	<ul>
 		<li><b>[Submit]</b><br>
 			will open the default mail client to send all triggered events for each tag.</li>
@@ -2080,7 +2087,7 @@ window.EMiR = function() {
 	</p>
 	<h3>Note</h3>
 	<ul>
-		<li>automatic event generation ([fire] button) works on some FORM tags only</li>
+		<li>automatic event generation (<b>[fire]</b> button) works on some FORM tags only</li>
 		<li>some (all?) FORM tags (INPUT, TEXTAREA, SELECT ..) may not get, and hence
 			list, all events 'cause of the assiged tag attributes to catch the event</li>
 		<li>some tags are not inside correct hierachy (i.e. PARAM inside OBJECT or EMBED)</li>
@@ -2102,7 +2109,7 @@ window.EMiR = function() {
 	Linux,     Midori 2.30.2 (WebKit): ~120 seconds
 -->
 		<li>there is no additional garbage collection implemented, some browsers may consume huge amount of memory</li>
-		<li>the [fire] butten triggers "onClick", "onChange", "onFocus", "onSelect" and "onBlur" in most browsers only.</li>
+		<li>the <b>[fire]</b> butten triggers "onClick", "onChange", "onFocus", "onSelect" and "onBlur" in most browsers only.</li>
 	</ul>
 	<h3>Closing Tags</h3>
 	For events in closing tags see <a href="tags-close.html">tags-close.html</a> (<b>Warning:</b> ~4.7MB)
@@ -2110,6 +2117,14 @@ window.EMiR = function() {
 	Some tag attributes if used invoke an event too, for example:
 	<b>checked</b>, <b>selected</b> or <b>autofocus</b><br>
 	A working test case for these events is currently missing.
+	<h3>CGI</h3>
+	This tool can be used to collect browser events automatically.
+	<p>
+	If <b>send each event to server</b> is checked in <span class="nav"><a href="#Config">Config</a></span>
+	section then each event will be send to the server specified in <b>FQDN to send event to</b> using the URL specified in <b>URL to send event to</b>. This request will use
+    the string set in <b>User-Agent to be send</b> as value for the "User-Agent" HTTP header.
+	</p>
+
 	<hr>
 	<a name="Selection"><h3>Selection</h3></a>
 	<form id="events"  action="dont-know-where-to-send-to" method="POST"></form>
