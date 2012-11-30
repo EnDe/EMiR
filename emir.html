@@ -300,6 +300,7 @@ window.EMiR = function() {
 			'onAfterPrint':     null,
 			'onAfterUpdate':    null,
 			'onAttrModified':   null,	// typo?
+			'onAfterScriptExecute': null,   // Firefox >= 4
 			'onBack':           null,
 			'onBeforeActivate': null,
 			'onBeforeCopy':     null,
@@ -308,6 +309,7 @@ window.EMiR = function() {
 			'onBeforeEditFocus':null,
 			'onBeforePaste':    null,
 			'onBeforePrint':    null,
+			'onBeforeScriptExecute':null,   // Firefox >= 4
 			'onBeforeUnload':   null,
 			'onBeforeUpdate':   null,
 			'onBegin':          null,
@@ -476,6 +478,7 @@ window.EMiR = function() {
 			'onURLFlip':        null,
 			'onVolumeChange':   null,
 			'onWaiting':        null,
+			'onWheel':          null,       // Firefox >= 4
 			'onXfer_Done':      null,
 			'onwebkitanimationend':      null,
 			'onwebkitanimationiteration':null,
@@ -745,6 +748,11 @@ window.EMiR = function() {
 			'onText':           null,
 			'onXfer_Done':      null
 		}, // Firefox3
+		'Firefox4': {
+			'onAfterScriptExecute': null,
+			'onBeforeScriptExecute':null,
+			'onWheel':          null,
+		}, // Firefox4
 		'IE': {
 			'msVisibilityChange':              null,  // IE9 ??
 			'onActivate':       null,
