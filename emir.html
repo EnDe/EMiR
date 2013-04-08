@@ -324,6 +324,8 @@ window.EMiR = function() {
 			'onClick':          null,
 			'onClose':          null,
 			'onCommand':        null,
+			'oncontentsave':    null,       // case-sensitive (IE)
+			'oncontentready':   null,       // case-sensitive (IE)
 			'onCommandUpdate':  null,
 			'onContextMenu':    null,
 			'onControlSelect':  null,
@@ -334,6 +336,8 @@ window.EMiR = function() {
 			'onDataSetComplete':null,
 			'onDblClick':       null,
 			'onDeactivate':     null,
+			'ondetach':         null,       // case-sensitive (IE)
+			'ondocumentready':  null,       // case-sensitive (IE)
 			'onDOMActivate':    null,
 			'onDOMAttrModified':null,
 			'onDOMAttributeNameChanged':null,
@@ -398,7 +402,7 @@ window.EMiR = function() {
 			'onMouseOver':      null,
 			'onMouseUp':        null,
 			'onMouseWheel':     null,
-			'onMove':           null,
+			'onmove':           null,       // case-sensitive (IE)
 			'onMoveEnd':        null,
 			'onMoveStart':      null,
 			'onmsGestureChange':               null,  // IE9 ??
@@ -774,6 +778,8 @@ window.EMiR = function() {
 			'onCellChange':     null,	// Data Binding
 			'onChange':         null,
 			'onClick':          null,
+			'oncontentsave':    null,       // HTC Context; case sensitive
+			'oncontentready':   null,       // HTC Context; case sensitive
 			'onContextMenu':    null,	// Mouse
 			'onCopy':           null,	// Clipboard
 			'onCut':            null,	// Clipboard
@@ -782,6 +788,8 @@ window.EMiR = function() {
 			'onDataSetComplete':null,	// Data Binding
 			'onDblClick':       null,
 			'onDeactivate':     null,
+			'ondetach':         null,       // HTC Context; case sensitive
+			'ondocumentready':  null,       // HTC Context; case sensitive
 			'onDrag':           null,	// Mouse
 			'onDragDrop':       null,	// Mouse ??
 			'onDragEnd':        null,	// Mouse
@@ -812,7 +820,7 @@ window.EMiR = function() {
 			'onMouseOver':      null,
 			'onMouseUp':        null,
 			'onMouseWheel':     null,
-			'onMove':           null,
+			'onmove':           null,       // case-sensitive
 			'onMoveEnd':        null,
 			'onMoveStart':      null,
 			'onmsGestureChange':               null,  // IE9 ??
@@ -858,7 +866,7 @@ window.EMiR = function() {
 			'onStorageCommit':  null,       // IE9 ??
 			'onSubmit':         null,       // IE9 ??
 			'onSuspend':        null,       // IE9 ??
-			'onTimeout':        null,       // IE9 ??
+			'ontimeout':        null,       // IE9 ?? XHR Context; case sensitive
 			'onTimeupdate':     null,       // IE9 ??
 			'onUnload':         null,      
 			'onVolumeChange':   null,       // IE9 ??
