@@ -377,6 +377,7 @@ window.EMiR = function() {
 			'onForward':        null,
 			'onHashChange':     null,
 			'onHelp':           null,
+			'onhide':           null,       // case-sensitive (IE)
 			'onInput':          null,
 			'onInvalid':        null,
 			'onKeyDown':        null,
@@ -418,6 +419,7 @@ window.EMiR = function() {
 			'onNodeRemoved':    null,	// typo?
 			'onOffline':        null,
 			'onOnline':         null,
+			'onopenstatechanged':null,      // case-sensitive (IE)
 			'onOutOfSync':      null,
 			'onOverFlow':       null,
 			'onOverFlowChanged':null,
@@ -428,6 +430,7 @@ window.EMiR = function() {
 			'onPause':          null,
 			'onPlay':           null,
 			'onPlaying':        null,
+			'onplaystatechange':null,       // case-sensitive (IE)
 			'onPopState':       null,
 			'onPopupHidden':    null,
 			'onPopupHiding':    null,
@@ -806,6 +809,7 @@ window.EMiR = function() {
 			'onFocusIn':        null,
 			'onFocusOut':       null,
 			'onHelp':           null,	// Keyboard
+			'onhide':           null,       // case-sensitive (IE)
 			'onKeyDown':        null,
 			'onKeyPress':       null,
 			'onKeyUp':          null,
@@ -833,12 +837,14 @@ window.EMiR = function() {
 			'onmsSiteModeShowJumpList':        null,  // IE9 ??
 			'onmsThumbnailClick':              null,  // IE9 ??
 			'onOffline':        null,       // IE9 ??
+			'onopenstatechanged':null,      // case-sensitive (IE)
 			'onOnline':         null,       // IE9 ??
 			'onPage':           null,       // IE9 ??
 			'onPaste':          null,       // IE9 ??
 			'onPause':          null,       // IE9 ??
 			'onPlay':           null,       // IE9 ??
 			'onPlaying':        null,       // IE9 ??
+			'onplaystatechange':null,       // case-sensitive (IE)
 			'onPopState':       null,       // IE9 ??
 			'onProgress':       null,       // IE9 ??
 			'onPropertyChange': null,	// Misc.
@@ -852,13 +858,14 @@ window.EMiR = function() {
 			'onRowExit':        null,	// Data Binding
 			'onRowsDelete':     null,	// Data Binding
 			'onRowsInserted':   null,	// Data Binding
-			'onSave':           null,
+			'onsave':           null,       // case-sensitive?
 			'onScroll':         null,
 			'onSeeked':         null,       // IE9 ??
 			'onSeeking':        null,       // IE9 ??
 			'onSelect':         null,       // IE9 ??
 			'onSelectionChamge':null,       // IE9 ??
 			'onSelectStart':    null,	// Mouse
+			'onshow':           null,       // case-sensitive?
 			'onStalled':        null,       // IE9 ??
 			'onStart':          null,	// Marquee
 			'onStop':           null,	// Object
