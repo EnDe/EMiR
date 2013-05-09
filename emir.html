@@ -9,12 +9,12 @@
 	git clone git@github.com:EnDe/EMiR.git
 -->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>EMiR - Events Mappings in Reality (emir.html 1.27)</title>
+	<title>EMiR - Events Mappings in Reality (emir.html 1.29)</title>
 	<meta name="Author"         content="Achim Hoffmann">
 	<meta name="Generator"      content="me using vi ;-)">
 	<meta name="DC.Creator"     content="emir @at@ my -dash- stp .dot. net">
 	<meta name="DC.Date"        content="2009-08-02">
-	<meta name="DC.Source"      content="@(#) emir.html 1.27 12/05/25 00:13:28">
+	<meta name="DC.Source"      content="@(#) emir.html 1.29 13/05/09 22:40:02">
 	<meta name="DC.Identifier"  content="git://github .dot. com/EnDe/EMiR/">
 	<meta name="DC.Title"       content="EMiR">
 	<meta name="DC.Description" content="EMiR - Event Mapping in Reality, strange Browser behaviours">
@@ -279,12 +279,17 @@ window.EMiR = function() {
 		//'browsers':
 			'Opera':    {desc:'spezial Opera events',    url:''},
 			'Safari':   {desc:'spezial Safari events',   url:''},
+			'Firefox3': {desc:'spezial Firfox 3 events', url:''},
+			'Firefox4': {desc:'spezial Firfox 4 events', url:''},
 			'IE':       {desc:'spezial IE events',       url:''},
+			'iOS':      {desc:'spezial iOS (Safari) events',   url:''},
+			'Android':  {desc:'spezial Android events',  url:''},
 			'Webkit':   {desc:'spezial Webkit events',   url:''},
 			'XUL':      {desc:'spezial Mozilla XUL elements events', url:''}
 		}, // categories
 		// note that sequence of following hashes is important for display
 		'all': {
+			// note that spelling (case) must be identical in all hashes
 			'DOMContentLoaded': null,
 			'DOMFrameContentLoaded': null,
 			'DOMMouseScroll':   null,
@@ -375,6 +380,9 @@ window.EMiR = function() {
 			'onFormChange':     null,
 			'onFormInput':      null,
 			'onForward':        null,
+			'ongesturechange':  null,
+			'ongestureend':     null,
+			'ongesturestart':   null,
 			'onHashChange':     null,
 			'onHelp':           null,
 			'onhide':           null,       // case-sensitive (IE)
@@ -420,6 +428,7 @@ window.EMiR = function() {
 			'onOffline':        null,
 			'onOnline':         null,
 			'onopenstatechanged':null,      // case-sensitive (IE)
+			'onorientationchange':             null,
 			'onOutOfSync':      null,
 			'onOverFlow':       null,
 			'onOverFlowChanged':null,
@@ -461,6 +470,7 @@ window.EMiR = function() {
 			'onSeeked':         null,
 			'onSeeking':        null,
 			'onSelect':         null,
+			'onSelection':      null,       // iOS
 			'onSelectionChange':null,
 			'onSelectStart':    null,
 			'onShow':           null,
@@ -479,6 +489,12 @@ window.EMiR = function() {
 			'onTimeError':      null,
 			'onTimeuout':       null,
 			'onTimeupdate':     null,
+			'ontouchcancel':    null,       // iOS
+			'ontouchend':       null,       // iOS
+			'ontouchenter':     null,
+			'ontouchmove':      null,       // iOS
+			'ontouchleave':     null,
+			'ontouchstart':     null,       // iOS
 			'onTrackChange':    null,
 			'onUnderflow':      null,
 			'onUndo':           null,
@@ -967,6 +983,35 @@ window.EMiR = function() {
 			'onwebkitanimationstart':    null,
 			'onwebkittransitionend':     null
 		}, // Webkit
+		'&nbsp;': {},
+		'iOS': {
+			// see http://developer.apple.com/library/ios/#DOCUMENTATION/AppleApplications/Reference/SafariWebContent/HandlingEvents/HandlingEvents.html#//apple_ref/doc/uid/TP40006511-SW5
+			// not sure if these names are case sensitive
+			'ondrop':           null,
+			'ongesturechange':  null,
+			'ongestureend':     null,
+			'ongesturestart':   null,
+			'onorientationchange':       null,
+			'onPageHide':       null,
+			'onPageShow':       null,
+			'onPaste':          null,
+			'onReset':          null,
+			'onSelection':      null,
+			'ontouchcancel':    null,
+			'ontouchend':       null,
+			'ontouchmove':      null,
+			'ontouchstart':     null
+		}, // iOS
+		'Android': {
+			// not sure if these names are case sensitive
+			'onDOMActivate':    null,
+			'onDOMFocusIn':     null,
+			'onDOMFocusOut':    null,
+			'ontouchcancel':    null,
+			'ontouchend':       null,
+			'ontouchmove':      null,
+			'ontouchstart':     null
+		}, // Android
 		'XUL': {
 			'DOMContentLoaded': null,	// ?
 			'DOMFrameContentLoaded': null,	// ?
