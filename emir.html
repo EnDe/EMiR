@@ -272,6 +272,7 @@ window.EMiR = function() {
 			'Mouse':    {desc:'common w3c events: category Mouse',           url:''},
 			'Mutation': {desc:'common w3c events: category mutation',        url:''},
 			'Object':   {desc:'common w3c events: category HTML frame/object',url:''},
+			'Touch':    {desc:'common w3c events: category Touch',           url:''},
 			'User':     {desc:'common w3c events: category user interface',  url:''},
 			'&nbsp;':   {desc:'reset all highlights',    url:''},
 				/* reset is a empty tab used as separartor
@@ -282,9 +283,10 @@ window.EMiR = function() {
 			'Firefox3': {desc:'spezial Firfox 3 events', url:''},
 			'Firefox4': {desc:'spezial Firfox 4 events', url:''},
 			'IE':       {desc:'spezial IE events',       url:''},
+			'Webkit':   {desc:'spezial Webkit events',   url:''},
+			'&#160;':   {desc:'(spacer)',                url:''},
 			'iOS':      {desc:'spezial iOS (Safari) events',   url:''},
 			'Android':  {desc:'spezial Android events',  url:''},
-			'Webkit':   {desc:'spezial Webkit events',   url:''},
 			'XUL':      {desc:'spezial Mozilla XUL elements events', url:''}
 		}, // categories
 		// note that sequence of following hashes is important for display
@@ -716,8 +718,19 @@ window.EMiR = function() {
 			'onDOMNodeRemovedFromDocument': null,
 			'onDOMSubTreeModified':null,
 			'onSubTreeModified':null	// typo?
-			}, // Mutation
+		}, // Mutation
+		'Touch': {
+			'ontouchcancel':    null,
+			'ontouchend':       null,
+			'ontouchenter':     null,
+			'ontouchmove':      null,
+			'ontouchleave':     null,
+			'ontouchstart':     null
+		}, // Touch
 		'User': {
+			'ongesturechange':  null,
+			'ongestureend':     null,
+			'ongesturestart':   null,
 			'onDOMFocusIn':     null,
 			'onDOMFocusOut':    null,
 			'onDOMActivate':    null,
@@ -776,7 +789,7 @@ window.EMiR = function() {
 		'Firefox4': {
 			'onAfterScriptExecute': null,
 			'onBeforeScriptExecute':null,
-			'onWheel':          null,
+			'onWheel':          null
 		}, // Firefox4
 		'IE': {
 			'msVisibilityChange':              null,  // IE9 ??
@@ -983,7 +996,7 @@ window.EMiR = function() {
 			'onwebkitanimationstart':    null,
 			'onwebkittransitionend':     null
 		}, // Webkit
-		'&nbsp;': {},
+		'&#160;': {},
 		'iOS': {
 			// see http://developer.apple.com/library/ios/#DOCUMENTATION/AppleApplications/Reference/SafariWebContent/HandlingEvents/HandlingEvents.html#//apple_ref/doc/uid/TP40006511-SW5
 			// not sure if these names are case sensitive
@@ -1649,7 +1662,8 @@ window.EMiR = function() {
 			} // LI
 		}, // create
 
-		'delete':   { //#? ######################################## delete tags
+		'delet':    { //#? ######################################## delete tags
+			// IE does not allow 'delete'
 			'tags':     function(obj) {
 				//#? delete all tags in DOM for given element
 				if (obj.hasChildNodes()) {
@@ -1658,7 +1672,7 @@ window.EMiR = function() {
 					} 
 				}
 			} // tags
-		}, // delete
+		}, // delet
 
 		'find':     { //#? ###################################### find elements
 			'reset':    function() { var c = null; while((c=objects.shift())!=null){} },
@@ -1885,9 +1899,9 @@ window.EMiR = function() {
 			var a = 0, b = 0;
 			var tag;
 			// remove all existing content first
-			this.delete.tags($('testing'));
-			this.delete.tags($('tag-result'));
-			this.delete.tags($('err-result'));
+			this.delet.tags($('testing'));
+			this.delet.tags($('tag-result'));
+			this.delet.tags($('err-result'));
 			for (tag in tags['HTML 4']) { a++; }
 			for (tag in tags['HTML 5']) { a++; }
 			for (tag in events.all)     { b++; }
@@ -1968,10 +1982,15 @@ window.EMiR = function() {
 			t.appendChild(f);
 			u = this.create.tag('UL',  {}, '');
 			c = 'utab_fg';
+			u.appendChild(this.create.tag('SPAN', {}, 'Category: '));  // ToDo: dirty hack
 			for (e in events) {
 				if (e==='w3c')        { continue; }
 				if (e==='categories') { continue; }
 				if (events.categories[e]===undefined) { continue; }
+				if (e==='Safari'){
+					u.appendChild(document.createElement('BR')); // ToDo: dirty hack
+					u.appendChild(this.create.tag('SPAN', {}, 'Browser:&#160;&#160;'));
+				}
 				u.appendChild(this.create.LI('',
 					{'id':typ + e, 'cls':c, 'href':'', 'onClick':'return $t$(this,"u");', title:events.categories[e].desc},
 					e)
