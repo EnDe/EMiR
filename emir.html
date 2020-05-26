@@ -1,27 +1,24 @@
 <html><head>
 <!--
-	ToDo: zu allen generierten Tags das Attribute  autofocus  dazu; extra Seite
+	TODO: zu allen generierten Tags das Attribute  autofocus  dazu; extra Seite
 
- vi:  ts=4:
- vim: ts=4:
--->
-<!--
 	git clone git@github.com:EnDe/EMiR.git
 -->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>EMiR - Events Mappings in Reality (emir.html 1.30)</title>
+	<title>EMiR - Events Mappings in Reality (emir.html 1.31.1.1)</title>
 	<meta name="Author"         content="Achim Hoffmann">
 	<meta name="Generator"      content="me using vi ;-)">
 	<meta name="DC.Creator"     content="emir @at@ my -dash- stp .dot. net">
 	<meta name="DC.Date"        content="2009-08-02">
-	<meta name="DC.Source"      content="@(#)  emir.html 1.30 13/05/09 23:20:30">
+	<meta name="DC.Source"      content="@(#) emir.html 1.31.1.1 20/05/26 22:20:01">
 	<meta name="DC.Identifier"  content="git://github .dot. com/EnDe/EMiR/">
 	<meta name="DC.Title"       content="EMiR">
 	<meta name="DC.Description" content="EMiR - Event Mapping in Reality, strange Browser behaviours">
 	<meta name="DC.Language"    content="en">
 	<meta name="DC.Rights"      content="Creative Commons 3.0, http://creativecommons.org/licenses/by-sa/3.0/">
+	<!-- { //# tags__CSS__ -->
 	<style  type="text/css">
-body, h1     { font-weight:normal; font-family:monospace; font-size:10pt; }
+body, h1        { font-weight:normal; font-family:monospace; font-size:10pt; }
 .chck { }
 .c1 { float:left; background:#fafafa; width:1em; max-width:1em; position:fixed;top:0px;left:0px;margin:0px;padding:0px; height:100%; border-right:1px solid #000000; padding-left:0.3em; }
 .c2 { margin-left:2em; }
@@ -134,9 +131,11 @@ label               { border:1px solid #ffffff; padding:2px; margin:2px; }
 #config label:hover { border:1px solid #a00000; }
 #config fieldset    { padding:1em; border:2px outset #f6f6f6; }
 	</style>
+	<!-- } //# tags__CSS__ -->
 <!--[if IE]><style  type="text/css">ul.conf li {display:block;}</style> <![endif] -->
+	<!-- { //# tags__JS__ -->
 	<script type="text/javascript">
-function $l$ (typ) {//#? called when "get list of .." clicked
+function $l$(typ)      {//#? called when "get list of .." clicked
 	var o = [];
 	switch (typ) {
 	  case 'events': o = emir.get_events('all'); break;
@@ -174,9 +173,10 @@ function $l$ (typ) {//#? called when "get list of .." clicked
 			win.document.body.appendChild(area);
 		//}
 	} catch (e) { alert('create area',e); }
+
 	return false;
 }; // $l$
-function $c$ (obj,typ) {//#? called when checkbox in "Show Events" clicked
+function $c$(obj,typ)  {//#? called when checkbox in "Show Events" clicked
 	var val = (obj.checked===true) ? 'inline' : 'none';
 	emir.status('checkbox: ' + typ);
 	emir.find.checked({type:typ});
@@ -206,7 +206,7 @@ function $e$(tag,evt) { //#? called for events of tag; sets corresponding checkb
 	//emir.status('');  // we want see the event for now
 	return false;
 }; // $e$
-function $s$ (obj,typ) {//#? called when highlight (un)check in "Show Events" clicked
+function $s$(obj,typ)  {//#? called when highlight (un)check in "Show Events" clicked
 	if (emir.selected.event===undefined) { return false; }
 	emir.status('highlight: ' + typ);
 	var c = null;
@@ -220,7 +220,7 @@ function $s$ (obj,typ) {//#? called when highlight (un)check in "Show Events" cl
 	emir.status('');
 	return false;
 }; // $s$
-function $t$(obj,cls){  //#? called when tab in "Show Events", "Show Tags" clicked
+function $t$(obj,cls)  {//#? called when tab in "Show Events", "Show Tags" clicked
 	emir.status('tab: ' + obj.id);
 	var c   = '';
 	var arr = obj.id.split('-'); // we get: use-event-* or use-tag-*
@@ -247,10 +247,19 @@ function $t$(obj,cls){  //#? called when tab in "Show Events", "Show Tags" click
 	emir.status('');
    	return false;
 }; // $t$
+function dumm(tag)     {alert('Tag <'+tag+'> clicked');return false;}
+        </script>
+	<!-- } //# tags__JS__ -->
 
+	<script type="text/javascript">
 window.EMiR = function() {
 	function $(id) { return document.getElementById(id); }
+
 	var events  = {
+		/*
+		 * for a description of the sub-hashes used here, see below in
+		 *  w3c, categories
+		 */
 		'w3c': {
 			// hash labels here must be the same as hash labels following categories{}
 			'HTML 4':       {desc:'w3c events: HTML 4',
@@ -290,7 +299,7 @@ window.EMiR = function() {
 			'XUL':      {desc:'spezial Mozilla XUL elements events', url:''}
 		}, // categories
 		// note that sequence of following hashes is important for display
-		'all': {
+		'all': {    //# tags__EVENTS__
 			// note that spelling (case) must be identical in all hashes
 			'DOMContentLoaded': null,
 			'DOMFrameContentLoaded': null,
@@ -490,7 +499,7 @@ window.EMiR = function() {
 			'onTextInput':      null,
 			'onTimeError':      null,
 			'onTimeuout':       null,
-			'onTimeupdate':     null,
+			'onTimeUpdate':     null,
 			'ontouchcancel':    null,       // iOS
 			'ontouchend':       null,       // iOS
 			'ontouchenter':     null,
@@ -511,7 +520,7 @@ window.EMiR = function() {
 			'onwebkitanimationstart':    null,
 			'onwebkittransitionend':     null,
 			'seekSegmentTime':  null
-		}, // all
+		}, // all //# tags__EVENTS__
 		'HTML 4': {
 			'onBlur':           null,
 			'onChange':         null,
@@ -792,7 +801,7 @@ window.EMiR = function() {
 			'onWheel':          null
 		}, // Firefox4
 		'IE': {
-			'msVisibilityChange':              null,  // IE9 ??
+			'msVisibilityChange':   null,  // IE9 ??
 			'onActivate':       null,
 			'onAfterPrint':     null,	// Misc.
 			'onAfterUpdate':    null,	// Data Binding
@@ -810,8 +819,8 @@ window.EMiR = function() {
 			'onCellChange':     null,	// Data Binding
 			'onChange':         null,
 			'onClick':          null,
-			'oncontentsave':    null,       // HTC Context; case sensitive
-			'oncontentready':   null,       // HTC Context; case sensitive
+			'oncontentsave':    null,   // HTC Context; case sensitive
+			'oncontentready':   null,   // HTC Context; case sensitive
 			'onContextMenu':    null,	// Mouse
 			'onCopy':           null,	// Clipboard
 			'onCut':            null,	// Clipboard
@@ -820,8 +829,8 @@ window.EMiR = function() {
 			'onDataSetComplete':null,	// Data Binding
 			'onDblClick':       null,
 			'onDeactivate':     null,
-			'ondetach':         null,       // HTC Context; case sensitive
-			'ondocumentready':  null,       // HTC Context; case sensitive
+			'ondetach':         null,   // HTC Context; case sensitive
+			'ondocumentready':  null,   // HTC Context; case sensitive
 			'onDrag':           null,	// Mouse
 			'onDragDrop':       null,	// Mouse ??
 			'onDragEnd':        null,	// Mouse
@@ -837,14 +846,14 @@ window.EMiR = function() {
 			'onFocus':          null,
 			'onFocusIn':        null,
 			'onFocusOut':       null,
-			'onHelp':           null,	// Keyboard
-			'onhide':           null,       // case-sensitive (IE)
+			'onHelp':           null,   // Keyboard
+			'onhide':           null,   // case-sensitive (IE)
 			'onKeyDown':        null,
 			'onKeyPress':       null,
 			'onKeyUp':          null,
 			'onLayoutComplete': null,
 			'onLoad':           null,
-			'onLoseCapture':    null,	// Misc.
+			'onLoseCapture':    null,   // Misc.
 			'onMouseDown':      null,
 			'onMouseEnter':     null,
 			'onMouseLeave':     null,
@@ -853,7 +862,7 @@ window.EMiR = function() {
 			'onMouseOver':      null,
 			'onMouseUp':        null,
 			'onMouseWheel':     null,
-			'onmove':           null,       // case-sensitive
+			'onmove':           null,   // case-sensitive
 			'onMoveEnd':        null,
 			'onMoveStart':      null,
 			'onmsGestureChange':               null,  // IE9 ??
@@ -1036,8 +1045,7 @@ window.EMiR = function() {
 			'onCommand':        null,	// Input
 			'onCommandUpdate':  null,	// User
 			'onContextMenu':    null,	// User
-//			'onCheckboxStateChange': null,	// Input
-//			'onRadioStateChange': null,	// Input
+			'onCheckboxStateChange': null,	// Input
 			'onDragDrop':       null,	// Mouse
 			'onDragEnter':      null,	// Mouse
 			'onDragExit':       null,	// Mouse
@@ -1050,10 +1058,12 @@ window.EMiR = function() {
 			'onPopupHiding':    null,	// User
 			'onPopupShowing':   null,	// User
 			'onPopupShown':     null,	// User
+			'onRadioStateChange': null,	// Input
 			'onUnderflow':      null
 		} // XUL
 	}; // events
-// ToDo: behavior not yet implemented (05-may-13)
+
+// TODO: behavior not yet implemented (05-may-13)
 	var behavior= {
 		'IE': {
 			'anchorClick':      null,
@@ -1062,22 +1072,23 @@ window.EMiR = function() {
 			'saveSnapshot':     null
 		} // IE
 	}; // behavior
+
 	var tags    = {
-		'w3c': {
-			// hash labels here must be the same as hash labels following categories{}
-			'HTML 4':       {desc:'w3c tags: HTML 4',
-							 url:'http://www.w3.org/TR/html4/'},
-			'HTML 5':       {desc:'w3c tags: HTML 5',
-							url:'http://dev.w3.org/html5/spec/Overview.html'},
-			'&nbsp;':       {desc:'reset all highlights', url:''}
-		}, // w3c
 		/*
+		 * this hash has following sub-hashes:
+		 *  tags_file:  list of tags using their own file (generated)
+		 *  w3c:        description
+		 *  debug:      list of tags used for debugging
+		 *  HTML 4:     list of HTML 4 tags
+		 *  HTML 5:     list of HTML 5 tags
+		 *
 		 * values in each hash are used as follows:
 		 *  file:   should be used in its own file also, provide a link for it
 		 *  meta:   tags for meta data, should appear in HEAD container only
 		 *  use:    don't generate, causes JavaScript DOM error
 		 *  attr:   all listes attributes are set in the generated tag
 		 *  empty:  element does not have content, hence closing tag forbidden
+		 *          (aka standalone tag, see https://www.w3.org/TR/xhtml1/ )
 		 *  notext: do not generate text node, causes JavaScript DOM error
 		 *          (except the script tag, this should occour for tags marked
 		 *           empty:true only)
@@ -1086,20 +1097,29 @@ window.EMiR = function() {
 		 *  table:  special behaviour for TABLE, TR, TD, etc. tags
 		 *  select: special behaviour for SELECT, OPTION, etc. tags
 		 */
-		'HTML 4': {
-			'a':            {href:'return dumm("A");'}, // does not work 'cause onClick returns false
+		'tags_file': [],  // will be generated from file: in init()
+		'w3c': {
+			// hash labels here must be the same as hash labels following categories{}
+			'HTML 4':       {desc:'w3c tags: HTML 4',
+							 url:'http://www.w3.org/TR/html4/'},
+			'HTML 5':       {desc:'w3c tags: HTML 5',
+							url:'http://dev.w3.org/html5/spec/Overview.html'},
+			'&nbsp;':       {desc:'reset all highlights', url:''}
+		}, // w3c
+		'HTML 4': {   //# tags__TAGS__
+			'a':            {href:'return dumm("A");'}, //# does not work 'cause onClick returns false
 			'abbr':         null,
-			'acronym':      null,
+			'acronym':      {html5:false},
 			'address':      null,
-			'applet':       {use:false,file:true,attr:{width:'15px',height:'15px',src:'#'}},
-			'area':         {empty:true},
+			'applet':       {html5:false,use:false,file:true,attr:{width:'240px',height:'20px',src:'#'}},
+			'area':         {empty:true},               //# must be child of map
 			'audioscope':   null,
 			'b':            null,
 			'base':         {file:true,empty:true,meta:true},
-			'basefont':     {empty:true},
+			'basefont':     {empty:true,html5:false},
 			'bdo':          null,
 			'bgsound':      null,
-			'big':          null,
+			'big':          {html5:false},
 			'blackface':    null,
 			'blink':        null,
 			'blockquote':   null,
@@ -1111,7 +1131,7 @@ window.EMiR = function() {
 			'br':           {empty:true},
 			'button':       null,
 			'caption':      {table:true},
-			'center':       null,
+			'center':       {html5:false},
 			'cite':         null,
 			'code':         null,
 			'col':          {table:true,empty:true},
@@ -1120,29 +1140,30 @@ window.EMiR = function() {
 			'dd':           null,
 			'del':          null,
 			'dfn':          null,
-			'dir':          null,
+			'dir':          {html5:false},
 			'div':          null,
 			'dl':           null,
 			'dt':           null,
 			'em':           null,
-			'elements':     {use:false},    // must be last tag
+			'elements':     {use:false},                //# must be last tag
 			'fieldset':     null,
 			'fn':           null,
-			'font':         null,
+			'font':         {html5:false},
 			'form':         {file:true,action:true},
-			'frame':        {file:true},
+			'frame':        {file:true,empty:true},     //# must be child of frameset
+			'frameset':     {file:true},
 			//'frameset':     {attr:{width:'15px',height:'15px'}},
-			'frameset':     {attr:{width:'200px',height:'30px',border:'1px',src:'data:text/html,ein <b>fetter text</b> im frameset'}},
+			//'frameset':     {attr:{width:'200px',height:'30px',border:'1px',src:'data:text/html,ein <b>fetter text</b> im frameset'}},
 			'h1':           null,
 			'head':         {file:true,meta:true},
 			'hr':           {empty:true,notext:true},
-			'html':         {file:true},    //# seems to work proper in Mozilla
+			'html':         {file:true},                //# seems to work proper in Mozilla
 			'i':            null,
-			'iframe':       {attr:{width:'200px',height:'30px',border:'0px',src:'data:text/html,ein <b>fetter text</b> im iframe'}},
+			'iframe':       {empty:true,attr:{width:'240px',height:'40px',border:'0px',src:'data:text/html,ein <b>fetter text</b> im iframe'}},
 			'ilayer':       null,
-			'img':          {attr:{width:'15px',height:'15px'},empty:true},
-			'input':        {input:{'button':true,'hidden':true,'text':true,'password':true,'reset':true,'submit':true,'file':true,'checkbox':true,'radio':true,'image':true},empty:true},
-	//HTML5	'input':        {input:{'search':true,'tel':true,'url':true,'email':true,'datetime':true,'date':true,'month':true,'week':true,'time':true,'datetime-local':true,'number':true,'range':true,'color':true},empty:true},
+			'img':          {empty:true,attr:{width:'240px',height:'20px'}},
+			'input':        {empty:true,input:{'button':true,'hidden':true,'text':true,'password':true,'reset':true,'submit':true,'file':true,'checkbox':true,'radio':true,'image':true}},
+	//HTML5	'input':        {empty:true,input:{'search':true,'tel':true,'url':true,'email':true,'datetime':true,'date':true,'month':true,'week':true,'time':true,'datetime-local':true,'number':true,'range':true,'color':true}},
 			'ins':          null,
 			'isindex':      {empty:true,meta:true,action:true},
 			'kbd':          null,
@@ -1167,7 +1188,7 @@ window.EMiR = function() {
 			'option':       {select:true},
 			'p':            null,
 			'param':        {empty:true},
-			'plaintext':    {attr:{width:'15px',height:'15px'}}, // for mozilla 1.7.x
+			'plaintext':    {attr:{width:'240px',height:'20px'}}, //# for mozilla 1.7.x
 			'pre':          null,
 			'q':            null,
 			's':            null,
@@ -1180,7 +1201,7 @@ window.EMiR = function() {
 			'small':        null,
 			'spacer':       {empty:true},
 			'span':         null,
-			'strike':       null,
+			'strike':       {html5:false},
 			'strong':       null,
 			'style':        {file:true,meta:true},
 			'sub':          null,
@@ -1188,46 +1209,50 @@ window.EMiR = function() {
 			'table':        {table:true},
 			'tbody':        {table:true},
 			'td':           {table:true},
-			'textarea':     {attr:{width:'15px',height:'15px'}},
+			'textarea':     {attr:{width:'240px',height:'20px'}},
 			'tfoot':        {table:true},
 			'th':           {table:true},
 			'thead':        {table:true},
-			'title':        {file:true,meta:true},    //# produces strange tags inside body in Mozilla
+			'title':        {file:true,meta:true},      //# produces strange tags inside body in Mozilla
 			'tr':           {table:true},
-			'tt':           null,
+			'tt':           {html5:false},
 			'u':            null,
 			'ul':           null,
 			'var':          null,
 			'wbr':          {empty:true},
 			'xml':          null,
 			'xmp':          null
-		}, // HTML 4
-		'HTML 5': {
+		}, // HTML 4  //# tags__TAGS__
+		'HTML 5': {   //# tags__TAGS__
 			'article':      null,
 			'aside':        null,
 			'audio':        null,
 	//HTML5	'button':       {input:{'button':true,'submit':true,'reset':true}},
 			'bdi':          null,
 			'bdo':          null,
-			'canvas':       null,
+			'canvas':       {attr:{height:'20px'}},
 			'command':      null,
 			'datalist':     null,
 			'dialog':       null,
 			'details':      null,
-			'embed':        {attr:{width:'15px',height:'15px',src:'#'},empty:true},
+			'embed':        {attr:{width:'240px',height:'60px',src:'#'},empty:true},
 			'figcaption':   null,
 			'figure':       null,
 			'footer':       null,
 			'header':       null,
 			'hgroup':       null,
+			'ins':          null,
 	//HTML5	'input':        {input:{'search':true,'tel':true,'url':true,'email':true,'datetime':true,'date':true,'month':true,'week':true,'time':true,'datetime-local':true,'number':true,'range':true,'color':true},empty:true},
 			'keygen':       {empty:true},
+			'main':         null,
 			'mark':         null,
+			'math':         null,
 			'menu':         null,
 			'meter':        null,
 			'nav':          null,
 			'noembed':      {file:true},
 			'nosmartquotes':null, // ?
+			'picture':      null,
 			'progress':     null,
 			'output':       null,
 			'rp':           null,
@@ -1235,16 +1260,19 @@ window.EMiR = function() {
 			'ruby':         null,
 			'section':      null,
 			'small':        null,
-			'source':       null,
+			'source':       {empty:true},               //# must be child of video
 			'summary':      null,
+			'svg':          null,
+			'template':     {file:true,meta:true},
 			'time':         null,
-			'track':        null,
-			'video':        null
-		} // HTML 5
+			'track':        {empty:true},               //# must be child of video
+			'video':        {attr:{height:'20px'}}
+		} // HTML 5   //# tags__TAGS__
 	};
 	var objects = [];   // temp. array for sections
 
 	obj = function(){ this.init(); },
+
 	obj.prototype = {
 		'cfg':{ // runtime configurations
 			'sortkey':  'tags',
@@ -1258,18 +1286,20 @@ window.EMiR = function() {
 			'tags': 'HTML 4'
 		}, // selected
 		'html':   '-test me-',
-		'get_objects':function() {
-			//#? get array of all objects[]
+
+		//#? get array items functions ########################################
+
+		'get_objects':  function()     {//#? get array of all objects[]
 			return objects;
 		}, // get_objects
-		'get_events':function(typ) {
-			//#? get array of all events[typ]
+
+		'get_events':   function(typ)  {//#? get array of all events[typ]
 			var t = [];
 			for (var e in events[typ]) { t.push(e); }
 			return t;
 		}, // get_events
-		'get_tags':function(typ) {
-			//#? get array of all tags[typ]
+
+		'get_tags':     function(typ)  {//#? get array of all tags[typ]
 			var t = [];
 			var e = null;
 			if (typ==='all') {
@@ -1280,7 +1310,10 @@ window.EMiR = function() {
 			}
 			return t;
 		}, // get_events
-		'http': {   //#? ####################################### XMLHttpRequest
+
+		//#? XMLHttpRequest functions #########################################
+
+		'http': {
 			/*
 			 * NOTE that most modern browsers will not allow to use XMLHttpRequest
 			 * to other domains due to the Same Origin Policy
@@ -1295,8 +1328,8 @@ window.EMiR = function() {
 			'schema':   'http://',
 			'token':    '',
 			'ctype':    'application/x-www-form-urlencoded',
-			'xmlhttp':  new function () {
-			//#? get XMLHttpRequest object
+
+			'xmlhttp':  new function() {//#? get XMLHttpRequest object
 				if (window.XMLHttpRequest) {
 					return new XMLHttpRequest();
 				} else {
@@ -1307,16 +1340,17 @@ window.EMiR = function() {
 				}
 				return null;
 			}, // xmlhttp
-			'prepare': function (url) {
-			//#? prepare URL to be used in XMLHttpRequest
+
+			'prepare':  function(url)  {//#? prepare URL to be used in XMLHttpRequest
 				if (this.url!==null) { return; }
 				if (this.host!=='') { // take care for same origin policy
 					this.url = (this.host===location.host) ?  '' : this.schema + this.host;
 					this.url += url;
 				}
+				return;
 			}, // prepare
-			'post_event': function (tag, evt) {
-			//#? send tag and event type to remote server
+
+			'post_event': function(tag, evt)   {//#? send tag and event type to remote server
 				if (this.xmlhttp) {
 					this.prepare(this.result);
 					this.xmlhttp.open('POST', this.url, false);
@@ -1335,8 +1369,8 @@ window.EMiR = function() {
 				}
 				return true;
 			}, // post_event
-			'get_token': function () {
-			//#? get token from remote server
+
+			'get_token': function()    {//#? get token from remote server
 				if (this.xmlhttp) {
 					this.url = null; // reset to force correct url
 					this.prepare(this.gettoken);
@@ -1353,8 +1387,9 @@ window.EMiR = function() {
 			} // get_token;
 		}, // http
 
-		'set_config': function (src) { //#? ############ configuration settings
-		//#? set configuration data for tool itself and AJAX requests;
+		//#? configuration setting functions ###################################
+
+		'set_config':   function(src)  {//#? set configuration data for tool itself and AJAX requests;
 			// updates internal data structure and display
 			if (!src) { return false; }
 			if (src.id===undefined) { return false; }
@@ -1385,20 +1420,22 @@ window.EMiR = function() {
 			return false;
 		}, // set_config
 
-		'create':   { //#? ######################################## create tags
-			// ToDo 'self': this,
-			'html': '-test me-', // ToDo: should be this.html;
-			'inputID':  function(id,txt) { return id += '\ttype=' + txt; },
-				//#? create special id for INPUT tags
-			'innerHTML':function(parent,html) {
-				//#? set innerHTML attribute
+		//#? create tags functions ############################################
+
+		'create':   {
+			// TODO 'self': this,
+			'html': '-test me-', // TODO: should be this.html;
+			'inputID':  function(id,txt)       {//#? create special id for INPUT tags
+				return id += '\ttype=' + txt;
+			},
+			'innerHTML':function(parent,html)  {//#? set innerHTML attribute
 				if (html !== '') {
 					try{ parent.innerHTML = html; }
 					catch(e){}; // contribution to w3c-conform browsers
 				}
+				return;
 			}, // innerHTML
-			'onEvent':  function(parent,typ) {
-				//#? set all events[typ] attributes
+			'onEvent':  function(parent,typ)   {//#? set all events[typ] attributes
 				var err = '';
 				for (var x in events[typ]) {
 					try { parent.setAttribute(x, "return $e$(this,'"+ x +"');"); }
@@ -1406,8 +1443,8 @@ window.EMiR = function() {
 				}
 				return err;
 			}, // onEvent
-			'on_body':  function(parent,typ) {
-				//#? set all events[typ] attributes for <body> (excluding 'onload')
+
+			'on_body':  function(parent,typ)   {//#? set all events[typ] attributes for <body> (excluding 'onload')
 				var err = '';
 				for (var x in events[typ]) {
 					if (x.match(/^onLoad/i)!==null) {        alert('onload');continue; }
@@ -1419,8 +1456,8 @@ window.EMiR = function() {
 				}
 				return err;
 			}, // on_body
-			'checkboxes':function(tag,id,parent,err) {
-				//#? create checkboxes for all events
+
+			'checkboxes':function(tag,id,parent,err) {//#? create checkboxes for all events
 				var t = null;
 				var i = id;
 				//parent.appendChild(document.createElement('BR')); // nur bei inline Elementen
@@ -1445,8 +1482,8 @@ window.EMiR = function() {
 				}
 				return;
 			}, // checkboxes
-			'tag':  function(tag,arg_hash,html) {
-				//#? return specified tag with given attributes
+
+			'tag':      function(tag,arg_hash,html)  {//#? return specified tag with given attributes
 				var args= arg_hash;
 				var t = document.createElement(tag);
 				this.innerHTML(t,html);
@@ -1456,8 +1493,8 @@ window.EMiR = function() {
 					// we need a name attrinute if we want to make a request
 				return t;
 			}, // tag
-			'tags': function(parent,typ) {
-				//#? create all tags of given typ (returns void)
+
+			'tags':     function(parent,typ)         {//#? create all tags of given typ (returns void)
 				var i   = 0;
 				var obj = null;
 				var tag = null;
@@ -1491,7 +1528,7 @@ window.EMiR = function() {
 							}
 						}
 					}
-					parent.appendChild(this.tag_form(tag, typ, {}, html)); // ToDo: inline should be configurable
+					parent.appendChild(this.tag_form(tag, typ, {}, html)); // TODO: inline should be configurable
 					if (tags[typ][tag]!==null) {
 						if (tags[typ][tag].file!==undefined) {
 						parent.appendChild(this.tag_form(tag, typ, {'url':'tags-'+tag.toLowerCase()+'.html'}, html));
@@ -1500,9 +1537,10 @@ window.EMiR = function() {
 					//if ((i%10)==0) {$('status').innerHTML += '.'; } // ugly hack
 						// status does not work, 'cause rendering engine is not called
 				}
+				return;
 			}, // tags
-			'CHECKBOX': function(dummytag,arg_hash) {
-				//#? return <label><input type=checkbox></label>
+
+			'CHECKBOX': function(dummytag,arg_hash)  {//#? return <label><input type=checkbox></label>
 				var args= arg_hash; // style: is for the surounding LABEL tag, all others for INPUT tag
 				var t   = document.createElement('LABEL');
 				var id  = args.id;
@@ -1519,15 +1557,15 @@ window.EMiR = function() {
 				}
 				return t;
 			}, // CHECKBOX
-			'FIELDSET': function(tag,arg_hash,html) {
-				//#? return <fieldset><span> tag </span> </fieldset>
+
+			'FIELDSET': function(tag,arg_hash,html)  {//#? return <fieldset><span> tag </span> </fieldset>
 				var t =   this.tag('FIELDSET', {}, '');
 				t.appendChild(this.tag('SPAN', {cls:'l'}, '&#x3c;' + tag.toUpperCase() + '&#x3e;'));
 				this.innerHTML(t,html);
 				return t;
 			}, // FIELDSET
-			'tag_form': function(tag,typ,arg_hash,html) {
-				//#? return <div><fieldset><span> tag </span> <tag>..</tag> </fieldset></div>
+
+			'tag_form': function(tag,typ,arg_hash,html) {//#? return <div><fieldset><span> tag </span> <tag>..</tag> </fieldset></div>
 				var args= arg_hash; // attributes for generated tag
 				var err = '';
 				var id  = tag;
@@ -1566,8 +1604,8 @@ window.EMiR = function() {
 				t.appendChild(f);  delete this.f;
 				return t;
 			}, // tag_form
-			'SELECT':   function(tag,arg_hash,html) {
-				//#? return <select><optgroup><option> text </option></optgroup></select>
+
+			'SELECT':   function(tag,arg_hash,html)  {//#? return <select><optgroup><option> text </option></optgroup></select>
 				/* event attributes are set to given "tag" only */
 				var id  = '';
 				var err = '';
@@ -1599,7 +1637,8 @@ window.EMiR = function() {
 				t.appendChild(g);  delete this.g;
 				return t;
 			}, // SELECT
-			'TABLE':    function(tag,arg_hash,html) {
+
+			'TABLE':    function(tag,arg_hash,html)  {//#? return table <tag></tag>
 				var id  = '';
 				var err = '';
 				var tid = {'cls':'table'}, ttx = '';
@@ -1653,16 +1692,19 @@ window.EMiR = function() {
 				t.appendChild(d);  delete this.d;
 				return t;
 			}, // TABLE
-			'LI':       function(tag,arg_hash,html) {
-				//#? return <li><a ...>html</a></li>
+
+			'LI':       function(tag,arg_hash,html)  {//#? return <li><a ...>html</a></li>
 				var args= arg_hash;
 				var t = document.createElement('LI');
 				t.appendChild(this.tag('A', arg_hash, html));
 				return t;
 			} // LI
+
 		}, // create
 
-		'delet':    { //#? ######################################## delete tags
+		//#? delete functions #################################################
+
+		'delet':    {
 			// IE does not allow 'delete'
 			'tags':     function(obj) {
 				//#? delete all tags in DOM for given element
@@ -1671,13 +1713,18 @@ window.EMiR = function() {
 						obj.removeChild(obj.firstChild);       
 					} 
 				}
+				return;
 			} // tags
 		}, // delet
 
-		'find':     { //#? ###################################### find elements
-			'reset':    function() { var c = null; while((c=objects.shift())!=null){} },
-			'checked':  function(arg_hash) {
-				//#? find all checkboxes in tags of given type
+		//#? find functions ###################################################
+
+		'find':     {
+			'reset':    function()          {//#? clear array of objects[]
+				var c = null;//#? clear array of objects[]
+				while((c=objects.shift())!=null){}//#? clear array of objects[]
+			},
+			'checked':  function(arg_hash)  {//#? find all checkboxes in tags of given type
 				var args= arg_hash;
 				var arr = document.getElementsByTagName('LABEL');
 				var c   = null;
@@ -1698,14 +1745,15 @@ window.EMiR = function() {
 				}
 				return false;
 			},  // checked
-			'show':     function(val) {
+
+			'show':     function(val)       {//#? (show) display all objects from objects[]
 				var c = null;
 				while ((c=objects.shift())!=null) { $(c).style.display = val; }
 				c = null;
 				return false;
 			}, // show
-			'mark':     function(obj) {
-				//#? mark all checkboxes in "Show Events" which belong to events[tab]
+
+			'mark':     function(obj)       {//#? mark all checkboxes in "Show Events" which belong to events[tab]
 				var arr = obj.id.split('-'); // we get: use-event-* or use-tag-*
 				var typ = arr[1];
 				var tab = arr[2];
@@ -1731,10 +1779,13 @@ window.EMiR = function() {
 					}
 				}
 				rex = null;
+				return;
 			} // mark
 		}, // find
-		'result':   function (mode) { //#? ############################# result
-		//#? called when Result button clicked
+
+		//#? result functions #################################################
+
+		'result':    function(mode)      {//#? called when Result button clicked
 			//#mode? show: show result in mailto: application
 			//#mode? tags: show reult in "Result" area
 			//#mode? ajax: send a request to the remote server for each recorded event
@@ -1775,7 +1826,7 @@ window.EMiR = function() {
 			 * then
 			 */
 			for (c in keys) {
-				if (mode==='ajax') { // ToDo: NOT YET implemented
+				if (mode==='ajax') { // TODO: NOT YET implemented
 					for (i=0; i<keys[c].length; i++) {
 						this.http.post_event(tag.tagName, evt);
 					}
@@ -1814,8 +1865,10 @@ window.EMiR = function() {
 			this.status('');
 			return e;
 		}, // result
-		'fire': function() {//#? ######################################### fire
-		//#? called to fire all known events
+
+		//#? fire functions ###################################################
+
+		'fire':      function()          {//#? called to fire all known events
 			if (emir.selected.event===undefined) { return false; }
 			this.status('fire: ');
 			var f = [];
@@ -1848,7 +1901,7 @@ window.EMiR = function() {
 			}
 			e = this.get_events('all');
 			for (i=0; i<e.length; i++) {
-// ToDo: does not work
+// TODO: does not work
 				typ = e[i].replace(/^on/,'');
 				evt = document.createEvent('Events');
 				evt.initEvent(typ, true, true);
@@ -1869,7 +1922,7 @@ window.EMiR = function() {
 						err += '\t' + tag + '[' + typ + ']'; // collect failed events
 					}
 					if (xxx==1) {
-/* ToDo: does not work
+/* TODO: does not work
 						evt = obj.createEvent('Events');
 						evt.initEvent(typ, true, true);
 						obj.dispatchEvent(evt);
@@ -1886,15 +1939,24 @@ window.EMiR = function() {
 			obj.innerHTML = err;
 			return false;
 		}, // fire
-		'status': function(txt) {   //#? ############################### status
+
+		//#? status functions #################################################
+
+		'status':       function(txt)  {//#? set text in status line
 			$('status').innerHTML = txt;
+			return;
 		}, // status
-		'status_': function(txt) {
+
+		'status_':      function(txt)  {//#? append text to status line
 			$('status').innerHTML += txt;
+			return;
 		}, // status_
-		//                  //# ########################################## init
+
+		//#? init functions ###################################################
+
 		'initdone': false,  // avoid multiple calls
-		'initevents':function(){ //#? reset
+
+		'initevents':   function()    {//#? reset
 			//#? initialize "Testing"
 			var a = 0, b = 0;
 			var tag;
@@ -1933,7 +1995,8 @@ window.EMiR = function() {
 		'resetevents':function(){ //#? resetevents
 			this.initevents();
 		}, // resetevents
-		'init': function(){ //#? init
+
+		'init':         function()     {//#? init variables and GUI
 			var html = '';
 			//#dbx# alert ('done '+this.initdone);
 			if (this.initdone===true) { return; }
@@ -1955,7 +2018,7 @@ window.EMiR = function() {
 			var u = this.create.tag('UL',  {}, '');
 			var e = null;
 			var f = null;
-			var c = 'otab_fg';  // ToDo: need to have at least on *_fg, otherwise $t$ will not work
+			var c = 'otab_fg';  // TODO: need to have at least on *_fg, otherwise $t$ will not work
 			for (e in events.w3c) {
 				u.appendChild(this.create.LI('',
 					{'id':typ + e, 'cls':c, 'href':'', 'onClick':'return $t$(this,"o");', title:events.w3c[e].desc},
@@ -1982,13 +2045,13 @@ window.EMiR = function() {
 			t.appendChild(f);
 			u = this.create.tag('UL',  {}, '');
 			c = 'utab_fg';
-			u.appendChild(this.create.tag('SPAN', {}, 'Category: '));  // ToDo: dirty hack
+			u.appendChild(this.create.tag('SPAN', {}, 'Category: '));  // TODO: dirty hack
 			for (e in events) {
 				if (e==='w3c')        { continue; }
 				if (e==='categories') { continue; }
 				if (events.categories[e]===undefined) { continue; }
 				if (e==='Safari'){
-					u.appendChild(document.createElement('BR')); // ToDo: dirty hack
+					u.appendChild(document.createElement('BR')); // TODO: dirty hack
 					u.appendChild(this.create.tag('SPAN', {}, 'Browser:&#160;&#160;'));
 				}
 				u.appendChild(this.create.LI('',
@@ -2038,7 +2101,7 @@ window.EMiR = function() {
 			t = this.create.tag('FIELDSET',  {cls:'e'}, '');
 			t.appendChild(this.create.tag('LEGEND', {}, 'Tag Categories'));
 			u = this.create.tag('UL',  {}, '');
-			c = 'otab_fg';  // ToDo:
+			c = 'otab_fg';  // TODO:
 			for (e in tags.w3c) {
 				u.appendChild(this.create.LI('',
 					{'id':typ + e, 'cls':c, 'href':'', 'onClick':'return $t$(this,"o");', title:tags.w3c[e].desc},
@@ -2089,7 +2152,7 @@ window.EMiR = function() {
 			delete this.u; u = null;
 			delete this.t; t = null;
 
-/* / ToDo: does not work (destroys event handling in some browsers completely
+/* / TODO: does not work (destroys event handling in some browsers completely
 			e = this.get_events('all');
 			for (c=0; c<e.length; c++) {
 				typ = e[c].replace(/^on/,'');
@@ -2101,6 +2164,7 @@ window.EMiR = function() {
 			this.initevents();
 			delete this.t; t = null;
 			this.status('.'); // -----------------------
+			return;
 		}, // init
 		uselessdummytokeepjavascriptsyntaxhappy: null
 	}; // obj
@@ -2193,19 +2257,21 @@ window.EMiR = function() {
 		<li>FF3 seems to have changed the event bubbling, hence tests are unreliable</li>
 
 <!-- times: loading page and building DOM (Intel Dual-Core 2.8GHz)
-	Mac OS X,  Safari 4.04:		>120 seconds
-	Mac OS X,  Safari 5.03:		>180 seconds
-	Mac OS X,  Webkit r51708:	>120 seconds
-	Mac OS X,  Firefox 2.0.20:	~20 seconds
-	Mac OS X,  Opera 10.10:		~1 second
-	WindowsXP, Chrome 3.0.195.33	>120 seconds
-	WindowsXP, Firefox 2.0.20:	~20 seconds
-	WindowsXP, Opera 10.10:		~10 second
+	Mac OS X,  Safari 4.04:              >120 seconds
+	Mac OS X,  Safari 5.03:              >180 seconds
+	Mac OS X,  Webkit r51708:            >120 seconds
+	Mac OS X,  Firefox 2.0.20:           ~ 20 seconds
+	Mac OS X,  Opera 10.10:              ~  1 second
+	WindowsXP, Chrome 3.0.195.33         >120 seconds
+	WindowsXP, Firefox 2.0.20:           ~ 20 seconds
+	WindowsXP, Opera 10.10:              ~ 10 second
      times: loading page and building DOM (Intel Quat-Core 3.1GHz)
-	Linux,     Chrome 8.0.552.237	>180 seconds
+	Linux,     Chrome 8.0.552.237        >180 seconds
+	Linux,     Chromium 73.0.3683.75:    ~ 10 seconds
 	Linux,     Epiphany 2.30.2 (WebKit): ~120 seconds
-	Linux,     Firefox 3.6.13:	~2 seconds
-	Linux,     Midori 2.30.2 (WebKit): ~120 seconds
+	Linux,     Firefox 3.6.13:           ~  2 seconds
+	Linux,     Firefox 68.6:             ~  2 seconds
+	Linux,     Midori 2.30.2 (WebKit):   ~120 seconds
 -->
 		<li>there is no additional garbage collection implemented, some browsers may consume huge amount of memory</li>
 		<li>the <b>[fire]</b> butten triggers "onClick", "onChange", "onFocus", "onSelect" and "onBlur" in most browsers only.</li>
@@ -2213,9 +2279,11 @@ window.EMiR = function() {
 	<h3>Closing Tags</h3>
 	For events in closing tags see <a href="tags-close.html">tags-close.html</a> (<b>Warning:</b> ~4.7MB)
 	<h3>Not (yet) automatically testable</h3>
+	<p>
 	Some tag attributes if used invoke an event too, for example:
 	<b>checked</b>, <b>selected</b> or <b>autofocus</b><br>
 	A working test case for these events is currently missing.
+	</p>
 	<h3>CGI</h3>
 	This tool can be used to collect browser events automatically.
 	<p>
