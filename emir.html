@@ -5,12 +5,12 @@
 	git clone git@github.com:EnDe/EMiR.git
 -->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>EMiR - Events Mappings in Reality (emir.html 1.31.1.1)</title>
+	<title>EMiR - Events Mappings in Reality (emir.html 1.31.1.2)</title>
 	<meta name="Author"         content="Achim Hoffmann">
 	<meta name="Generator"      content="me using vi ;-)">
 	<meta name="DC.Creator"     content="emir @at@ my -dash- stp .dot. net">
 	<meta name="DC.Date"        content="2009-08-02">
-	<meta name="DC.Source"      content="@(#) emir.html 1.31.1.1 20/05/26 22:20:01">
+	<meta name="DC.Source"      content="@(#) emir.html 1.31.1.2 20/05/27 08:18:16">
 	<meta name="DC.Identifier"  content="git://github .dot. com/EnDe/EMiR/">
 	<meta name="DC.Title"       content="EMiR">
 	<meta name="DC.Description" content="EMiR - Event Mapping in Reality, strange Browser behaviours">
@@ -301,69 +301,74 @@ window.EMiR = function() {
 		// note that sequence of following hashes is important for display
 		'all': {    //# tags__EVENTS__
 			// note that spelling (case) must be identical in all hashes
-			'DOMContentLoaded': null,
+			'DOMContentLoaded':  null,
 			'DOMFrameContentLoaded': null,
-			'DOMMouseScroll':   null,
-			'DOMMenuItemActive':null,
-			'DOMMenuItemInactive':null,
-			'FSCommand':        null,	// SWF only
-			'formchange':       null,	// typo? Opera
-			'forminput':        null,	// typo? Opera
-			'invalid':          null,	// typo? Opera
-			'msVisibilityChange':              null,  // IE9 ??
-			'onAbort':          null,
-			'onActivate':       null,
-			'onAfterPrint':     null,
-			'onAfterUpdate':    null,
-			'onAttrModified':   null,	// typo?
-			'onAfterScriptExecute': null,   // Firefox >= 4
-			'onBack':           null,
-			'onBeforeActivate': null,
-			'onBeforeCopy':     null,
-			'onBeforeCut':      null,
+			'DOMMouseScroll':    null,
+			'DOMMenuItemActive': null,
+			'DOMMenuItemInactive':   null,
+			'FSCommand':         null,       // SWF only
+			'formchange':        null,       // typo? Opera
+			'forminput':         null,       // typo? Opera
+			'invalid':           null,       // typo? Opera
+			'msVisibilityChange':null,       // IE9 ??
+			'onAuxClick':        null,       //# unknown ??
+			'onAbort':           null,
+			'onActivate':        null,
+			'onAfterPrint':      null,
+			'onAfterUpdate':     null,
+			'onAttrModified':    null,       // typo?
+			'onAfterScriptExecute': null,    // Firefox >= 4
+			'onBack':            null,
+			'onBeforeActivate':  null,
+			'onBeforeCopy':      null,
+			'onBeforeCut':       null,
 			'onBeforeDeactivate':null,
-			'onBeforeEditFocus':null,
-			'onBeforePaste':    null,
-			'onBeforePrint':    null,
-			'onBeforeScriptExecute':null,   // Firefox >= 4
-			'onBeforeUnload':   null,
-			'onBeforeUpdate':   null,
-			'onBegin':          null,
-			'onBlur':           null,
-			'onBounce':         null,
-			'onBroadcast':      null,
-			'onCanPlay':        null,
-			'onCanPlayThrough': null,
-			'onCellChange':     null,
-			'onChange':         null,
-			'onCharacterDataModified':null,	// typo?
-			'onClick':          null,
-			'onClose':          null,
-			'onCommand':        null,
-			'oncontentsave':    null,       // case-sensitive (IE)
-			'oncontentready':   null,       // case-sensitive (IE)
-			'onCommandUpdate':  null,
-			'onContextMenu':    null,
-			'onControlSelect':  null,
-			'onCopy':           null,
-			'onCut':            null,
-			'onDataAvailable':  null,
-			'onDataSetChanged': null,
-			'onDataSetComplete':null,
-			'onDblClick':       null,
-			'onDeactivate':     null,
-			'ondetach':         null,       // case-sensitive (IE)
-			'ondocumentready':  null,       // case-sensitive (IE)
-			'onDOMActivate':    null,
-			'onDOMAttrModified':null,
-			'onDOMAttributeNameChanged':null,
+			'onBeforeEditFocus': null,
+			'onBeforePaste':     null,
+			'onBeforePrint':     null,
+			'onBeforeScriptExecute': null,   // Firefox >= 4
+			'onBeforeUnload':    null,
+			'onBeforeUpdate':    null,
+			'onBegin':           null,
+			'onBlur':            null,
+			'onBounce':          null,
+			'onBroadcast':       null,
+			'onCanPlay':         null,
+			'onCanPlayThrough':  null,
+			'onCellChange':      null,
+			'onChange':          null,
+			'onCharacterDataModified':null,  // typo?
+			'onClick':           null,
+			'onClose':           null,
+			'onCommand':         null,
+			'onCommandUpdate':   null,
+                        'onCompositionEnd':  null,       //# unknown ??
+			'onCompositionStart':null,       //# unknown ??
+			'onCompositionUpdate':   null,   //# unknown ??
+			'oncontentsave':     null,       // case-sensitive (IE)
+			'oncontentready':    null,       // case-sensitive (IE)
+			'onContextMenu':     null,
+			'onControlSelect':   null,
+			'onCopy':            null,
+			'onCueChange':       null,       //# unknown ??
+			'onCut':             null,
+			'onDataAvailable':   null,
+			'onDataSetChanged':  null,
+			'onDataSetComplete': null,
+			'onDblClick':        null,
+			'onDeactivate':      null,
+			'ondetach':          null,       // case-sensitive (IE)
+			'ondocumentready':   null,       // case-sensitive (IE)
+			'onDOMActivate':     null,
+			'onDOMAttrModified': null,
+			'onDOMAttributeNameChanged': null,
 			'onDOMCharacterDataModified':null,
-			'onDOMElementNameChanged':null,
-			'onDOMFocusIn':     null,
-			'onDOMFocusOut':    null,
-			'onDOMNodeInserted':   null,
+			'onDOMElementNameChanged':   null,
+			'onDOMFocusIn':      null,
+			'onDOMFocusOut':     null,
+			'onDOMNodeInserted': null,
 			'onDOMNodeInsertedIntoDocument':null,
-			'onDOMNodeRemoved':    null,
+			'onDOMNodeRemoved':  null,
 			'onDOMNodeRemovedFromDocument': null,
 			'onDOMSubTreeModified':null,
 			'onDrag':           null,
@@ -389,6 +394,7 @@ window.EMiR = function() {
 			'onFocusIn':        null,
 			'onFocusOut':       null,
 			'onFormChange':     null,
+			'onFormData':       null,       //# unknown ??
 			'onFormInput':      null,
 			'onForward':        null,
 			'ongesturechange':  null,
@@ -434,182 +440,212 @@ window.EMiR = function() {
 			'onmsSiteModeJumpListitemRemoved': null,  // IE9 ??
 			'onmsSiteModeShowJumpList':        null,  // IE9 ??
 			'onmsThumbnailClick':              null,  // IE9 ??
-			'onNodeInserted':   null,	// typo?
-			'onNodeRemoved':    null,	// typo?
-			'onOffline':        null,
-			'onOnline':         null,
-			'onopenstatechanged':null,      // case-sensitive (IE)
-			'onorientationchange':             null,
-			'onOutOfSync':      null,
-			'onOverFlow':       null,
-			'onOverFlowChanged':null,
-			'onPage':           null,
-			'onPageHide':       null,
-			'onPageShow':       null,
-			'onPaste':          null,
-			'onPause':          null,
-			'onPlay':           null,
-			'onPlaying':        null,
-			'onplaystatechange':null,       // case-sensitive (IE)
-			'onPopState':       null,
-			'onPopupHidden':    null,
-			'onPopupHiding':    null,
-			'onPopupShowing':   null,
-			'onPopupShown':     null,
-			'onProgress':       null,
-			'onPropertyChange': null,
-			'onRateChange':     null,
-			'onReadyStateChange': null,
-			'onRedo':           null,
-			'onRepeat':         null,
-			'onReset':          null,
-			'onResize':         null,
-			'onResizeEnd':      null,
-			'onResizeStart':    null,
-			'onResume':         null,
-			'onReverse':        null,
-			'onRowDelete':      null,	// typo?
-			'onRowEnter':       null,
-			'onRowExit':        null,
-			'onRowInserted':    null,	// typo?
-			'onRowsDelete':     null,
-			'onRowsInserted':   null,
-			'onSave':           null,
-			'onScroll':         null,
-			'onSearch':         null,
-			'onSeek':           null,
-			'onSeeked':         null,
-			'onSeeking':        null,
-			'onSelect':         null,
-			'onSelection':      null,       // iOS
-			'onSelectionChange':null,
-			'onSelectStart':    null,
-			'onShow':           null,
-			'onStalled':        null,
-			'onStart':          null,
-			'onStop':           null,
-			'onStorage':        null,
-			'onStorageCommit':  null,
-			'onSubmit':         null,
-			'onSubTreeModified':null,	// typo?
-			'onSuspend':        null,
-			'onSyncRestored':   null,
-			'onSynchRestored':  null,	// typo?
-			'onText':           null,
-			'onTextInput':      null,
-			'onTimeError':      null,
-			'onTimeuout':       null,
-			'onTimeUpdate':     null,
-			'ontouchcancel':    null,       // iOS
-			'ontouchend':       null,       // iOS
-			'ontouchenter':     null,
-			'ontouchmove':      null,       // iOS
-			'ontouchleave':     null,
-			'ontouchstart':     null,       // iOS
-			'onTrackChange':    null,
-			'onUnderflow':      null,
-			'onUndo':           null,
-			'onUnload':         null,
-			'onURLFlip':        null,
-			'onVolumeChange':   null,
-			'onWaiting':        null,
-			'onWheel':          null,       // Firefox >= 4
-			'onXfer_Done':      null,
+			'onNodeInserted':    null,       // typo?
+			'onNodeRemoved':     null,       // typo?
+			'onOffline':         null,
+			'onOnline':          null,
+			'onopenstatechanged':null,       // case-sensitive (IE)
+			'onorientationchange':   null,
+			'onOutOfSync':       null,
+			'onOverFlow':        null,
+			'onOverFlowChanged': null,
+			'onPage':            null,
+			'onPageHide':        null,
+			'onPageShow':        null,
+			'onPaste':           null,
+			'onPause':           null,
+			'onPlay':            null,
+			'onPlaying':         null,
+			'onplaystatechange': null,       // case-sensitive (IE)
+			'onGotPointerCapture':   null,   //# unknown ??
+			'onLostPointerCapture':  null,   //# unknown ??
+			'onPointerCancel':   null,       //# unknown ??
+			'onPointerCenter':   null,       //# unknown ??
+			'onPointerDown':     null,       //# unknown ??
+			'onPointerEnter':    null,       //# unknown ??
+			'onPointerLeave':    null,       //# unknown ??
+			'onPointerMove':     null,       //# unknown ??
+			'onPointerOut':      null,       //# unknown ??
+			'onPointerOver':     null,       //# unknown ??
+			'onPointerRawUpdate':null,       //# unknown ??
+			'onPointerUp':       null,       //# unknown ??
+			'onPopState':        null,
+			'onPopupHidden':     null,
+			'onPopupHiding':     null,
+			'onPopupShowing':    null,
+			'onPopupShown':      null,
+			'onProgress':        null,
+			'onPropertyChange':  null,
+			'onRateChange':      null,
+			'onReadyStateChange':null,
+			'onRedo':            null,
+			'onRepeat':          null,
+			'onReset':           null,
+			'onResize':          null,
+			'onResizeEnd':       null,
+			'onResizeStart':     null,
+			'onResume':          null,
+			'onReverse':         null,
+			'onRowDelete':       null,       // typo?
+			'onRowEnter':        null,
+			'onRowExit':         null,
+			'onRowInserted':     null,       // typo?
+			'onRowsDelete':      null,
+			'onRowsInserted':    null,
+			'onSave':            null,
+			'onScroll':          null,
+			'onSearch':          null,
+			'onSeek':            null,
+			'onSeeked':          null,
+			'onSeeking':         null,
+			'onSelect':          null,
+			'onSelection':       null,       // iOS
+			'onSelectionChange': null,
+			'onSelectStart':     null,
+			'onShow':            null,
+			'onStalled':         null,
+			'onStart':           null,
+			'onStop':            null,
+			'onStorage':         null,
+			'onStorageCommit':   null,
+			'onSubmit':          null,
+			'onSubTreeModified': null,       // typo?
+			'onSuspend':         null,
+			'onSyncRestored':    null,
+			'onSynchRestored':   null,       // typo?
+			'onText':            null,
+			'onTextInput':       null,
+			'onTimeError':       null,
+			'onTimeuout':        null,
+			'onTimeUpdate':      null,
+			'ontouchcancel':     null,       // iOS
+			'ontouchend':        null,       // iOS
+			'ontouchenter':      null,
+			'ontouchmove':       null,       // iOS
+			'ontouchleave':      null,
+			'ontouchstart':      null,       // iOS
+			'onTrackChange':     null,
+			'onUnderflow':       null,
+			'onUndo':            null,
+			'onUnload':          null,
+			'onURLFlip':         null,
+			'onVolumeChange':    null,
+			'onWaiting':         null,
+			'onWheel':           null,       // Firefox >= 4
+			'onXfer_Done':       null,
 			'onwebkitanimationend':      null,
 			'onwebkitanimationiteration':null,
 			'onwebkitanimationstart':    null,
 			'onwebkittransitionend':     null,
-			'seekSegmentTime':  null
+			'seekSegmentTime':   null
 		}, // all //# tags__EVENTS__
 		'HTML 4': {
-			'onBlur':           null,
-			'onChange':         null,
-			'onClick':          null,
-			'onDblClick':       null,
-			'onFocus':          null,
-			'onKeyDown':        null,
-			'onKeyPress':       null,
-			'onKeyUp':          null,
-			'onLoad':           null,
-			'onMouseDown':      null,
-			'onMouseMove':      null,
-			'onMouseOut':       null,
-			'onMouseOver':      null,
-			'onMouseUp':        null,
-			'onReset':          null,
-			'onSelect':         null,
-			'onSubmit':         null,
-			'onUnload':         null
+			'onBlur':            null,
+			'onChange':          null,
+			'onClick':           null,
+			'onDblClick':        null,
+			'onFocus':           null,
+			'onKeyDown':         null,
+			'onKeyPress':        null,
+			'onKeyUp':           null,
+			'onLoad':            null,
+			'onMouseDown':       null,
+			'onMouseMove':       null,
+			'onMouseOut':        null,
+			'onMouseOver':       null,
+			'onMouseUp':         null,
+			'onReset':           null,
+			'onSelect':          null,
+			'onSubmit':          null,
+			'onUnload':          null
 		}, // HTML 4
 		'HTML 5': {
 			//objects: {'document':null, 'window':null },
-			'onAbort':          null,
-			'onAfterPrint':     null,
-			'onBeforePrint':    null,
-			'onBeforeUnload':   null,
-			'onBlur':           null,
-			'onCanPlay':        null,
-			'onCanPlayThrough': null,
-			'onChange':         null,
-			'onClick':          null,
-			'onContextMenu':    null,
-			'onDblClick':       null,
-			'onDrag':           null,
-			'onDragEnd':        null,
-			'onDragEnter':      null,
-			'onDragLeave':      null,
-			'onDragOver':       null,
-			'onDragStart':      null,
-			'onDrop':           null,
-			'onDurationChange': null,
-			'onEmtied':         null,
-			'onEnded':          null,
-			'onError':          null,
-			'onFocus':          null,
-			'onFormChange':     null,
-			'onFormInput':      null,
-			'onHashChange':     null,
-			'onInvalid':        null,
-			'onLoad':           null,
-			'onLoadedData':     null,
-			'onLoadedMetaData': null,
-			'onLoadStart':      null,
-			'onKeyDown':        null,
-			'onKeyPress':       null,
-			'onKeyUp':          null,
-			'onMessage':        null,
-			'onMouseDown':      null,
-			'onMouseMove':      null,
-			'onMouseOut':       null,
-			'onMouseOver':      null,
-			'onMouseUp':        null,
-			'onMouseWheel':     null,
-			'onOffline':        null,
-			'onOnline':         null,
-			'onPause':          null,
-			'onPlay':           null,
-			'onPlaying':        null,
-			'onPopState':       null,
-			'onProgress':       null,
-			'onRateChange':     null,
-			'onReadyStateChange': null,
-			'onRedo':           null,
-			'onReset':          null, // missing?
-			'onResize':         null,
-			'onScroll':         null,
-			'onSeeked':         null,
-			'onSeeking':        null,
-			'onSelect':         null,
-			'onShow':           null,
-			'onStalled':        null,
-			'onStorage':        null,
-			'onSubmit':         null,
-			'onSuspend':        null,
-			'onTimeupdate':     null,
-			'onVolumeChange':   null,
-			'onWaiting':        null,
-			'onUndo':           null,
-			'onUnload':         null // missing?
+			'onAuxClick':        null,       //# unknown ??
+			'onAbort':           null,
+			'onAfterPrint':      null,
+			'onBeforePrint':     null,
+			'onBeforeUnload':    null,
+			'onBlur':            null,
+			'onCanPlay':         null,
+			'onCanPlayThrough':  null,
+			'onChange':          null,
+			'onClick':           null,
+                        'onCompositionEnd':  null,       //# unknown ??
+			'onCompositionStart':null,       //# unknown ??
+			'onCompositionUpdate':   null,   //# unknown ??
+			'onContextMenu':     null,
+			'onCueChange':       null,       //# unknown ??
+			'onDblClick':        null,
+			'onDrag':            null,
+			'onDragEnd':         null,
+			'onDragEnter':       null,
+			'onDragLeave':       null,
+			'onDragOver':        null,
+			'onDragStart':       null,
+			'onDrop':            null,
+			'onDurationChange':  null,
+			'onEmtied':          null,
+			'onEnded':           null,
+			'onError':           null,
+			'onFocus':           null,
+			'onFormChange':      null,
+			'onFormData':        null,       //# unknown ??
+			'onFormInput':       null,
+			'onHashChange':      null,
+			'onInvalid':         null,
+			'onLoad':            null,
+			'onLoadedData':      null,
+			'onLoadedMetaData':  null,
+			'onLoadStart':       null,
+			'onKeyDown':         null,
+			'onKeyPress':        null,
+			'onKeyUp':           null,
+			'onMessage':         null,
+			'onMouseDown':       null,
+			'onMouseMove':       null,
+			'onMouseOut':        null,
+			'onMouseOver':       null,
+			'onMouseUp':         null,
+			'onMouseWheel':      null,
+			'onOffline':         null,
+			'onOnline':          null,
+			'onPause':           null,
+			'onPlay':            null,
+			'onPlaying':         null,
+			'onGotPointerCapture':   null,   //# unknown ??
+			'onLostPointerCapture':  null,   //# unknown ??
+			'onPointerCancel':   null,       //# unknown ??
+			'onPointerCenter':   null,       //# unknown ??
+			'onPointerDown':     null,       //# unknown ??
+			'onPointerEnter':    null,       //# unknown ??
+			'onPointerLeave':    null,       //# unknown ??
+			'onPointerMove':     null,       //# unknown ??
+			'onPointerOut':      null,       //# unknown ??
+			'onPointerOver':     null,       //# unknown ??
+			'onPointerRawUpdate':null,       //# unknown ??
+			'onPointerUp':       null,       //# unknown ??
+			'onPopState':        null,
+			'onProgress':        null,
+			'onRateChange':      null,
+			'onReadyStateChange':null,
+			'onRedo':            null,
+			'onReset':           null, // missing?
+			'onResize':          null,
+			'onScroll':          null,
+			'onSeeked':          null,
+			'onSeeking':         null,
+			'onSelect':          null,
+			'onShow':            null,
+			'onStalled':         null,
+			'onStorage':         null,
+			'onSubmit':          null,
+			'onSuspend':         null,
+			'onTimeupdate':      null,
+			'onVolumeChange':    null,
+			'onWaiting':         null,
+			'onUndo':            null,
+			'onUnload':          null // missing?
 		}, // HTML 5
 		'DOM Level 2': {
 			'onAbort':          null,
@@ -642,42 +678,60 @@ window.EMiR = function() {
 			'onUnload':         null
 		}, // DOM Level 2
 		'DOM Level 3': {
-			'onAbort':          null,
-			'onBlur':           null,
-			'onChange':         null,
-			'onClick':          null,
-			'onDblClick':       null,
-			'onDOMActivate':    null,
-			'onDOMAttrModified':null,
-			'onDOMAttributeNameChanged':null,
+			'onAuxClick':        null,       //# unknown ??
+			'onAbort':           null,
+			'onBlur':            null,
+			'onChange':          null,
+			'onClick':           null,
+                        'onCompositionEnd':  null,       //# unknown ??
+			'onCompositionStart':null,       //# unknown ??
+			'onCompositionUpdate':   null,   //# unknown ??
+			'onCueChange':       null,       //# unknown ??
+			'onDblClick':        null,
+			'onDOMActivate':     null,
+			'onDOMAttrModified': null,
+			'onDOMAttributeNameChanged': null,
 			'onDOMCharacterDataModified':null,
-			'onDOMElementNameChanged':null,
-			'onDOMFocusIn':     null,
-			'onDOMFocusOut':    null,
-			'onDOMNodeInserted':   null,
+			'onDOMElementNameChanged':   null,
+			'onDOMFocusIn':      null,
+			'onDOMFocusOut':     null,
+			'onDOMNodeInserted': null,
 			'onDOMNodeInsertedIntoDocument':null,
-			'onDOMNodeRemoved':    null,
+			'onDOMNodeRemoved':  null,
 			'onDOMNodeRemovedFromDocument': null,
 			'onDOMSubTreeModified':null,
-			'onError':          null,
-			'onFocus':          null,
-			'onKeyDown':        null,
-			'onKeyUp':          null,
-			'onLoad':           null,
-			'onMouseDown':      null,
-			'onMouseMove':      null,
-			'onMouseMultiWheel':null,
-			'onMouseOut':       null,
-			'onMouseOver':      null,
-			'onMouseUp':        null,
-			'onMouseWheel':     null,
-			'onReset':          null,
-			'onResize':         null,
-			'onScroll':         null,
-			'onSelect':         null,
-			'onSubmit':         null,
-			'onTextInput':      null,
-			'onUnload':         null
+			'onError':           null,
+			'onFocus':           null,
+			'onFormData':        null,       //# unknown ??
+			'onKeyDown':         null,
+			'onKeyUp':           null,
+			'onLoad':            null,
+			'onMouseDown':       null,
+			'onMouseMove':       null,
+			'onMouseMultiWheel': null,
+			'onMouseOut':        null,
+			'onMouseOver':       null,
+			'onMouseUp':         null,
+			'onMouseWheel':      null,
+			'onGotPointerCapture':   null,   //# unknown ??
+			'onLostPointerCapture':  null,   //# unknown ??
+			'onPointerCancel':   null,       //# unknown ??
+			'onPointerCenter':   null,       //# unknown ??
+			'onPointerDown':     null,       //# unknown ??
+			'onPointerEnter':    null,       //# unknown ??
+			'onPointerLeave':    null,       //# unknown ??
+			'onPointerMove':     null,       //# unknown ??
+			'onPointerOut':      null,       //# unknown ??
+			'onPointerOver':     null,       //# unknown ??
+			'onPointerRawUpdate':null,       //# unknown ??
+			'onPointerUp':       null,       //# unknown ??
+			'onReset':           null,
+			'onResize':          null,
+			'onScroll':          null,
+			'onSelect':          null,
+			'onSubmit':          null,
+			'onTextInput':       null,
+			'onUnload':          null
 		}, // DOM Level 3
 		'Object': {
 			'onAbort':          null,
