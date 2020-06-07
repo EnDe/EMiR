@@ -1,4 +1,6 @@
 
+							Version 09.02.01
+
 EMiR - (Browser JavaScript) Event Mapping in Reality
 
 	This project tries to map all known/existing JavaScript events
@@ -7,3 +9,14 @@ EMiR - (Browser JavaScript) Event Mapping in Reality
 	Get a Copy
 		git clone git@github.com:EnDe/EMiR.git
 		git clone http://github.com/EnDe/EMiR.git
+
+
+							Version 20.06.20
+
+	EMiR is currently (5/2020) being updated.
+	The work in progress can be found in
+		emi-2020.html tags.html Makefile
+	only these files are necessary for the new version, anthing else
+	is generated using make.
+
+	More informations cumming soon ...
