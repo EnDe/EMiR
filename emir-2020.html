@@ -13,13 +13,13 @@
 -->
 <head> <!-- //# emir__HEAD__ -->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>EMiR - Event Mappings in Reality (emir.html 1.70)</title> <!-- //# emir__TITLE__ -->
+	<title>EMiR - Event Mappings in Reality (emir.html 1.71)</title> <!-- //# emir__TITLE__ -->
 	<meta name="dummy"          content=""> <!-- //# emir__META__ -->
 	<meta name="Author"         content="Achim Hoffmann">
 	<meta name="Generator"      content="me using vi ;-)">
 	<meta name="DC.Creator"     content="emir @at@ my -dash- stp .dot. net">
 	<meta name="DC.Date"        content="2009-08-02">
-	<meta name="DC.Source"      content="@(#) emir.html 1.70 20/06/23 23:41:47">
+	<meta name="DC.Source"      content="@(#) emir.html 1.71 20/06/24 00:05:15">
 	<meta name="DC.Identifier"  content="git://github .dot. com/EnDe/EMiR/">
 	<meta name="DC.Title"       content="EMiR">
 	<meta name="DC.Description" content="EMiR - Event Mappings in Reality, strange Browser behaviours">
@@ -1419,6 +1419,7 @@ window.EMiR = function() {
 			'host':     location.host,
 			'result':   '/emir_result.cgi',
 			'gettoken': '/emir_token.cgi',
+			'mail':     'some@where',    // not really 'http:', but we don't have 'mail:'
 			// following variables are used internal only
 			'url':      null,
 			'schema':   'http://',
@@ -1511,6 +1512,9 @@ window.EMiR = function() {
 			  case 'emir.e.host':     this.http.host     = src.value; break;
 			  case 'emir.e.result':   this.http.result   = src.value; break;
 			  case 'emir.e.gettoken': this.http.gettoken = src.value; break;
+			  case 'emir.e.mail':     this.http.mail     = src.value;
+				document.getElementById('mailto').value.replace(/:([^?]*)/, src.value);
+				break;
 			}
 			return false;
 		}, // set_config
@@ -2186,7 +2190,7 @@ t.setAttribute('style', 'background:red');
 			}
 			if (mode==='show') {
 				r = document.getElementById('mailto');
-				r.href = 'mailto:some@where?subject=Events for: ' + this.http.ua + '&body=' + e;
+				r.href = 'mailto:' + this.http.mail + '?subject=Events for: ' + this.http.ua + '&body=' + e;
 				r.focus();
 				r.click();
 				e = false;
@@ -2292,6 +2296,7 @@ t_list = ['a', 'b', 'footer'];  // user specified list
 				}
 			}
 			this.status('Init GUI variables..');    // -----------------------
+			$('emir.e.mail').value     = this.http.mail;
 			$('emir.e.host').value     = this.http.host;
 			$('emir.e.ua').value       = this.http.ua;
 			$('emir.e.result').value   = this.http.result;
@@ -2505,6 +2510,7 @@ t_list = ['a', 'b', 'footer'];  // user specified list
 		<label for="emir.e.sevent"> <input id="emir.e.sevent" name="sort" type="radio" onChange="emir.set_config(this);"/>events</label>
 		<label for="emir.e.empty">&#160;  list empty events, tags: <input id="emir.e.empty" type="checkbox" onChange="emir.set_config(this);" checked /></label>
 		<hr>
+		<label for="emir.e.mail">&#160;email address to send results to:  <input id="emir.e.mail"  type="text"     onChange="emir.set_config(this);"/></label><br>
 		<label for="emir.e.send">&#160;send each event to server:  <input id="emir.e.send"  type="checkbox" onChange="emir.set_config(this);"/></label>
 		<br>
 		<label for="emir.e.host"     >&#160;FQDN to send event to:<input id="emir.e.host"   type="text"     onChange="emir.set_config(this);" size="20" value="" /></label>
