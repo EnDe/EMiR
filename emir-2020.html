@@ -13,13 +13,13 @@
 -->
 <head> <!-- //# emir__HEAD__ -->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>EMiR - Event Mappings in Reality (emir.html 1.69)</title> <!-- //# emir__TITLE__ -->
+	<title>EMiR - Event Mappings in Reality (emir.html 1.70)</title> <!-- //# emir__TITLE__ -->
 	<meta name="dummy"          content=""> <!-- //# emir__META__ -->
 	<meta name="Author"         content="Achim Hoffmann">
 	<meta name="Generator"      content="me using vi ;-)">
 	<meta name="DC.Creator"     content="emir @at@ my -dash- stp .dot. net">
 	<meta name="DC.Date"        content="2009-08-02">
-	<meta name="DC.Source"      content="@(#) emir.html 1.69 20/06/01 00:25:20">
+	<meta name="DC.Source"      content="@(#) emir.html 1.70 20/06/23 23:41:47">
 	<meta name="DC.Identifier"  content="git://github .dot. com/EnDe/EMiR/">
 	<meta name="DC.Title"       content="EMiR">
 	<meta name="DC.Description" content="EMiR - Event Mappings in Reality, strange Browser behaviours">
@@ -31,15 +31,17 @@ body, h1        { font-weight:normal; font-family:monospace; font-size:10pt; }
 h2              { font-weight:bold;   font-size:150%; }
 .chck { }
 .c1 { float:left; background:#fafafa; width:1em; max-width:1em; position:fixed;top:0px;left:0px;margin:0px;padding:0px; height:100%; border-right:1px solid #000000; padding-left:0.3em; }
-.c2 { margin-left:2em; }
-.c2 p button    { width:7em; height:1.6em; }
+.c2             { margin-left:2em; }
+.c2 > div       { padding:0.5em;   }
+.c2 > div:hover { border-radius:8px; box-shadow:0px 5px 5px #666; }
+.c2 > div button { width:7em; height:1.6em; }
 .c2 li > b:before , .testme:before { content:"- test me -"; }
 .c2 li > b      { background:#00ffff; border:1px solid #000000; }
 .testme         { background:#00ffff; border:1px solid #000000; }
-.c1    ul       { display:none; background:#fafafa; position:fixed; top:0.5em; left:1em; z-index:1; border-top:1px solid #000000;border-right:1px solid #000000;  border-bottom:1px solid #000000; padding:0.5em; }
+.c1 ul          { display:none; background:#fafafa; position:fixed; top:0.5em; left:1em; z-index:1; border-top:1px solid #000000;border-right:1px solid #000000;  border-bottom:1px solid #000000; padding:0.5em; }
 .c1 li:hover ul { display:block; }
-.c1       li    { list-style:none; margin-left:0px; }
-.c1    ul li    { list-style:none; margin-left:0px; }
+.c1    li       { list-style:none; margin-left:0px; }
+.c1 ul li       { list-style:none; margin-left:0px; }
 .nav a          { color:#000000; text-decoration:none; background:#f0f0f0; border:1px outset #f6f6f6; padding-left:0.5em; padding-right:0.5em; width:100%; font-weight:bold; }
 .nav            { border-radius:8px; box-shadow:0px 5px 5px #666; }
 .nav a:hover    { color:#0000ff; text-decoration:none; }
@@ -47,15 +49,16 @@ h2              { font-weight:bold;   font-size:150%; }
 ul.conf { padding: 0px; }
 ul.conf li {
 	display:        none;
-	padding:        0px;
 	list-style:     none;
 	list-style-type:none;
 }
 ul.conf:hover li {
 	display:        block;
 	position:       absolute;
-	margin-top:     -6em;
+	margin-top:     -0.9em;
+	margin-right:   1.0em;
 	z-index:        1;
+	background:     #ffffff;
 }
 .otab ul {
 	padding-top:    1.0ex;
@@ -146,10 +149,16 @@ fieldset.e:first-child:hover{ background:#ffffff; }
 .status { border:1px solid #808080; color:#808080; background:#ffffcf; position:fixed; width:99.9%; height:3em; margin:0px; left:0px; bottom:0px; }
 .status:before      { content: "Status: "; }
 label               { border:1px solid #ffffff; padding:2px; margin:2px; }
-.c2 > p label       { border:1px solid #00b0ff; padding:0px; margin:0px; }
+.c2 > div label     { border:1px solid #00b0ff; padding:0px; margin:0px; }
+#events, #tags, #config      { border-radius:8px; box-shadow:0px 5px 5px #666;
+			padding-left:1em;
+			padding-bottom:0.5em;
+			border-right:1px solid #000000;
+			border-bottom:1px solid #000000;
+}
 #events label:hover { border:1px solid #00b0ff; }
 #tags   label:hover { border:1px solid #00b0ff; }
-#config             { border-radius:8px; box-shadow:0px 5px 5px #666; }
+#config             { padding:0em; }
 #config label       { width:20em; }
 #config label:hover { border:1px solid #00b0ff; }
 #config fieldset    { padding:1em; border:2px outset #f6f6f6; }
@@ -1912,7 +1921,6 @@ t.setAttribute('style', 'background:red');
 			f.innerHTML = ' (NOTE: will take up to 10 seconds)  ';
 			t.appendChild(f);
 			$('events').appendChild(t);
-			$('events').appendChild(document.createElement('HR'));
 			delete this.f; f = null;
 			delete this.t; t = null;
 			return;
@@ -1965,6 +1973,10 @@ t.setAttribute('style', 'background:red');
 				   }
 				));
 			}
+			t.appendChild(f);
+			f = document.createElement('SUB');
+			f.innerHTML = "(checking these boxes have currently no effect, it's just informational)";
+			f.setAttribute('style', 'display:block;padding-top:0.8em');  // dirty hack :-((
 			t.appendChild(f);
 			t.appendChild(document.createElement('HR'));
 			f = document.createElement('BUTTON');
@@ -2351,30 +2363,30 @@ t_list = ['a', 'b', 'footer'];  // user specified list
 <div class="c2">
 	<a name="Top"></a>
 <h2>Test Suite for Events in Tag Attributes</h2>
-	<p>
+	<div>
 	The purpose of this page is to identify the events which are bound to a
-	HTML tag using the event attributes (like <i>onClick, onMouseOver</i>, etc.).
-	</p>
+	HTML tag using the event attributes (like <i>onClick</i>, <i>onMouseOver</i>, etc.).
+	</div>
 	<h3>Usage</h3>
-	<p>
-	In the <span class="nav"><a href="#Testing">Testing</a></span> section JavaScript events bound to a
+	<div>
+	In the <span class="nav"><a href="#Testing">Testing</a></span> section events bound to a
 	<span class="tag">tag</span> call a log function when they are triggered.
-	The logged reults for each tag can be shown with the <button>Result</button> button.<br>
+	The logged events for each tag can be shown with the <button>Result</button> button.<br>
 	For more functionality, please see the following descriptions.
-	</p>
+	</div>
 	<h3>How It Works in Detail</h3>
-	<p>
+	<div>
 	In the <span class="nav"><a href="#Testing">Testing</a></span> section below, all known tags are listed.
 	Each <span class="tag">tag</span> contains a text <b class="testme"></b>.
 	All known JavaScript events are bound to that tag as tag attribute. If the
 	event is triggered, the corresponding checkbox will be ticked.
-	</p>
-	<p>
+	</div>
+	<div>
 	Some tags need to be tested in a specific context. Such a tag contains a
 	link to be clicked, the <i>onClick</i> attribute is not set.<br>
 	The content of the called link uses the tag in its intented context.
-	</p>
-	<p>
+	</div>
+	<div>
 	As some events are interactive, they must be triggered manually by:
 	<ol>
 		<li>move the mouse over the <b></b> text</li>
@@ -2386,29 +2398,30 @@ t_list = ['a', 'b', 'footer'];  // user specified list
 		<li>try to paste something on the <b></b> text</li>
 		<li>use the mouse wheel on the <b></b> text</li>
 	</ol>
-	</p>
-	<p>
+	</div>
+	<div>
 	Finally click the <button>Result</button> button at end of the <span class="nav"><a href="#Testing">Testing</a></span>
     section to get the triggerd events for the tags in the <span class="nav"><a href="#Results">Results</a></span> section.
-	</p>
+	</div>
 	<h3>GUI</h3>
-	<p>
+	<div>
 	All checkboxes for the events in the tags are invisible by default.<br>
 	Clicking the appropriate checkbox in the <span class="nav"><a href="#SelectEvents">Selection: Events</a></span>
 	section shows this event checkbox for each tag. Unchecking the checkbox hides
 	the tag's event checkbox.
-	</p>
+	</div>
 	<h4>Config</h4>
-	<p>
+	<div>
 	Moving the mouse over the <span class="nav"><a href="#Config">Config</a></span> section pops up a inset window with some
 	configuration settings which are used for the result.
-	</p>
+	</div>
 	<h4>Event Errors</h4>
-	<p>
+	<div>
 	The <span class="nav"><a href="#Errors">Event Errors</a></span> section shows all tag events which threw an exception
 	when triggered with the <button>fire</button> button.
-	</p>
+	</div>
 	<h4>GUI Buttons</h4>
+	<div>
 	Buttons at the end of the <span class="nav"><a href="#Testing">Testing</a></span> area:
 	<ul>
 		<li><button>Submit</button><br>
@@ -2419,11 +2432,13 @@ t_list = ['a', 'b', 'footer'];  // user specified list
 			tries to trigger all events for each tag.</li>
 	</ul>
 	Some of these action may take 5-20 seconds, depending on the browser.
-	<p>
+	</div>
+	<div>
 	The tabs (like "HTML 4" or "Keys") are just used to highlight all events of
 	this category. These tabs provide no other functionality.
-	</p>
+	</div>
 	<h3>Note</h3>
+	<div>
 	<ul>
 		<li>automatic event generation (<button>fire</button> button) works on some <span class="tag">FORM</span> tags only</li>
 		<li>some (all?) <span class="tag">FORM</span> tags (<span class="tag">INPUT</span>, <span class="tag">TEXTAREA</span>, <span class="tag">SELECT</span> ..) may not get, and hence
@@ -2452,21 +2467,25 @@ t_list = ['a', 'b', 'footer'];  // user specified list
 		<li>there is no additional garbage collection implemented, some browsers may consume huge amount of memory</li>
 		<li>the <button>fire</button> butten triggers "onClick", "onChange", "onFocus", "onSelect" and "onBlur" in most browsers only.</li>
 	</ul>
+	</div>
 	<h3>Closing Tags</h3>
+	<div>
 	For events in closing tags see <a href="tags-close.html">tags-close.html</a> (<b>Warning:</b> ~4.7MB)
+	</div>
 	<h3>Not (yet) automatically testable</h3>
-	<p>
+	<div>
 	Some tag attributes if used invoke an event too, for example:
 	<i>checked</i>, <i>selected</i> or <i>autofocus</i><br>
 	A working test case for these events is currently missing.
-	</p>
+	</div>
 	<h3>CGI</h3>
+	<div>
 	This tool can be used to collect browser events automatically.
-	<p>
+	<br>
 	If <label>send each event to server</label> is checked in <span class="nav"><a href="#Config">Config</a></span>
 	section then each event will be send to the server specified in <label>FQDN to send event to</label> using the URL specified in <label>URL to send event to</label>. This request will use
     the string set in <label>User-Agent to be send</label> as value for the "User-Agent" HTTP header.
-	</p>
+	</div>
 
 	<hr>
 	<a name="SelectEvents"><h2>Selection: Events</h2></a>
@@ -2474,7 +2493,6 @@ t_list = ['a', 'b', 'footer'];  // user specified list
 	<a name="SelectTags"><h2>Selection: Tags</h2></a>
 	<form id="tags"    action="dont-know-where-to-send-to" method="POST">
 	</form>
-		<sub>checking these boxes have currently no effect, it's just informational</sub>
 	<hr>
 <ul class="conf">
 	<a name="Config"><h2>Config</h2></a>
