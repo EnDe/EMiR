@@ -15,25 +15,25 @@
 #?      For details about the generation, see  tags.pl .
 #?
 #? VERSION
-#?      @(#) Makefile 1.1 20/06/07 22:56:59
+#?      @(#) Makefile 1.2 20/06/25 10:26:25
 #?
 #? AUTHOR
 #?      20-apr-20 Achim Hoffmann
 #?
 # -----------------------------------------------------------------------------
 
-SID             := 1.1
+SID             := 1.2
 
 first-target-is-default: help
 
-EMiR-EXE.pl     := ./tags.pl
+EMiR-EXE.pl     := ./tag-file-generator.pl
 EMiR.html       := ./emir.html
 EMiR.js         := ./emir.js
+EMiR-PREFIX     := emir-
 empty-pattern   := "/empty:true/&&do{s/\s*'([^']*)'.*/\1/;print}"
 meta-pattern    := "/meta:true/&&do{s/\s*'([^']*)'.*/\1/;print}"
 file-pattern    := "/file:true/&&do{s/\s*'([^']*)'.*/\1/;print}"
 EMiR-TAGS       := $(shell perl -lane $(file-pattern) $(EMiR.html) | sort -u)
-EMiR-PREFIX     := emir-
 
 EMiR.files       = $(EMiR-TAGS:%=$(EMiR-PREFIX)%.html) $(EMiR.js)
 
