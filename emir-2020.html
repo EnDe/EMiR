@@ -13,13 +13,13 @@
 } //# emir__INFO__ -->
 <head> <!-- //# emir__HEAD__ -->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>EMiR - Event Mappings in Reality (emir.html 1.72)</title> <!-- //# emir__TITLE__ -->
+	<title>EMiR - Event Mappings in Reality (emir.html 1.73)</title> <!-- //# emir__TITLE__ -->
 	<meta name="dummy"          content=""> <!-- //# emir__META__ -->
 	<meta name="Author"         content="Achim Hoffmann">
 	<meta name="Generator"      content="me using vi ;-)">
 	<meta name="DC.Creator"     content="emir @at@ my -dash- stp .dot. net">
 	<meta name="DC.Date"        content="2009-08-02">
-	<meta name="DC.Source"      content="@(#) emir.html 1.72 20/06/25 09:37:02">
+	<meta name="DC.Source"      content="@(#) emir.html 1.73 20/08/05 00:28:04">
 	<meta name="DC.Identifier"  content="git://github .dot. com/EnDe/EMiR/">
 	<meta name="DC.Title"       content="EMiR">
 	<meta name="DC.Description" content="EMiR - Event Mappings in Reality, strange Browser behaviours">
@@ -278,10 +278,53 @@ function $t$(obj,cls)   {//#? called when tab in "Show Events", "Show Tags" clic
 	c = null; try { delete this.arr; } catch(e) { /* some browsers crash */ }
    	return false;
 }; // $t$
-function dumm(tag)      { alert('Tag <'+tag+'> clicked');return false; };
+function dumm(tag)      { alert('Tag <'+tag+'> clicked');return false; }; //#? called when no click expected
+
+function dbx_tree(obj,i) {//#? print functions tree from object
+	var txt = '';
+	var ident   = '';
+	for (var a=0; a<i; a++) { ident += '    '; }
+	for(var property in obj) { 
+		var type  = typeof(obj[property]);
+		switch (type) {
+		  case 'function': break;
+		  case 'object':   break;
+		  case 'undefined': txt += ident + property + ':\tUNDEF;\n'; break;
+		  default: // boolean, number, string
+			if (type === 'string') { type = '"' + obj[property].valueOf() + '"'; }
+			txt  += ident + property + ':\t' + type + ';\n';
+			break;
+		}
+		continue;
+	} 
+	for(var property in obj) { 
+		var type  = typeof(obj[property]);
+		switch (type) {
+		  case 'function':
+			f    = obj[property] + "";
+			f    = f.replace(/(\r\n|\r|\n[\s\S]*)/gm, ' }\n'); // line with "function" only
+			f    = f.replace(/([{]\s*[\r\n])/, '{}');// pretty print
+			f    = f.replace(/([)]\s*)/, ')\t');     // pretty print
+			txt += ident + property + ':\t' + f;
+			break;
+		  case 'object':
+			txt += ident + property + ':\t{\n' + dbx_tree(obj[property], i+1) + ident + '};\n';
+			break;
+		  case 'boolean':
+		  case 'number':
+		  case 'string':
+			break;
+		  default: // boolean, number, string
+			txt += ident + property + ':\t' + type + '?;\n';
+			break;
+		}
+		continue;
+	} 
+	return txt;
+}; // dbx_tree
 
 // JavaScript used in this file only
-window.EMiR = function() {
+window.EMiR = function() {  //#? EMiR object
 	function $(id)  { return document.getElementById(id); }
 	var debug      = {
         // debugging is enabled if max_tags or max_events > 0
@@ -1545,10 +1588,10 @@ window.EMiR = function() {
 			'on_body':   function(parent,typ)        {//#? set all events[typ] attributes for <body> (excluding 'onload')
 				var err = '';
 				for (var x in events[typ]) {
-					if (x.match(/^onLoad/i)!==null) {        alert('onload');continue; }
-					if (x.match(/^onContextMenu/i)!==null) { alert('onContextMenu');continue; }
-					//if (x.match(/^onFocus/i)!==null) {       alert('onFocus');continue; }
-					//if (x.match(/^onActivate/i)!==null) {    alert('onActivate');continue; }
+					if (x.match(/^onLoad/i)!==null)        {   alert('onload');continue; }
+					if (x.match(/^onContextMenu/i)!==null) {   alert('onContextMenu');continue; }
+					//if (x.match(/^onFocus/i)!==null)     {   alert('onFocus');continue; }
+					//if (x.match(/^onActivate/i)!==null)  {   alert('onActivate');continue; }
 					try { parent.setAttribute(x, "return $e$(this,'"+ x +"');"); }
 					catch(e) { err += '\n** ' + x + '\t"' + e + '"'; }
 				}
@@ -2345,7 +2388,7 @@ t_list = ['a', 'b', 'footer'];  // user specified list
 		uselessdummytokeepjavascriptsyntaxhappy: null
 	}; // obj
 	return function() { return new obj(); };
-}();
+}(); // EMiR object
 	//# } emir__JS__
 	</script>
 </head>
@@ -2490,6 +2533,10 @@ t_list = ['a', 'b', 'footer'];  // user specified list
 	If <label>send each event to server</label> is checked in <span class="nav"><a href="#Config">Config</a></span>
 	section then each event will be send to the server specified in <label>FQDN to send event to</label> using the URL specified in <label>URL to send event to</label>. This request will use
     the string set in <label>User-Agent to be send</label> as value for the "User-Agent" HTTP header.
+	</div>
+	<h3>Debugging / Internals</h3>
+		<button id="emir.d.internal" onClick="return alert(dbx_tree(emir,0));">show internal functions</button><br>
+	<div>
 	</div>
 
 	<hr>
