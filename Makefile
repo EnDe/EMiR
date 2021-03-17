@@ -15,14 +15,14 @@
 #?      For details about the generation, see  tag-file-generator.pl .
 #?
 #? VERSION
-#?      @(#) Makefile 1.3 21/03/17 12:32:02
+#?      @(#) Makefile 1.4 21/03/17 12:41:37
 #?
 #? AUTHOR
 #?      20-apr-20 Achim Hoffmann
 #?
 # -----------------------------------------------------------------------------
 
-SID             := 1.3
+SID             := 1.4
 
 first-target-is-default: help
 
@@ -34,12 +34,19 @@ empty-pattern   := "/empty:true/&&do{s/\s*'([^']*)'.*/\1/;print}"
 meta-pattern    := "/meta:true/&&do{s/\s*'([^']*)'.*/\1/;print}"
 file-pattern    := "/file:true/&&do{s/\s*'([^']*)'.*/\1/;print}"
 EMiR-FILE-TAGS  := $(shell perl -lane $(file-pattern) $(EMiR.html) | sort -u)
+EMiR-TAGS       := $(shell perl $(EMiR-EXE.pl) --list-tags   | sort -u)
+EMiR-EVENTS     := $(shell perl $(EMiR-EXE.pl) --list-events | sort -u)
 
 EMiR.files       = $(EMiR-FILE-TAGS:%=$(EMiR-PREFIX)%.html) $(EMiR.js)
 
 help:
-	@echo " all:    generate all files:"
+	@echo "# target description"
+	@echo "#-------+------------------------------------------------------"
+	@echo " help    WYSIWYG"
+	@echo " all     generate all files:"
 	@echo "         $(EMiR.files)"
+	@echo " emir.js generate $(EMiR.js)"
+	@echo " list    list all known tags and events"
 
 doc: help
 
@@ -50,3 +57,8 @@ $(EMiR-PREFIX)%.html:
 	@$(EMiR-EXE.pl) $* > $@
 
 all: $(EMiR.files)
+
+list:
+	@echo "# EMiR-FILE-TAGS: $(EMiR-FILE-TAGS)"
+	@echo "# EMiR-TAGS:      $(EMiR-TAGS)"
+	@echo "# EMiR-EVENTS:    $(EMiR-EVENTS)"
