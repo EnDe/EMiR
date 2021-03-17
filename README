@@ -4,22 +4,24 @@ EMiR - (Browser JavaScript) Event Mapping in Reality
 	This project tries to map all known/existing JavaScript events
 	of HTML tags.
 
-	Get a Copy
+	Get a copy and start
 		git clone git@github.com:EnDe/EMiR.git
 		git clone http://github.com/EnDe/EMiR.git
+		make all
+		your-browser emir.html
 
 
 							Version 21.02.21
 
 	Generation of events in closing tags supported,  replaces static
-	file  tags-close.html .
+	files  tags-close.html  and all other static  tags-*.html .
 
 
 							Version 20.06.20
 
 	EMiR is currently (5/2020) being updated.
 	The work in progress can be found in
-		emir-2020.html emir.js tag-file-generator.pl Makefile
+		emir-2020.html Makefile tag-file-generator.pl
 	only these files are necessary for the new version, anthing else
 	is generated using make.
 
