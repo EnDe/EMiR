@@ -8,21 +8,21 @@
 #?      All data is well defined in  emir.html,  hence it is useed to extract
 #?      other informations from there instead of statically defining it here,
 #?      for example the tags requiring their own file:  EMiR-FILE-TAGS .
-#?      The tags in emir.html used here are marked with following attributes:
+#?      The tags used here are marked with following attributesin emir.html:
 #?          empty:true
 #?          meta:true
 #?          file:true
 #?      For details about the generation, see  tag-file-generator.pl .
 #?
 #? VERSION
-#?      @(#) Makefile 1.5 21/03/17 14:12:39
+#?      @(#) Makefile 1.6 21/10/29 21:36:21
 #?
 #? AUTHOR
 #?      20-apr-20 Achim Hoffmann
 #?
 # -----------------------------------------------------------------------------
 
-SID             := 1.5
+SID             := 1.6
 
 first-target-is-default: help
 
@@ -48,12 +48,15 @@ help:
 	@echo "# target description"
 	@echo "#-------+------------------------------------------------------"
 	@echo " help    WYSIWYG"
+	@echo " list    list all known tags and events"
 	@echo " all     generate all files:"
 	@echo "         $(EMiR.files)"
+	@echo " $(EMiR-PREFIX)TAG.html"
+	@echo "         generate $(EMiR-PREFIX)TAG.html, where TAG is any of:"
+	@echo "         $(EMiR.files)"
 	@echo " emir.js generate $(EMiR.js)"
-	@echo " $(EMiR.CLOSEhtml):"
+	@echo " $(EMiR.CLOSEhtml)"
 	@echo "         generate $(EMiR.CLOSEhtml)"
-	@echo " list    list all known tags and events"
 
 doc: help
 
@@ -68,8 +71,7 @@ $(EMiR.files): Makefile $(EMiR-EXE.pl) $(EMiR.html)
 all: $(EMiR.files)
 
 list:
-	@echo "# EMiR-FILE-TAGS: $(EMiR-FILE-TAGS)"
 	@echo "# EMiR.files:     $(EMiR.files)"
-	@echo "# EMiR-TAGS:      $(EMiR-TAGS)"
+	@echo "# EMiR-FILE-TAGS: $(EMiR-FILE-TAGS)"
 	@echo "# EMiR-TAGS:      $(EMiR-TAGS)"
 	@echo "# EMiR-EVENTS:    $(EMiR-EVENTS)"
